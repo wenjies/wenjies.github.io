@@ -57,7 +57,7 @@ title: 资源「USEFUL LINKS」
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.dandyweng.com" target="_blank" >翁天信</a>- homeschooling、自由的行者...
 <p>
 <a href="http://szhshp.org" target="_blank" >szhshp</a>- 前端，设计，游戏，生活.
-<a href="https://xiaolei.tech" target="_blank" >Xiaolei</a>- 电科，影响了我的一位大神.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://xiaolei.tech" target="_blank" >Xiaolei</a>- 电科，影响了我的一位大神.
 
 <h3> Others</h3>  
  <p> 
