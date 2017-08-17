@@ -118,7 +118,7 @@ var duoshuoQuery = {short_name:"robotkang"};
 	</script>
 <!-- 多说公共JS代码 end -->
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
