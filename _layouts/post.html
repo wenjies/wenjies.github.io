@@ -71,22 +71,28 @@ layout: default
 
 <br><br><br></br>
 
-<div id="plus"></div>
-<script src="https://qingqing.com/static/js/plus.js"></script>
+{% if page.comments %}
+  <div class="comments" id="comments"></div>
+    {% if (theme.valine and theme.valine.enable)%}
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='/Valine-1.1.4/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            av: AV,
+            el: '.comments' ,
+            verify: true,
+            app_id: '{{ theme.valine.appId }}',
+            app_key: '{{ theme.valine.appKey }}',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!'
+        });
+    </script>
+    {% endif %}
+{% endif %}
 
-<!-- wangyi评论框 start 
+<!--div id="plus"></div>
+<script src="https://qingqing.com/static/js/plus.js"></script-->
 
-<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script>
-  var cloudTieConfig = {
-    url: document.location.href, 
-    sourceId: "",
-    productKey: "88e913c19bd844db833a1288040a08ce",
-    target: "cloud-tie-wrapper"
-  };
-</script>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
- wangyi 公共JS代码 end -->
+
 
 
 <link href="/css/top.css/" rel="stylesheet" type="text/css" />
