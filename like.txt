@@ -2,3 +2,5 @@ http://xiaokedada.com/
 huxpro.github.io
 maoxiaoke.github.io http://xiaokedada.com/
 leopardpan.github.io
+http://sunxiaobiu.github.io
+http://playingfingers.com/2016/03/26/build-a-blog/#why-github-pages--jekyll
