@@ -1,37 +1,57 @@
 
- window.onload = function(){
-	var play="/styles/images/voice_play.png";
-	var stop="/styles/images/voice_stop.png";
+window.onload = function(){
 	var myAudio=document.getElementById("media");
+	var list=null;
 	if(myAudio){
-		var list=$.map($("#media>source"),function(obj,i){return $(obj).attr('src');});
+		list=$.map($("#media>source"),function(obj,i){return $(obj).attr('src');});
 		myAudio.volume=0.4;
 		myAudio.loop = false;
-		myAudio.preload="auto";
-		myAudio.src = list.shift();
+		myAudio.src = list[0];
 		myAudio.addEventListener("ended", playEndedHandler);
 		myAudio.pause();
+		
 		function playEndedHandler(){
-			if(list.length==0){
-				list=$.map($("#media>source"),function(obj,i){return $(obj).attr('src');});
-				myAudio.pause();
-			}
-			myAudio.src = list.shift();
+			var index=list.indexOf(myAudio.src);
+			var len=list.length;
+			index=index+1;
+			index=index>len-1?0:index;
+			play(index);
+		}
+		
+		function play(index){
+			var $that=$('.play.glyphicon');
+			$that.addClass('glyphicon-pause');
+			$that.removeClass('glyphicon-play');
+			myAudio.src = list[index];
 			myAudio.preload="auto";
 			myAudio.play();
 		}
 		
-		$("#music").click(function(){
-			var img=$("#music>img");
-			if(myAudio.paused){
-				myAudio.play();
-				img.attr('src',play);
-			}else{
+		$(".glyphicon").click(function(){
+			var index=list.indexOf(myAudio.src);
+			var len=list.length;
+			var $that=$(this);
+			if($that.hasClass('glyphicon-backward')){
+				index=index-1;
+				index=index<0?len-1:index;
+				play(index);
+			}else if($that.hasClass('glyphicon-forward')){
+				index=index+1;
+				index=index>len-1?0:index;
+				play(index);
+			}else if($that.hasClass('glyphicon-pause')){
+				$that.addClass('glyphicon-play');
+				$that.removeClass('glyphicon-pause');
 				myAudio.pause();
-				img.attr('src',stop);
+			}else if($that.hasClass('glyphicon-play')){
+				$that.removeClass('glyphicon-play');
+				$that.addClass('glyphicon-pause');
+				myAudio.play();
 			}
+			
+			
+			
 		});
 	}else{
-		$("#music>img").attr('src',stop);
 	}
  }
