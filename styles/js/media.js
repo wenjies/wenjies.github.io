@@ -9,10 +9,8 @@ window.onload = function(){
 		list=$.map($("#media>source"),function(obj,i){return $(obj).attr('src');});
 		myAudio.volume=0.8;
 		myAudio.loop = false;
-		myAudio.src = list[0];
 		myAudio.addEventListener("ended", playEndedHandler);
 		myAudio.addEventListener("timeupdate",timeupdateHandler);
-		myAudio.pause();
 		checkMusic();
 	}
  }
@@ -84,6 +82,10 @@ function  checkMusic(){
 			$that.removeClass('glyphicon-play');
 			myAudio.play();
 		}
+	}else{
+		myAudio.src = list[0];
+		myAudio.preload="auto";
+		myAudio.pause();
 	}
 	
 }
