@@ -99,6 +99,23 @@ CALL p_in_out(@p_in_out);
 SELECT @p_in_out;
 结果：1
 
+**`动态拼接sql例子`**
+>	DELIMITER $$
+DROP PROCEDURE IF EXISTS dsql $$
+CREATE PROCEDURE dsql(IN parameter INT,IN name1 VARCHAR(64))
+  BEGIN
+    SET @sql1='SELECT * FROM  t_user u WHERE 1=1';
+    IF parameter IS NOT NULL THEN
+      SET @sql1= CONCAT(@sql1,' and u.id = ',parameter);
+    END IF ;
+    IF (name1 IS NOT NULL AND name1!='') THEN
+      SET @sql1= CONCAT(@sql1,' and u.name LIKE\'%',name1,'%\'');
+    END IF ;
+    PREPARE stmt FROM @sql1;
+    EXECUTE stmt;
+  END$$
+DELIMITER ;
+
 ## 存储程序中的变量
 1.	DECLARE局部变量 DECLARE var_name[,...] type [DEFAULT value]<br>
 这个语句被用来声明局部变量。 要给变量提供一个默认值，请包含一个DEFAULT子句。值可以被指定为一个表达式，不需要为一个常数。如果没有DEFAULT子句，初始值为NULL。 局部变量的作用范围在它被声明的BEGIN ... END块内。它可以被用在嵌套的块中，除了那些用相同名字声明变量的块。
