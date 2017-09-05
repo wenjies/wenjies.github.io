@@ -85,14 +85,14 @@ SELECT @p_out;
 **`INOUT参数例子`**
 	
 >	DELIMITER $$
-CREATE
-    PROCEDURE p_in_out(IN parm_in_out INT)
-    BEGIN
-    SELECT parm_in_out;	#若注掉 结果：5
-    SET parm_in_out=5;
-    SELECT parm_in_out;
-    END$$
-DELIMITER ;
+	CREATE
+	    PROCEDURE p_in_out(IN parm_in_out INT)
+	    BEGIN
+	    SELECT parm_in_out;	#若注掉 结果：5
+	    SET parm_in_out=5;
+	    SELECT parm_in_out;
+	    END$$
+	DELIMITER ;
 调用
 SET @p_in_out=1;
 CALL p_in_out(@p_in_out);
@@ -101,20 +101,20 @@ SELECT @p_in_out;
 
 **`动态拼接sql例子`**
 >	DELIMITER $$
-DROP PROCEDURE IF EXISTS dsql $$
-CREATE PROCEDURE dsql(IN parameter INT,IN name1 VARCHAR(64))
-  BEGIN
-    SET @sql1='SELECT * FROM  t_user u WHERE 1=1';
-    IF parameter IS NOT NULL THEN
-      SET @sql1= CONCAT(@sql1,' and u.id = ',parameter);
-    END IF ;
-    IF (name1 IS NOT NULL AND name1!='') THEN
-      SET @sql1= CONCAT(@sql1,' and u.name LIKE\'%',name1,'%\'');
-    END IF ;
-    PREPARE stmt FROM @sql1;
-    EXECUTE stmt;
-  END$$
-DELIMITER ;
+	DROP PROCEDURE IF EXISTS dsql $$
+	CREATE PROCEDURE dsql(IN parameter INT,IN name1 VARCHAR(64))
+	  BEGIN
+	    SET @sql1='SELECT * FROM  t_user u WHERE 1=1';
+	    IF parameter IS NOT NULL THEN
+	      SET @sql1= CONCAT(@sql1,' and u.id = ',parameter);
+	    END IF ;
+	    IF (name1 IS NOT NULL AND name1!='') THEN
+	      SET @sql1= CONCAT(@sql1,' and u.name LIKE\'%',name1,'%\'');
+	    END IF ;
+	    PREPARE stmt FROM @sql1;
+	    EXECUTE stmt;
+	  END$$
+	DELIMITER ;
 
 ## 存储程序中的变量
 1.	DECLARE局部变量 DECLARE var_name[,...] type [DEFAULT value]<br>
