@@ -27,7 +27,8 @@ tag: mysql
 
 ## MySQL存储过程的
 **`语法`**
-> 	CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型[,[IN|OUT|INOUT] 参数名 数据类型…]]) [特性 ...] 过程体
+> 	DELIMITER $$
+	CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型[,[IN|OUT|INOUT] 参数名 数据类型…]]) [特性 ...] 过程体
 	DELIMITER $$
 	CREATE
 	    PROCEDURE p_in(IN parm_in INT)
