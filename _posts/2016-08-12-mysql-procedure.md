@@ -29,13 +29,6 @@ tag: mysql
 **`语法`**
 > 	DELIMITER $$
 	CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型[,[IN|OUT|INOUT] 参数名 数据类型…]]) [特性 ...] 过程体
-	DELIMITER $$
-	CREATE
-	    PROCEDURE p_in(IN parm_in INT)
-	    BEGIN
-		   ......;
-		   ......;
-	    END$$
 	DELIMITER ;
 
 **`分隔符`**
@@ -147,7 +140,7 @@ SELECT col_name[,...] INTO var_name[,...] table_expr这个SELECT语法把选定�
 	CALL tp2(); 
  
 ## MySQL存储过程的调用
-	用call和你过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。
+	用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
 
 ## MySQL存储过程的查询
 	SELECT name FROM mysql.proc WHERE db='数据库名';
@@ -322,6 +315,8 @@ CALL proc();
 		RAND([seed]) //随机数
 		ROUND (number [,decimals ]) //四舍五入,decimals为小数位数] 注：返回类型并非均为整数，如：
 		SIGN (number2 ) // 正数返回1，负数返回-1
+		MINUTE(datetime) //分返回符号,正负或0
+		SQRT(number2) //开平方
 	 
 3.	日期时间类
 	>	ADDTIME (date2 ,time_interval ) //将time_interval加到date2
@@ -354,8 +349,6 @@ CALL proc();
 		LAST_DAY(date) //date的月的最后日期
 		MICROSECOND(datetime) //微秒
 		MONTH(datetime) //月
-		MINUTE(datetime) //分返回符号,正负或0
-		SQRT(number2) //开平方
 
 <!--http://www.cnblogs.com/mark-chan/p/5384139.html-->
 
