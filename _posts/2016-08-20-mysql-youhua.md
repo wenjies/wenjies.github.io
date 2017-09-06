@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL的sql优化"
+title: "mysql的sql优化"
 date: 2016-08-20 09:00:00 +0800 
 categories: MySQL
 tag: mysql
@@ -11,7 +11,7 @@ tag: mysql
 <!-- more -->
 
 ## 单值索引和复合索引的区别
-1.	首先来看没有索引的情况：可以看出 type 为 all 是全表扫描性能不高，优化就是简历索引。
+1.	首先来看没有索引的情况：可以看出 type 为 all 是全表扫描性能不高，优化就是建立索引。
 >	EXPLAIN SELECT address,`name` FROM t_user u WHERE  u.address='成都' AND u.name='haha'
 
 	![](/img/msql/y_h_1.jpg)
@@ -26,7 +26,7 @@ tag: mysql
 	![](/img/msql/y_h_2.jpg)
 
 ----------
-3.	来看创建一个复合索引的情况：key为idx_a_n说明只用了索引,ref为 const,const 说名这个复合索引对这两个字段都起作用。Extra中有Using index（覆盖索引）sql性能很好。
+3.	来看创建一个复合索引的情况：key为idx_a_n说明用了索引,ref为 const,const 说名这个复合索引对这两个字段都起作用。Extra中有Using index（覆盖索引）sql性能很好。
 >	CREATE INDEX idx_a_n ON t_user(address,`name`);
 	EXPLAIN SELECT address,`name` FROM t_user u WHERE  u.address='成都' AND u.name='haha'
 
@@ -66,3 +66,7 @@ tag: mysql
 
 ## in和exists
 ----------
+
+
+## 慢查询开启及分析
+![](/img/msql/sql_slow.jpg)
