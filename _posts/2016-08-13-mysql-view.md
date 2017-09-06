@@ -56,5 +56,5 @@ tag: mysql
 
 ----------
 
-## explain分析简要说明：
+## mysql执行计划分析：
 ![](/img/msql/idx_.jpg)
