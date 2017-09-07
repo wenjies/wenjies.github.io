@@ -110,6 +110,19 @@ SELECT @p_in_out;
 	  END$$
 	DELIMITER ;
 
+
+## MySQL存储过程的调用
+	用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
+
+## MySQL存储过程的查询
+	SELECT name FROM mysql.proc WHERE db='数据库名';
+	SELECT routine_name FROM information_schema.routines WHERE routine_schema='数据库名';
+	SHOW PROCEDURE STATUS WHERE db='数据库名';
+	 
+## MySQL存储过程的删除
+	DROP PROCEDURE [过程1[,过程2…]]
+	从MySQL的表格中删除一个或多个存储过程。
+
 ## 存储程序中的变量
 1.	DECLARE局部变量 DECLARE var_name[,...] type [DEFAULT value]<br>
 这个语句被用来声明局部变量。 要给变量提供一个默认值，请包含一个DEFAULT子句。值可以被指定为一个表达式，不需要为一个常数。如果没有DEFAULT子句，初始值为NULL。 局部变量的作用范围在它被声明的BEGIN ... END块内。它可以被用在嵌套的块中，除了那些用相同名字声明变量的块。
@@ -139,18 +152,6 @@ SELECT col_name[,...] INTO var_name[,...] table_expr这个SELECT语法把选定�
 	CALL tp1();
 	CALL tp2(); 
  
-## MySQL存储过程的调用
-	用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
-
-## MySQL存储过程的查询
-	SELECT name FROM mysql.proc WHERE db='数据库名';
-	SELECT routine_name FROM information_schema.routines WHERE routine_schema='数据库名';
-	SHOW PROCEDURE STATUS WHERE db='数据库名';
-	 
-## MySQL存储过程的删除
-	DROP PROCEDURE [过程1[,过程2…]]
-	从MySQL的表格中删除一个或多个存储过程。
-
 ## MySQL存储过程的控制语句
 1.	变量作用域: 内部变量在其作用域范围内享有更高的优先权，当执行到end时，内部变量消失，不再可见了，在存储 过程外再也找不到这个内部变量，但是可以通过out参数或者将其值指派给会话变量来保存其值。
 

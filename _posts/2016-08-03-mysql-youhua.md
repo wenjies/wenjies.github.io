@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "mysql的sql优化"
-date: 2016-08-20 09:00:00 +0800 
+date: 2016-08-03 09:00:00 +0800 
 categories: MySQL
 tag: mysql
 ---
@@ -60,13 +60,61 @@ tag: mysql
 3、如index(a,b,c)=> where a=1 and b>5 and c=6 那么a,b会用到索引，c不会使用索引.<br/>
 7、可以使用覆盖索引的方式解决：like'%..%'索引失效。<br/>
 9、可以使用 union 带替代 or<br/>
+ 
+----------
+
+ 
+## index列子分析
+index(c1,c2,c3,c4):order by
+>	where c1>50 order by c2  出现:filesort。
+	where 1=1  order by c1 asc,c2 desc 出现:filesort。
+	where 1=1  order by c1 asc,c2 desc 出现:filesort。
+	where c1="c1" and c5='c5' order by c3,c2  出现:filesort。
+	where c1="c1" and c5='c5' order by c2,c3  不出现:filesort。
+	where c1="c1" and c5='c5' and c2='c2' order by c3,c2  不出现:filesort。
+
+
+index(c1,c2,c3,c4):group by
+>	where c1="c1" and c4='c4' group by c2,c3  不出现:filesort、temp
+	where c1="c1" and c4='c4' group by c3,c2  出现:filesort、temp。
+	where c1="c1" and c4='c4' and c2='c2' group by c2,c3  不出现:filesort、temp。
+
+group by:分组之前基本需要排序，可能会有临时表产生很耗性能。
+![](/img/msql/y_h_8.jpg)
+![](/img/msql/y_h_4.jpg)
+ 
+----------
 
 ## 小表驱动大表
+![](/img/msql/y_h_10.jpg)
+
+	exists不一定性能比in高，exists是in的一个变种替代。
+
 ----------
-
-## in和exists
-----------
-
-
+ 
 ## 慢查询开启及分析
 ![](/img/msql/sql_slow.jpg)
+
+
+
+## profile
+>	SHOW VARIABLES LIKE'profiling';
+	SET profiling=ON;
+	SHOW PROFILES;
+	SHOW PROFILE cpu,block io FOR QUERY Query_ID;或将 cpu,block io 改为 all
+
+若：Status中出现以下4个中一个必须优化。
+![](/img/msql/y_h_7.jpg)
+ 
+----------
+
+## 全局查询日志
+>	SET GLOBAL general_log=1;#0为关闭 1为开启
+	SET GLOBAL log_output='Table';
+
+执行：SELECT * FROM mysql.general_log; 将看到执行过的sql信息。<br>
+sql优化过程步骤：
+![](/img/msql/y_h_9.jpg)
+
+## Mysql的锁
+![](/img/msql/y_h_11.jpg)
