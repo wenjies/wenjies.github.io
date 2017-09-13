@@ -25,6 +25,7 @@ function play(index){
 	myAudio.src = list[index];
 	myAudio.preload="auto";
 	myAudio.play();
+	setPaying(true);
 }
 
 $(".glyphicon").click(function(){
@@ -43,11 +44,13 @@ $(".glyphicon").click(function(){
 		$that.addClass('glyphicon-play');
 		$that.removeClass('glyphicon-pause');
 		myAudio.pause();
+		setPaying(false);
 		setTimeout(function(){saveTime(false);},500)
 	}else if($that.hasClass('glyphicon-play')){
 		$that.removeClass('glyphicon-play');
 		$that.addClass('glyphicon-pause');
 		myAudio.play();
+		setPaying(true);
 	}
 });
 
@@ -68,6 +71,8 @@ function timeupdateHandler(){
 }
 
 function  checkMusic(){
+	if(isPaying())return;
+	
 	var music = getTime();
 	if(music){
 		ind=music.index;
@@ -81,11 +86,13 @@ function  checkMusic(){
 			$that.addClass('glyphicon-pause');
 			$that.removeClass('glyphicon-play');
 			myAudio.play();
+			setPaying(true);
 		}
 	}else{
 		myAudio.src = list[0];
 		myAudio.preload="auto";
 		myAudio.pause();
+		setPaying(false);
 	}
 	
 }
@@ -104,4 +111,41 @@ function getTime(){
 		var musicObj = JSON.parse(music);
 		return musicObj;
 	}
+}
+
+
+function isPaying(){
+	var isPlay=null;
+ 	var sp=null;
+	isPlay=getCookie("playing");
+	isPlay=eval(isPlay);
+	if(window.sessionStorage){
+		sp=sessionStorage.getItem("playing");
+		sp=eval(sp);
+	}else{
+		sp=0;
+	}
+	if(sp==0){
+		return false;
+	}
+	if(sp){
+		return false;
+	}
+	return isPlay;
+}
+
+function getCookie(name) {
+	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+	if(arr = document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
+function setPaying(isPlay){
+	document.cookie="playing="+isPlay;
+	if(window.sessionStorage){
+		sessionStorage.setItem("playing", isPlay);
+	}
+	
 }
