@@ -110,6 +110,23 @@ SELECT @p_in_out;
 	  END$$
 	DELIMITER ;
 
+**`实际例子`**
+>	DELIMITER $$
+	DROP PROCEDURE IF EXISTS ckm $$
+	CREATE
+	    PROCEDURE ckm(IN t1 INT)
+	    BEGIN
+		DECLARE u_time TIMESTAMP;
+		SELECT  t.update_time INTO  u_time FROM tx_msg_task t ;
+		UPDATE tx_msg_task SET update_time=NOW();
+		DELETE uk FROM tx_msg_uk uk INNER JOIN tx_msg_hc h ON  uk.msg_key=h.msg_key;
+		
+		PREPARE sql1 FROM 'SELECT * FROM tx_msg_uk u  WHERE DATE_SUB(NOW(),INTERVAL ? MINUTE) >=u.update_time';
+		SET @a = t1;
+		EXECUTE sql1 USING @a;#多个可以，分割
+		DEALLOCATE PREPARE sql1;#清理资源
+	    END$$
+	DELIMITER ; 
 
 ## MySQL存储过程的调用
 	用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
