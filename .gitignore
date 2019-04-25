@@ -1,4 +1,2 @@
-_site
-.sass-cache
-/.settings
-/.project
+/node_modules
+/.npmignore
