@@ -65,7 +65,7 @@ search:
 comment:
     # Name of the comment plugin
     type: gitment
-    owner: wenjie
+    owner: wenjies
     repo: Comments
     client_id: 1165b7a19460d5cbd15f
     client_secret: 3fca2b162fbd846d81b1d24160343b3f5d0c4088
