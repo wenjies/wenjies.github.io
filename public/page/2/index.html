@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>du小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="假如生活欺骗了你，不要悲伤，不要哭泣。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="du小站">
+<meta property="og:url" content="https://wenjies.github.io/page/2/index.html">
+<meta property="og:site_name" content="du小站">
+<meta property="og:description" content="假如生活欺骗了你，不要悲伤，不要哭泣。">
+<meta property="og:locale">
+<meta property="article:author" content="杰">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="du小站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">du小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我们笑着说再见，却深知再见遥遥无期。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wenjies.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-java多线程的一些总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2017-07-24T01:00:00.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/">java多线程的一些总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-java线程创建方式"><a href="#1-java线程创建方式" class="headerlink" title="1.java线程创建方式"></a>1.java线程创建方式</h1><hr>
+<h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><ol>
+<li>继承 Thread重写 run方法,调用 start方法。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">new Thread()&#123;</span><br><span class="line">public void run() &#123;</span><br><span class="line">System.out.println(&quot;Thread&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">&#125;.start();</span><br></pre></td></tr></table></figure></li>
+<li>Thread构造函数 中传入 Runnable 实现类,调用 start方法。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run() &#123;</span><br><span class="line">		System.out.println(&quot;Runnable&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>线程池中submit一个 (<em>Callable</em> ) 代码如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService service = Executors.newSingleThreadExecutor();</span><br><span class="line">Future&lt;String&gt; future = service.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">	public String call() throws Exception &#123;</span><br><span class="line">		return &quot;Callable&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line">future.get();</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>创建Timer</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Timer().schedule(</span><br><span class="line">		new TimerTask()&#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				System.out.println(&quot;Timer&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, </span><br><span class="line">10000,</span><br><span class="line">1000);</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-线程间的通信方式"><a href="#2-线程间的通信方式" class="headerlink" title="2.线程间的通信方式"></a>2.线程间的通信方式</h1><h3 id="1-线程同步synchronized、notify、wait"><a href="#1-线程同步synchronized、notify、wait" class="headerlink" title="1. 线程同步synchronized、notify、wait"></a>1. 线程同步synchronized、notify、wait</h3><ul>
+<li>如果对象调用了wait方法就会 使持有该对象的线程把该对象的控制权交出去，然后处于等待状态。</li>
+<li>如果对象调用了notify方法就会通知某个正在等待这个对象的控制权的线程可以继续运行。（但不是立即）</li>
+<li>如果对象调用了notifyAll方法就会通知所有等待这个对象控制权的线程继续运行。（但不是立即）</li>
+<li>wait、notify必须用在synchronized块里面。</li>
+<li>下面主线程和子线程轮流打印5次例子：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class SynchronizedDemo &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		final Worker business = new Worker();</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">					try &#123;</span><br><span class="line">						business.sub(i);</span><br><span class="line">					&#125; catch (Exception e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;.start();</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">			business.main(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class Worker &#123;</span><br><span class="line">	private boolean isSub = true;</span><br><span class="line"></span><br><span class="line">	public synchronized void sub(int i) throws Exception &#123;</span><br><span class="line">		while (!isSub) &#123;</span><br><span class="line">			this.wait();</span><br><span class="line">		&#125;</span><br><span class="line">		for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">			System.out.println(&quot;sub: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">		&#125;</span><br><span class="line">		isSub = false;</span><br><span class="line">		this.notify();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public synchronized void main(int i) throws InterruptedException &#123;</span><br><span class="line">		while (isSub) &#123;</span><br><span class="line">			this.wait();</span><br><span class="line">		&#125;</span><br><span class="line">		for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">			System.out.println(&quot;main: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">		&#125;</span><br><span class="line">		isSub = true;</span><br><span class="line">		this.notify();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-利用ReentrantLock、Condition"><a href="#2-利用ReentrantLock、Condition" class="headerlink" title="2. 利用ReentrantLock、Condition"></a>2. 利用ReentrantLock、Condition</h3><ul>
+<li>如果Lock调用了await()方法就会 使持有该对象的线程把该对象的控制权交出去，然后处于等待状态。</li>
+<li>如果对象调用了signal方法就会通知某个正在等待这个对象的控制权的线程可以继续运行。（但不是立即）</li>
+<li>如果对象调用了signalAll方法就会通知所有等待这个对象控制权的线程继续运行。（但不是立即）</li>
+<li>lock.unlock() 一定要写在 finally 块里防止异常释放锁失败造成死锁。</li>
+<li>下面主线程和子线程轮流打印5次例子：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public class ReentrantLockDemo &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		final Worker2 business = new Worker2();</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">					try &#123;</span><br><span class="line">						business.sub(i);</span><br><span class="line">					&#125; catch (Exception e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;.start();</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">			business.main(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">class Worker2 &#123;</span><br><span class="line">	Lock lock = new ReentrantLock();</span><br><span class="line">	Condition condition = lock.newCondition();</span><br><span class="line">	private boolean isSub = true;</span><br><span class="line">	public void sub(int i) throws InterruptedException &#123;</span><br><span class="line">		lock.lock();</span><br><span class="line">		try &#123;</span><br><span class="line">			while (!isSub) &#123;</span><br><span class="line">				condition.await();</span><br><span class="line">			&#125;</span><br><span class="line">			for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">				System.out.println(&quot;sub: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">			&#125;</span><br><span class="line">			isSub = false;</span><br><span class="line">			condition.signal();</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			lock.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void main(int i) throws InterruptedException &#123;</span><br><span class="line">		lock.lock();</span><br><span class="line">		try &#123;</span><br><span class="line">			while (isSub) &#123;</span><br><span class="line">				condition.await();</span><br><span class="line">			&#125;</span><br><span class="line">			for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">				System.out.println(&quot;main: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">			&#125;</span><br><span class="line">			isSub = true;</span><br><span class="line">			condition.signal();</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			lock.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）"><a href="#3-volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）" class="headerlink" title="3. volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）"></a>3. volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）</h3><h3 id="4-并发工具类"><a href="#4-并发工具类" class="headerlink" title="4. 并发工具类"></a>4. 并发工具类</h3><ul>
+<li>Semaphore 线程调用semaphore.acquire()获取资源使用权 当获取到资源执行，否则一直阻塞 等待获取资源Semaphore 构造函数中必须有<br>最大的数量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	final Semaphore semaphore = new Semaphore(1);</span><br><span class="line">	for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			@Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				try &#123;</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot; 我申请坑位&quot;);</span><br><span class="line">					semaphore.acquire(1);</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot; 我申请到坑位啦&quot;);</span><br><span class="line">					Thread.sleep(5000);</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot;:  我完事啦&quot;);</span><br><span class="line">					semaphore.release();</span><br><span class="line">				&#125; catch (InterruptedException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;.start();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Callable、Future 必须在线程池中使用，调用future.get()的线程会阻塞等待结果。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	ExecutorService service = Executors.newSingleThreadExecutor();</span><br><span class="line">	final Future&lt;String&gt; future = service.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">		public String call() throws Exception &#123;</span><br><span class="line">			System.out.println(&quot;我在计算中&quot;);</span><br><span class="line">			Thread.sleep(1000);</span><br><span class="line">			return &quot;hello&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	service.submit(new Runnable() &#123;</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				System.out.println(&quot;我在等待结果中&quot;);</span><br><span class="line">				System.out.println(&quot;结果: &quot;+future.get());</span><br><span class="line">			&#125; catch (Exception e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	service.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Exchanger仅适用与两个线程间数据的交换(类是与买东西 找补)。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> public static void main(String[] args) &#123;</span><br><span class="line">	final Exchanger&lt;Integer&gt; exchanger=new Exchanger&lt;Integer&gt;();</span><br><span class="line">	 new Thread()&#123;</span><br><span class="line">		 @Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			 System.out.println(Thread.currentThread().getName()+ &quot;那谁，我要给你5块&quot;);</span><br><span class="line">			 try &#123;</span><br><span class="line">				Integer exchange = exchanger.exchange(5);</span><br><span class="line">				System.out.println(Thread.currentThread().getName()+ &quot;收到：&quot;+exchange +&quot; 块 &quot;);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125;.start();</span><br><span class="line">	 </span><br><span class="line">	 new Thread()&#123;</span><br><span class="line">		 @Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			 System.out.println(Thread.currentThread().getName()+ &quot;那谁，我要找你1块&quot;);</span><br><span class="line">			 try &#123;</span><br><span class="line">				 Integer exchange = exchanger.exchange(1);</span><br><span class="line">			     System.out.println(Thread.currentThread().getName()+ &quot;收到：&quot;+exchange +&quot; 块 &quot;);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				// TODO Auto-generated catch block</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125;.start();</span><br><span class="line">	 </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CyclicBarrier 用于多个线程都准备等待,当同时等待的线程达到规定数量后 所有线程自动唤醒运行。 （类似汽车票站<br>没有检够票数不发车）相比CountDownLatch,CyclicBarrier不需要其他线程来唤醒等待的线程.CyclicBarrier 的构造函数 等待线程数量<br>达到规定数量线程开始运行。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	CyclicBarrier cyclicBarrier=new CyclicBarrier(5);</span><br><span class="line">	for(int i=0;i&lt;5;i++) &#123;</span><br><span class="line">		 new Thread()&#123;</span><br><span class="line">			 @Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				 try &#123;</span><br><span class="line">					 cyclicBarrier.await();</span><br><span class="line">					Thread.sleep((long) (Math.random()*1000));</span><br><span class="line">					System.out.println(Thread.currentThread().getName()+ &quot;:  开始跑啦&quot;);</span><br><span class="line">				&#125; catch (Exception e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;.start();;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CountDownLatch 用于多个线程都准备等待，接到命令后 统一运行（类似 赛跑比赛）CountDownLatch的构造函数中的数字表示等待者必须接到几次命令后<br>开始运行等待者待用调用countDownLatch.await()后开始阻塞发布命令者调用一次或多次countDownLatch.countDown()后唤醒等待者。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	 final CountDownLatch countDownLatch=new CountDownLatch(1);</span><br><span class="line">	 for(int i=0;i&lt;3;i++) &#123;</span><br><span class="line">		 new Thread()&#123;</span><br><span class="line">			 @Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				 try &#123;</span><br><span class="line">					countDownLatch.await();</span><br><span class="line">					Thread.sleep((long) (Math.random()*1000));</span><br><span class="line">					System.out.println(Thread.currentThread().getName()+ &quot;:  开始跑啦&quot;);</span><br><span class="line">				&#125; catch (InterruptedException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;.start();</span><br><span class="line">	 &#125;</span><br><span class="line">	 </span><br><span class="line">	 Thread.sleep(2000);</span><br><span class="line">	 System.out.println(Thread.currentThread().getName()+ &quot;:  准备&quot;);</span><br><span class="line">	 countDownLatch.countDown();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-线程常用api"><a href="#3-线程常用api" class="headerlink" title="3.线程常用api"></a>3.线程常用api</h1><ol>
+<li>join()：线程的合并的含义就是将几个并行线程的线程合并为一个单线程执行，应用场景是当一个线程必须等待另一个线程执行完毕才能执行时可以使用join方法。</li>
+<li>yield(): 暂停当前正在执行的线程对象，并执行其他线程。（当前时间片）。</li>
+<li>interrupt():中断线程。</li>
+<li>sleep(long millis)：暂停执行(不会释放占有资源)。</li>
+</ol>
+<h1 id="4-线程池"><a href="#4-线程池" class="headerlink" title="4.线程池"></a>4.线程池</h1><h3 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h3><pre><code>1.ThreadPoolExecutor：ThreadPoolExecutor(int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue&lt;Runnable&gt; workQueue)
+    1.	当线程池实际线程数小于corePoolSize时，有新的任务加入则优先创建线程。
+    2.	当线程池实际线程数等于corePoolSize时，有新的任务加入则加入队列。
+    3.	当线程池实际线程数等于corePoolSize时，有新的任务加入若队列已满，则在总线程数不大于maximumPoolSize的前提下，创建新的线程。
+    4.	当线程池实际线程数等于maximumPoolSize，有新的任务加入则执行拒绝策略（默认抛异常）。可自定义拒绝策略 需实现RejectedExecutionHandler接口。
+    总结：所以关键点是： 队列是否会满若是无限队列（可能系统资源耗尽） ,maximumPoolSize是否会达到最大值。
+
+2.Executors工具提供四种线程池(基于 ThreadPoolExecutor )，分别为：
+    1.	newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+    2.	newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+    3.	newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+    4.	newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+</code></pre>
+<h1 id="5-Java死锁范例以及如何分析死锁"><a href="#5-Java死锁范例以及如何分析死锁" class="headerlink" title="5.Java死锁范例以及如何分析死锁"></a>5.Java死锁范例以及如何分析死锁</h1><h3 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h3><pre><code>1.死锁是这样一种情形：多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放,而那个资源又不能被释放。导致线程被无限期地阻塞，因此程序不可能正常终止。(等待一个永远无法获取的资源)
+2.java 死锁产生的四个必要条件：
+    1、互斥使用，即当资源被一个线程使用(占有)时，别的线程不能使用
+    2、不可抢占，资源请求者不能强制从资源占有者手中夺取资源，资源只能由资源占有者主动释放。
+    3、请求和保持，即当资源请求者在请求其他的资源的同时保持对原有资源的占有。
+    4、循环等待，即存在一个等待队列：P1占有P2的资源，P2占有P3的资源，P3占有P1的资源。这样就形成了一个等待环路。
+</code></pre>
+<h3 id="死锁方式"><a href="#死锁方式" class="headerlink" title="死锁方式"></a>死锁方式</h3><ol>
+<li></li>
+</ol>
+<p>第一种synchronized方式死锁：线程thread1先获取锁locka，然后在同步块里嵌套竞争锁lockb。而线程thread2先获取锁lockb，然后在同步块里嵌套竞争锁locka。此时已经被线程thread1拥有，而thread1在等待lockb，而lockb被thread2拥有，thread2在等待locka……无线循环。(<br>synchronized (locka){ …; synchronized (locka){…;} ….; } )</p>
+<ol start="2">
+<li>第二种concurrent包Lock错误使用，导致死锁：释放锁使用地方不规范，导致死锁不能正常释放！ 应该在finally块里 lock.unlock();</li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
+<li>修改代码才能从根本解决问题。</li>
+<li>检查问题代码<ol>
+<li>使用一些静态分析库可以帮助我们发现可能出现的死锁。</li>
+<li>它其中包含连个方法findDeadlockedThreads()和findMonitorDeadlockedThreads()，用来查找处于死锁。代码如下：thread1<br>和thread2 死锁状态。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	final Object lock1 = new Object();</span><br><span class="line">	final Object lock2 = new Object();</span><br><span class="line"></span><br><span class="line">	Thread thread1 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			synchronized (lock1) &#123;</span><br><span class="line">				System.out.println(&quot;Thread1 acquired lock1&quot;);</span><br><span class="line">				try &#123;</span><br><span class="line">					TimeUnit.MILLISECONDS.sleep(500);</span><br><span class="line">				&#125; catch (InterruptedException ignore) &#123;</span><br><span class="line">				&#125;</span><br><span class="line">				synchronized (lock2) &#123;</span><br><span class="line">					System.out.println(&quot;Thread1 acquired lock2&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;);</span><br><span class="line">	thread1.start();</span><br><span class="line"></span><br><span class="line">	Thread thread2 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			synchronized (lock2) &#123;</span><br><span class="line">				System.out.println(&quot;Thread2 acquired lock2&quot;);</span><br><span class="line">				synchronized (lock1) &#123;</span><br><span class="line">					System.out.println(&quot;Thread2 acquired lock1&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	thread2.start();</span><br><span class="line">	try &#123;</span><br><span class="line">		Thread.sleep(20000);</span><br><span class="line">	&#125; catch (InterruptedException e) &#123;</span><br><span class="line">		// TODO Auto-generated catch block</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	Thread thread3 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			ThreadMXBean mbean = ManagementFactory.getThreadMXBean();</span><br><span class="line">			long[] findDeadlockedThreads = mbean.findDeadlockedThreads();</span><br><span class="line">			if (findDeadlockedThreads != null) &#123;</span><br><span class="line">				ThreadInfo[] threadInfos = mbean.getThreadInfo(findDeadlockedThreads);</span><br><span class="line">				for (ThreadInfo threadInfo : threadInfos) &#123;</span><br><span class="line">					//获取线程</span><br><span class="line">					for (Thread thread : Thread.getAllStackTraces().keySet()) &#123;</span><br><span class="line">						if (thread.getId() == threadInfo.getThreadId()) &#123;</span><br><span class="line">							System.err.println(threadInfo.toString().trim());</span><br><span class="line">							for (StackTraceElement ste : thread.getStackTrace()) &#123;</span><br><span class="line">								System.err.println(&quot;t&quot; + ste.toString().trim());</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	thread3.start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/" data-id="cm3zaz9c5000itgu63dl8eyh2" data-title="java多线程的一些总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Spring中事务的一些特性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/05/23/Spring%E4%B8%AD%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2017-05-23T01:00:00.000Z" itemprop="datePublished">2017-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/05/23/Spring%E4%B8%AD%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/">Spring中事务的一些特性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="数据库的四大特性"><a href="#数据库的四大特性" class="headerlink" title="数据库的四大特性"></a>数据库的四大特性</h1><hr>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ol>
+<li><p>原子性（Atomicity): 原子性是指事务包含的所有操作要么全部成功，要么全部失败回滚，这和前面两篇博客介绍事务的功能是一样的概念，因此事务的操作如果成功就必须要完全应用到数据库，如果操作失败则不能对数据库有任何影响。</p>
+</li>
+<li><p>一致性（Consistency):<br>一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。拿转账来说，假设用户A和用户B两者的钱加起来一共是5000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是5000，这就是事务的一致性。</p>
+</li>
+<li><p>隔离性（Isolation):<br>隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。即要达到这么一种效果：对于任意两个并发的事务T1和T2，在事务T1看来，T2要么在T1开始之前就已经结束，要么在T1结束之后才开始，这样每个事务都感觉不到有其他事务在并发地执行。关于事务的隔离性数据库提供了多种隔离级别，稍后会介绍到。</p>
+</li>
+<li><p>持久性（Durability): 持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</p>
+</li>
+</ol>
+<h3 id="几种问题"><a href="#几种问题" class="headerlink" title="几种问题"></a>几种问题</h3><ol>
+<li>脏读: 是指在一个事务处理过程里读取了另一个未提交的事务中的数据。当一个事务正在多次修改某个数据，而在这个事务中这多次的修改都还未提交，这时一个并发的事务来访问该数据，就会造成两个事务得到的数据不一致。</li>
+<li>不可重复读:<br>不可重复读是指在对于数据库中的某个数据，一个事务范围内多次查询却返回了不同的数据值，这是由于在查询间隔，被另一个事务修改并提交了。例如事务T1在读取某一数据，而事务T2立马修改了这个数据并且提交事务给数据库，事务T1再次读取该数据就得到了不同的结果，发送了不可重复读。不可重复读和脏读的区别是，脏读是某一事务读取了另一个事务未提交的脏数据，而不可重复读则是读取了前一事务提交的数据。在某些情况下，不可重复读并不是问题，比如我们多次查询某个数据当然以最后查询得到的结果为主。但在另一些情况下就有可能发生问题，例如对于同一个数据A和B依次查询就可能不同，A和B就可能打起来了……</li>
+<li>虚读(幻读):<br>幻读是事务非独立执行时发生的一种现象。例如事务T1对一个表中所有的行的某个数据项做了从“1”修改为“2”的操作，这时事务T2又对这个表中插入了一行数据项，而这个数据项的数值还是为“1”并且提交给数据库。而操作事务T1的用户如果再查看刚刚修改的数据，会发现还有一行没有修改，其实这行是从事务T2中添加的，就好像产生幻觉一样，这就是发生了幻读。幻读和不可重复读都是读取了另一条已经提交的事务（这点就脏读不同），所不同的是不可重复读查询的都是同一个数据项，而幻读针对的是一批数据整体（比如数据的个数）。</li>
+</ol>
+<h1 id="五个事务隔级别"><a href="#五个事务隔级别" class="headerlink" title="五个事务隔级别"></a>五个事务隔级别</h1><hr>
+<h3 id="事务隔级别"><a href="#事务隔级别" class="headerlink" title="事务隔级别"></a>事务隔级别</h3><ol>
+<li>default 默认的事务隔离级别(Repeatable read)</li>
+<li>Read uncommitted (读未提交)：最低级别，任何情况都无法保证。</li>
+<li>Repeatable read (可重复读)：可避免脏读、不可重复读的发生。</li>
+<li>Read committed (读已提交)：可避免脏读的发生。</li>
+<li>Serializable (串行化)：可避免脏读、不可重复读、幻读的发生。</li>
+</ol>
+<blockquote>
+<ul>
+<li>隔离级别最高的是Serializable级别，最低的是Read uncommitted级别，当然级别越高，执行效率就越低。</li>
+</ul>
+</blockquote>
+<h1 id="七个事务的传播行为"><a href="#七个事务的传播行为" class="headerlink" title="七个事务的传播行为"></a>七个事务的传播行为</h1><hr>
+<h3 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h3><ol>
+<li>propagation_required 如果一个事务存在，则支持当前事务，如果不存在，则创建新的事务。</li>
+<li>propagation_supports 如果一个事务存在，则支持当前事务，如果不存在，则非事务的方法运行。</li>
+<li>propagation_mendatory 如果一个事务存在，则支持当前事务，如果存在，则抛出异常。</li>
+<li>propagation_requires_new 总是要开启一个新的事务，如果事务存在，将该事务挂起。</li>
+<li>propagation_not_supported 总是非事务方法运行，并挂起所有的事务。</li>
+<li>propagation_never 总是非事务方法运行，如果事务存在则抛出异常</li>
+<li>propagation_nested 某一个事务存在，则运行在一个嵌套的事务中。</li>
+</ol>
+<blockquote>
+<p><strong>配置方式</strong> :</p>
+</blockquote>
+<pre><code>&lt;tx:method name=&quot;save*&quot; propagation=&quot;REQUIRED&quot; isolation=&quot;DEFAULT&quot; /&gt;
+
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/05/23/Spring%E4%B8%AD%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/" data-id="cm3zaz9c00001tgu6ada21hmp" data-title="Spring中事务的一些特性" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Spring扩展" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/05/22/Spring%E6%89%A9%E5%B1%95/" class="article-date">
+  <time class="dt-published" datetime="2017-05-22T01:00:00.000Z" itemprop="datePublished">2017-05-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/05/22/Spring%E6%89%A9%E5%B1%95/">Spring扩展</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring扩展"><a href="#Spring扩展" class="headerlink" title="Spring扩展"></a>Spring扩展</h1><hr>
+<h3 id="为什么要扩展"><a href="#为什么要扩展" class="headerlink" title="为什么要扩展"></a>为什么要扩展</h3><ol>
+<li>做java开发Spring是必须要用的而且用的很频繁。</li>
+<li>Spring的核心IOC和AOP是我们最想要的，但是有些时候需要把我们自定义的bean的生产过程，bean创建好之后再交给Spring容器。所以重点来了怎么交给它</li>
+<li>其实Spring的设计早就考虑到这些问题了，只是平时没怎么使用而已，本文带你解开它神秘的面纱。</li>
+</ol>
+<h1 id="理论加实践"><a href="#理论加实践" class="headerlink" title="理论加实践"></a>理论加实践</h1><hr>
+<h3 id="1-使用Component注解"><a href="#1-使用Component注解" class="headerlink" title="1.使用Component注解"></a>1.使用Component注解</h3><ol>
+<li>想让Spring扫描我们自定义的注解很简单。只需要在我们的注解上加上 @org.springframework.stereotype.Component 代码如下:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">public @interface MyService &#123;</span><br><span class="line">	String value() default &quot;&quot;;// 必须要有</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就可以让Spring扫描到我们的注解，作用和Spring的注解作用是一样的。 细心的同学可能已经发现<br>org.springframework.stereotype.Controller 的注解不就是这样实现的嘛。<br>让我们来看看这是为什么,在<br>org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider类中的registerDefaultFilters 方法中有<br>this.includeFilters.add(new AnnotationTypeFilter(Component.class))这样一句话，看到这里明白了吧 。代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">protected void registerDefaultFilters() &#123;</span><br><span class="line">	this.includeFilters.add(new AnnotationTypeFilter(Component.class));</span><br><span class="line">	ClassLoader cl = ClassPathScanningCandidateComponentProvider.class.getClassLoader();</span><br><span class="line">	try &#123;</span><br><span class="line">		this.includeFilters.add(new AnnotationTypeFilter(</span><br><span class="line">				((Class&lt;? extends Annotation&gt;) ClassUtils.forName(&quot;javax.annotation.ManagedBean&quot;, cl)), false));</span><br><span class="line">		logger.debug(&quot;JSR-250 &#x27;javax.annotation.ManagedBean&#x27; found and supported for component scanning&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	catch (ClassNotFoundException ex) &#123;</span><br><span class="line">		// JSR-250 1.1 API (as included in Java EE 6) not available - simply skip.</span><br><span class="line">	&#125;</span><br><span class="line">	try &#123;</span><br><span class="line">		this.includeFilters.add(new AnnotationTypeFilter(</span><br><span class="line">				((Class&lt;? extends Annotation&gt;) ClassUtils.forName(&quot;javax.inject.Named&quot;, cl)), false));</span><br><span class="line">		logger.debug(&quot;JSR-330 &#x27;javax.inject.Named&#x27; annotation found and supported for component scanning&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	catch (ClassNotFoundException ex) &#123;</span><br><span class="line">		// JSR-330 API not available - simply skip.</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你以为这样就完了嘛？如果仅仅是装个x确实完了，被他注解的类会被Spring管理。 但是对于我们来讲是不够滴，应为我们还要定义这个bean的生产过程呀！这才是真正的目的。代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyBeanPostProcessor implements BeanPostProcessor &#123;</span><br><span class="line">	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">		System.out.println(&quot;postProcessAfterInitialization  &quot;+ beanName);</span><br><span class="line">		return bean;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Object postProcessBeforeInitialization(``````Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">		System.out.println(&quot;postProcessBeforeInitialization &quot;+ beanName);</span><br><span class="line">		return bean;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BeanPostProcessor接口作用是：如果我们需要在Spring容器完成Bean的实例化、配置和其他的初始化前后添加一些自己的逻辑处理，我们就可以定义一个或者多个BeanPostProcessor接口的实现，然后注册到容器中。两个方法一个之前<br>一个之后。注册到容器时两个方法都会调，获取的时会调postProcessBeforeInitialization方法。我们可以在这里把bean在定制一番,怎么定制就看个人需求啦不再讲述。听SpringMvc就是采用的这种策略，没去验证过。第一种方法就介绍完了。</p>
+<h3 id="2-扫描包解析注解"><a href="#2-扫描包解析注解" class="headerlink" title="2.扫描包解析注解"></a>2.扫描包解析注解</h3><ol>
+<li>先定义注解代码如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.Documented;</span><br><span class="line">import java.lang.annotation.ElementType;</span><br><span class="line">import java.lang.annotation.Retention;</span><br><span class="line">import java.lang.annotation.RetentionPolicy;</span><br><span class="line">import java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line">@Target(&#123;ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">public @interface Component &#123;</span><br><span class="line">	String value() default &quot;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>扫描 既然用到了Spring那么就让Spring来帮我们扫描代码如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Set;</span><br><span class="line">import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;</span><br><span class="line">import org.springframework.beans.factory.config.BeanDefinitionHolder;</span><br><span class="line">import org.springframework.beans.factory.support.BeanDefinitionRegistry;</span><br><span class="line">import org.springframework.beans.factory.support.GenericBeanDefinition;</span><br><span class="line">import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;</span><br><span class="line">import org.springframework.core.type.filter.AnnotationTypeFilter;</span><br><span class="line"></span><br><span class="line">public final class Scanner extends ClassPathBeanDefinitionScanner &#123;</span><br><span class="line"></span><br><span class="line">	public Scanner(BeanDefinitionRegistry registry) &#123;</span><br><span class="line">		super(registry);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void registerDefaultFilters() &#123;</span><br><span class="line">		this.addIncludeFilter(new AnnotationTypeFilter(Component.class));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Set&lt;BeanDefinitionHolder&gt; doScan(String... basePackages) &#123;</span><br><span class="line">		//super.doScan(basePackages) 会把生成的bean 加入Spring容器</span><br><span class="line">		Set&lt;BeanDefinitionHolder&gt; beanDefinitions = super.doScan(basePackages);</span><br><span class="line">		for (BeanDefinitionHolder holder : beanDefinitions) &#123;</span><br><span class="line">			GenericBeanDefinition definition = (GenericBeanDefinition) holder.getBeanDefinition();</span><br><span class="line">			// beanClassName给FactoryBeanImpl使用，还以再加几个Property</span><br><span class="line">			definition.getPropertyValues().add(&quot;beanClassName&quot;, definition.getBeanClassName()); </span><br><span class="line">			definition.setBeanClass(FactoryBeanImpl.class);</span><br><span class="line">		&#125;</span><br><span class="line">		return beanDefinitions;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) &#123;</span><br><span class="line">		return super.isCandidateComponent(beanDefinition) </span><br><span class="line">					&amp;&amp; (beanDefinition.getMetadata().hasAnnotation(Component.class.getName()));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码就是扫描，解析后得到的BeanDefinitionHolder 然后指定工厂FactoryBeanImpl生产后加入容器 代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.beans.factory.FactoryBean;</span><br><span class="line">import org.springframework.beans.factory.InitializingBean;</span><br><span class="line">import org.springframework.cglib.core.SpringNamingPolicy;</span><br><span class="line">import org.springframework.cglib.proxy.Enhancer;</span><br><span class="line"></span><br><span class="line">public class FactoryBeanImpl&lt;T&gt; implements InitializingBean, FactoryBean&lt;T&gt; &#123;</span><br><span class="line">	private String beanClassName;</span><br><span class="line"> </span><br><span class="line">	public void setBeanClassName(String beanClassName) &#123;</span><br><span class="line">		this.beanClassName = beanClassName;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public T getObject() throws Exception &#123;</span><br><span class="line">		Class innerClass = Class.forName(beanClassName);</span><br><span class="line">		if (innerClass.isInterface()) &#123;//接口使用 jdk代理</span><br><span class="line">			return (T) InvocationHandlerImpl.newInstance(innerClass);</span><br><span class="line">		&#125; else &#123;//类使用 cglib代理</span><br><span class="line">			Enhancer enhancer = new Enhancer();</span><br><span class="line">			enhancer.setSuperclass(innerClass);</span><br><span class="line">			enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);</span><br><span class="line">			enhancer.setCallback(new MethodInterceptorImpl());</span><br><span class="line">			return (T) enhancer.create();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			return Class.forName(beanClassName);</span><br><span class="line">		&#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean isSingleton() &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void afterPropertiesSet() throws Exception &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个属性beanClassName是上面扫描绑定过来的。这里就是生成bean的工厂。getObject是bean的生成方法，代理就略过。代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.InvocationHandler;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.lang.reflect.Proxy;</span><br><span class="line">public class InvocationHandlerImpl implements InvocationHandler &#123;</span><br><span class="line">  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">      System.out.println(&quot;ObjectProxy execute:&quot; + method.getName());</span><br><span class="line">      return method.invoke(proxy, args);</span><br><span class="line">  &#125;</span><br><span class="line">  public static &lt;T&gt; T newInstance(Class&lt;T&gt; innerInterface) &#123;</span><br><span class="line">      ClassLoader classLoader = innerInterface.getClassLoader();</span><br><span class="line">      Class[] interfaces = new Class[] &#123; innerInterface &#125;;</span><br><span class="line">      InvocationHandlerImpl proxy = new InvocationHandlerImpl();</span><br><span class="line">      return (T) Proxy.newProxyInstance(classLoader, interfaces, proxy);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import org.springframework.cglib.proxy.MethodInterceptor;</span><br><span class="line">import org.springframework.cglib.proxy.MethodProxy;</span><br><span class="line"></span><br><span class="line">public class MethodInterceptorImpl implements MethodInterceptor &#123;</span><br><span class="line">	public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable &#123;</span><br><span class="line">		System.out.println(&quot;MethodInterceptorImpl:&quot; + method.getName());</span><br><span class="line">		return methodProxy.invokeSuper(o, objects);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.什么都做了，什么时候扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Scanner(BeanDefinitionRegistry registry) &#123;</span><br><span class="line">    super(registry);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实例化Scanner时需要 BeanDefinitionRegistry该类的作用主要是向注册表中注册 BeanDefinition实例 完成注册的过程。<br>BeanFactoryPostProcessor是在spring容器加载了bean的定义文件之后，在bean实例化之前执行的。<br>ConfigurableListableBeanFactory该类提供解析,修改bean定义,并与初始化单例.<br>在运行的时候传入的是 DefaultListableBeanFactory为 ConfigurableListableBeanFactory子类且实现了 BeanDefinitionRegistry<br>接口。代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.beans.BeansException;</span><br><span class="line">import org.springframework.beans.factory.config.BeanFactoryPostProcessor;</span><br><span class="line">import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;</span><br><span class="line">import org.springframework.beans.factory.support.BeanDefinitionRegistry;</span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.ApplicationContextAware;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">public class BeanFactoryPostProcesserImpl implements BeanFactoryPostProcessor, ApplicationContextAware &#123;</span><br><span class="line">	private ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException &#123;</span><br><span class="line">		this.applicationContext = applicationContext;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException &#123;</span><br><span class="line">		Scanner scanner = new Scanner((BeanDefinitionRegistry) beanFactory);//可以强转</span><br><span class="line">		scanner.setResourceLoader(this.applicationContext);</span><br><span class="line">		scanner.setBeanNameGenerator(new AnnotationBeanNameGenerator());//解析注解得到value值。</span><br><span class="line">		scanner.scan(&quot;com.extend.service&quot;);//可以在xml配置进来 不再演示</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">import java.beans.Introspector;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;</span><br><span class="line">import org.springframework.beans.factory.config.BeanDefinition;</span><br><span class="line">import org.springframework.beans.factory.support.BeanDefinitionRegistry;</span><br><span class="line">import org.springframework.beans.factory.support.BeanNameGenerator;</span><br><span class="line">import org.springframework.core.annotation.AnnotationAttributes;</span><br><span class="line">import org.springframework.core.type.AnnotationMetadata;</span><br><span class="line">import org.springframework.util.ClassUtils;</span><br><span class="line">import org.springframework.util.StringUtils;</span><br><span class="line"></span><br><span class="line">public class AnnotationBeanNameGenerator implements BeanNameGenerator &#123;</span><br><span class="line"></span><br><span class="line">	private static final String COMPONENT_ANNOTATION_CLASSNAME = &quot;com.extend.annotation2.Component&quot;;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) &#123;</span><br><span class="line">		if (definition instanceof AnnotatedBeanDefinition) &#123;</span><br><span class="line">			String beanName = determineBeanNameFromAnnotation((AnnotatedBeanDefinition) definition);</span><br><span class="line">			if (StringUtils.hasText(beanName)) &#123;</span><br><span class="line">				return beanName;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return buildDefaultBeanName(definition, registry);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	protected String determineBeanNameFromAnnotation(AnnotatedBeanDefinition annotatedDef) &#123;</span><br><span class="line">		AnnotationMetadata amd = annotatedDef.getMetadata();</span><br><span class="line">		Set&lt;String&gt; types = amd.getAnnotationTypes();</span><br><span class="line">		String beanName = null;</span><br><span class="line">		for (String type : types) &#123;</span><br><span class="line">			AnnotationAttributes attributes = AnnotationAttributes.fromMap(amd.getAnnotationAttributes(type, false));</span><br><span class="line">			// AnnotationAttributes attributes =</span><br><span class="line">			// AnnotationConfigUtils.attributesFor(amd, type);</span><br><span class="line">			if (isStereotypeWithNameValue(type, amd.getMetaAnnotationTypes(type), attributes)) &#123;</span><br><span class="line">				Object value = attributes.get(&quot;value&quot;);</span><br><span class="line">				if (value instanceof String) &#123;</span><br><span class="line">					String strVal = (String) value;</span><br><span class="line">					if (StringUtils.hasLength(strVal)) &#123;</span><br><span class="line">					  if (beanName != null &amp;&amp; !strVal.equals(beanName)) &#123;</span><br><span class="line">						throw new IllegalStateException(&quot;Stereotype annotations suggest inconsistent &quot;</span><br><span class="line">								+ &quot;component names: &#x27;&quot; + beanName + &quot;&#x27; versus &#x27;&quot; + strVal + &quot;&#x27;&quot;);</span><br><span class="line">						&#125;</span><br><span class="line">						beanName = strVal;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return beanName;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	protected boolean isStereotypeWithNameValue(String annotationType, Set&lt;String&gt; metaAnnotationTypes,</span><br><span class="line">			Map&lt;String, Object&gt; attributes) &#123;</span><br><span class="line"></span><br><span class="line">		boolean isStereotype = annotationType.equals(COMPONENT_ANNOTATION_CLASSNAME)</span><br><span class="line">			|| (metaAnnotationTypes != null &amp;&amp; metaAnnotationTypes.contains(COMPONENT_ANNOTATION_CLASSNAME))</span><br><span class="line">			|| annotationType.equals(&quot;javax.annotation.ManagedBean&quot;) || annotationType.equals(&quot;javax.inject.Named&quot;);</span><br><span class="line"></span><br><span class="line">		return (isStereotype &amp;&amp; attributes != null &amp;&amp; attributes.containsKey(&quot;value&quot;));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	protected String buildDefaultBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) &#123;</span><br><span class="line">		return buildDefaultBeanName(definition);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	protected String buildDefaultBeanName(BeanDefinition definition) &#123;</span><br><span class="line">		String shortClassName = ClassUtils.getShortName(definition.getBeanClassName());</span><br><span class="line">		return Introspector.decapitalize(shortClassName);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是实现过程 下面是测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import com.extend.annotation2.Component;</span><br><span class="line">@Component(&quot;disCaver1&quot;)</span><br><span class="line">public class TestService &#123;</span><br><span class="line">	public String getName() &#123;</span><br><span class="line">		System.err.println(&quot;hello world!&quot;);</span><br><span class="line">		return &quot;hello world!&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(&quot;classpath:spring-mybatis.xml&quot;);</span><br><span class="line">		context.start();</span><br><span class="line">		TestService disCaver1 = (TestService) context.getBean(&quot;disCaver1&quot;);</span><br><span class="line">		TestService disCaver2 = (TestService) context.getBean(TestService.class);</span><br><span class="line">		disCaver1.getName();</span><br><span class="line">		context.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<p>spring-mybatis.xml：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">	&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">		xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</span><br><span class="line">		xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot; xmlns:dubbo=&quot;http://code.alibabatech.com/schema/dubbo&quot; </span><br><span class="line">		xmlns:cache=&quot;http://www.springframework.org/schema/cache&quot;</span><br><span class="line">		xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans    </span><br><span class="line">	           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    </span><br><span class="line">	           http://www.springframework.org/schema/context    </span><br><span class="line">	           http://www.springframework.org/schema/context/spring-context-3.0.xsd    </span><br><span class="line">	           http://www.springframework.org/schema/aop    </span><br><span class="line">	           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd    </span><br><span class="line">	           http://www.springframework.org/schema/tx </span><br><span class="line">	           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd</span><br><span class="line">	           http://code.alibabatech.com/schema/dubbo </span><br><span class="line">			   http://code.alibabatech.com/schema/dubbo/dubbo.xsd&quot;&gt;</span><br><span class="line">			   &lt;bean class=&quot;com.extend.annotation2.BeanFactoryPostProcesserImpl&quot;/&gt;</span><br><span class="line">	&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>结果：<br>MethodInterceptorImpl:getName<br>hello world!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/05/22/Spring%E6%89%A9%E5%B1%95/" data-id="cm3zaz9c20005tgu63va4ehvo" data-title="Spring扩展" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java面试总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/05/17/java%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2017-05-17T09:28:00.000Z" itemprop="datePublished">2017-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/05/17/java%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">JAVA面试总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="关于业务"><a href="#关于业务" class="headerlink" title="关于业务"></a>关于业务</h1><hr>
+<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h3><ol>
+<li>准备1-2个重点项目，简单描述项目内容 &amp; 自己负责的模块，遇到的技术难点 &amp;<br>是如何解决的。常见的技术难点：并发问题、分布式系统一致性问题、接口幂等问题、OOM分析、redis缓存etc.</li>
+<li>自己所负责项目的各项业务的指标。例如，存量数据量级、QPS、团单成交量、公司的营业额之类的也可以关注一下，会被问到。</li>
+<li>注意点：一定要对简历上写的业务非常熟悉。面试官会对某个业务细节内容进行深入询问，也会设置某些场景要求给出解决方案。</li>
+</ol>
+<h1 id="关于技术"><a href="#关于技术" class="headerlink" title="关于技术"></a>关于技术</h1><hr>
+<h3 id="自我介绍-1"><a href="#自我介绍-1" class="headerlink" title="自我介绍"></a>自我介绍</h3><ol>
+<li>自我介绍的时候可以介绍下自己比较熟悉的技术内容，从而引导面试官对自己擅长的技术进行深入提问。（e.g.我JAVA基础扎实，对JVM原理有一定的了解，熟悉Spring,ibatis等开源框架;<br>熟练使用面向对象设计原则，掌握设计模式及应用场景; 熟练使用底层中间件、分布式技术(包括缓存、消息系统等)<br>，并对原理有一定的了解; ）</li>
+</ol>
+<h3 id="被提问过的技术内容总结"><a href="#被提问过的技术内容总结" class="headerlink" title="被提问过的技术内容总结"></a>被提问过的技术内容总结</h3><blockquote>
+<p>**<code>Java语言基础</code>**，各种数据结构(Linklist, ArrayList, HashMap, TreeMap etc) 。其中，hashmap是提问频率最高的，几乎一定会被问到：</p>
+</blockquote>
+<ul>
+<li>Hashmap是基于什么数据结构实现的「数组+链表」</li>
+<li>Hashmap和hashtable的区别是什么「多线程问题，concurrenthashmap」</li>
+<li>Hashmap默认大小是多少？什么时候会resize？</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong><code>多线程相关</code></strong></p>
+</blockquote>
+<p>。主要掌握Executor创建线程池时的各种参数，各种BlockingQueue的区别以及适用场景。参考链接：<a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/java-threadPool">http://www.infoq.com/cn/articles/java-threadPool</a></p>
+<hr>
+<blockquote>
+<p>**<code>SQL优化</code>**主要会问一些跟索引相关的内容：</p>
+</blockquote>
+<ul>
+<li>聚集索引&amp;非聚集索引：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/AK2012/archive/2013/01/04/2844283.html">http://www.cnblogs.com/AK2012/archive/2013/01/04/2844283.html</a></li>
+<li>索引实战，索引设计问题e：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/gprime/article/details/1687930">http://blog.csdn.net/gprime/article/details/1687930</a></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong><code>JVM相关</code></strong>(JVM内存模型;ClassLoder机制;GC场景+机制;JVM编译优化)</p>
+</blockquote>
+<ul>
+<li>参考书：《深入理解Java虚拟机 》</li>
+<li>java类加载器参考链接：<a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/java/j-lo-classloader/">https://www.ibm.com/developerworks/cn/java/j-lo-classloader/</a></li>
+<li>GC参考链接：<a target="_blank" rel="noopener" href="http://blog.csdn.net/z69183787/article/details/51131629">http://blog.csdn.net/z69183787/article/details/51131629</a></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong><code>各种中间件</code></strong></p>
+<ol>
+<li>**<code>RPC服务框架</code>**（同步阻塞&#x2F;同步非阻塞&#x2F;异步非阻塞；BIO；NIO；NIO的4种调用方式、实现方式selector）</li>
+</ol>
+</blockquote>
+<ul>
+<li>点评pigeon资料：<a target="_blank" rel="noopener" href="http://ppt.geekbang.org/slide/show/424">http://ppt.geekbang.org/slide/show/424</a></li>
+<li>主流框架结构：<a target="_blank" rel="noopener" href="https://wiki.sankuai.com/pages/viewpage.action?pageId=725008629">https://wiki.sankuai.com/pages/viewpage.action?pageId=725008629</a></li>
+<li>序列化的方式（PB、Hession、thrift、java serializable序列化对象大小，序列化，反序列化时间的比较）</li>
+<li>Netty是怎么实现RPC的</li>
+</ul>
+<blockquote>
+<ol start="2">
+<li>**<code>消息中间件</code>**：Swallow kafka</li>
+</ol>
+</blockquote>
+<ul>
+<li>如何实现系统解耦；</li>
+<li>如何实现业务操作 和 消息发送的一致性；</li>
+<li>如何解决消息中间件与使用者的强依赖问题；</li>
+<li>JMS消息模型</li>
+</ul>
+<blockquote>
+<ol start="3">
+<li>**<code>KV中间件squirrel</code>**（需要了解redis的知识）</li>
+</ol>
+</blockquote>
+<ul>
+<li>缓存穿透，缓存击穿，缓存雪崩解决方案分析<a target="_blank" rel="noopener" href="http://blog.csdn.net/zeb_perfect/article/details/54135506">http://blog.csdn.net/zeb_perfect/article/details/54135506</a></li>
+<li></li>
+</ul>
+<p>点评的squirrel：<a target="_blank" rel="noopener" href="https://wiki.sankuai.com/pages/viewpage.action?pageId=610280467&preview=/610280467/610280452/Squirrel%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB.pptx">https://wiki.sankuai.com/pages/viewpage.action?pageId=610280467&amp;preview=%2F610280467%2F610280452%2FSquirrel%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB.pptx</a></p>
+<ul>
+<li>redis常见面试题&#96;**：<a target="_blank" rel="noopener" href="http://blog.csdn.net/guchuanyun111/article/details/52064870">http://blog.csdn.net/guchuanyun111/article/details/52064870</a></li>
+</ul>
+<blockquote>
+<ol start="4">
+<li>**<code>zebra</code>**数据库中间件</li>
+</ol>
+</blockquote>
+<ul>
+<li>垂直、水平拆分数据库；</li>
+<li>数据库分布式事务（重点）：ACID、CAP理论、二段式提交，三段式提交一致性Hash，Paxos算法</li>
+<li>数据层访问的流程</li>
+<li>ORM框架之间的比较</li>
+</ul>
+<blockquote>
+<ol start="5">
+<li>**<code>提问低频的一些中间件</code>**：监控平台CAT、HTTP层 SLB、HLB、统一任务调度平台Crane<br>  （需要稍作了解，比如cat监控平台有哪些参数，分别是什么作用；比如CAT是如何实现服务调用链路的监控，阿里是在接口上打注解，用AOP实现的）</li>
+</ol>
+</blockquote>
+<hr>
+<blockquote>
+<p>**<code>Spring相关</code>**：</p>
+</blockquote>
+<ol>
+<li>**<code>AOP实现原理</code>**（JDK动态代理）<br>延伸：JDK动态代理是怎么实现的？（反射http:<br>&#x2F;&#x2F;rejoy.iteye.com&#x2F;blog&#x2F;1627405）、JDK动态代理跟CGlib有什么区别（JDK动态代理只能代理接口）、JDK动态代理跟CGlib的效率哪个比较高？为什么？</li>
+<li><strong><code>IOC原理</code></strong></li>
+</ol>
+<hr>
+<blockquote>
+<p><strong><code>无规律可循的被提问到的内容：</code></strong></p>
+</blockquote>
+<ol>
+<li>**<code>SSO登录原理</code>**：<br>参考链接：<a target="_blank" rel="noopener" href="https://wiki.sankuai.com/pages/viewpage.action?pageId=737929535">https://wiki.sankuai.com/pages/viewpage.action?pageId=737929535</a></li>
+<li><strong><code>权限系统的设计原理</code></strong></li>
+<li><strong><code>你知道哪些设计模式，有哪些是在工作中用到的？如何实现一个简单的单例、Spring多例怎么实现（@Scope注解）</code></strong></li>
+<li><ul>
+<li>*<code>算法题目「参考校招面试，只要基础不差就可以，不用特意准备」（如何实现一个String的字母倒转、多个String模式匹配、信号量是什么，java中是哪个包实现的、汉诺塔问题）</code><br>**</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="最后的面试官的提问"><a href="#最后的面试官的提问" class="headerlink" title="最后的面试官的提问"></a>最后的面试官的提问</h4><blockquote>
+<h6 id="1-你平时关注哪些技术网站（InfoQ、segmentfault、github…）"><a href="#1-你平时关注哪些技术网站（InfoQ、segmentfault、github…）" class="headerlink" title="1.你平时关注哪些技术网站（InfoQ、segmentfault、github…）"></a>1.你平时关注哪些技术网站（InfoQ、segmentfault、github…）</h6><h6 id="2-你对自己未来的职业发展有什么看法"><a href="#2-你对自己未来的职业发展有什么看法" class="headerlink" title="2.你对自己未来的职业发展有什么看法"></a>2.你对自己未来的职业发展有什么看法</h6><h6 id="3-你有什么问题想问我的吗"><a href="#3-你有什么问题想问我的吗" class="headerlink" title="3.你有什么问题想问我的吗"></a>3.你有什么问题想问我的吗</h6></blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/05/17/java%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" data-id="cm3zaz9c3000atgu6dw5feo6e" data-title="JAVA面试总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-spring整合ActiveMQ" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/13/spring%E6%95%B4%E5%90%88ActiveMQ/" class="article-date">
+  <time class="dt-published" datetime="2016-12-13T01:00:00.000Z" itemprop="datePublished">2016-12-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/13/spring%E6%95%B4%E5%90%88ActiveMQ/">spring 整合 ActiveMQ </a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h6 id="spring-整合-ActiveMQ-xml如下："><a href="#spring-整合-ActiveMQ-xml如下：" class="headerlink" title="spring 整合 ActiveMQ xml如下："></a>spring 整合 ActiveMQ xml如下：</h6><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+           http://www.springframework.org/schema/aop   
+           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
+           http://www.springframework.org/schema/tx  
+           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd&quot;
+    default-autowire=&quot;byName&quot; default-lazy-init=&quot;false&quot;&gt;
+
+
+    &lt;!-- 第三方MQ工厂: ConnectionFactory --&gt;
+    &lt;bean id=&quot;targetConnectionFactory&quot; class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;&gt;
+        &lt;!-- ActiveMQ服务地址 --&gt;
+        &lt;property name=&quot;brokerURL&quot; value=&quot;$&#123;activemq.brokerURL&#125;&quot; /&gt;
+        &lt;property name=&quot;userName&quot; value=&quot;$&#123;activemq.userName&#125;&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;password&quot; value=&quot;$&#123;activemq.password&#125;&quot;&gt;&lt;/property&gt; 
+    &lt;/bean&gt;
+    
+    &lt;!-- 
+        ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory
+        可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包
+     --&gt;
+    &lt;bean id=&quot;pooledConnectionFactory&quot; class=&quot;org.apache.activemq.pool.PooledConnectionFactory&quot;&gt;
+        &lt;property name=&quot;connectionFactory&quot; ref=&quot;targetConnectionFactory&quot; /&gt;
+        &lt;property name=&quot;maxConnections&quot; value=&quot;$&#123;activemq.pool.maxConnections&#125;&quot; /&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory --&gt;
+    &lt;bean id=&quot;connectionFactory&quot; class=&quot;org.springframework.jms.connection.SingleConnectionFactory&quot;&gt;
+        &lt;!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory --&gt;
+        &lt;property name=&quot;targetConnectionFactory&quot; ref=&quot;pooledConnectionFactory&quot; /&gt;
+    &lt;/bean&gt;
+    
+    &lt;!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 --&gt;
+    
+    &lt;!-- 队列模板 --&gt;
+    &lt;bean id=&quot;jmsTemplate&quot; class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;  
+        &lt;!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 --&gt;  
+        &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;  
+        &lt;property name=&quot;defaultDestinationName&quot; value=&quot;$&#123;activemq.queueName&#125;&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt; 
+    
+    &lt;!--这个是目的地:mailQueue --&gt;
+    &lt;bean id=&quot;mailQueue&quot; class=&quot;org.apache.activemq.command.ActiveMQQueue&quot;&gt;
+        &lt;constructor-arg&gt;
+            &lt;value&gt;$&#123;activemq.queueName&#125;&lt;/value&gt;
+        &lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 配置自定义监听：MessageListener --&gt;
+    &lt;bean id=&quot;mailQueueMessageListener&quot; class=&quot;bhz.mq.MailQueueMessageListener&quot;&gt;&lt;/bean&gt;
+
+    &lt;!-- 将连接工厂、目标对了、自定义监听注入jms模板 --&gt;
+    &lt;bean id=&quot;sessionAwareListenerContainer&quot; class=&quot;org.springframework.jms.listener.DefaultMessageListenerContainer&quot;&gt;
+        &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;
+        &lt;property name=&quot;destination&quot; ref=&quot;mailQueue&quot; /&gt;
+        &lt;property name=&quot;messageListener&quot; ref=&quot;mailQueueMessageListener&quot; /&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/12/13/spring%E6%95%B4%E5%90%88ActiveMQ/" data-id="cm3zaz9c9001btgu6htozetxl" data-title="spring 整合 ActiveMQ " class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-windows下安装redis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/16/windows%E4%B8%8B%E5%AE%89%E8%A3%85redis/" class="article-date">
+  <time class="dt-published" datetime="2016-11-16T01:00:00.000Z" itemprop="datePublished">2016-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/16/windows%E4%B8%8B%E5%AE%89%E8%A3%85redis/">windows下安装redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="windows-下安装redis步骤："><a href="#windows-下安装redis步骤：" class="headerlink" title="windows 下安装redis步骤："></a>windows 下安装redis步骤：</h1><h5 id="1-点击-redis-选择zip版本，下载并解压"><a href="#1-点击-redis-选择zip版本，下载并解压" class="headerlink" title="1.点击 redis 选择zip版本，下载并解压"></a>1.点击 <a target="_blank" rel="noopener" href="https://github.com/MicrosoftArchive/redis/releases">redis</a> 选择zip版本，下载并解压</h5><h5 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2.修改配置"></a>2.修改配置</h5><ol>
+<li>maxheap 在 redis.windows.conf 找到 # maxheap <bytes> maxheap 1024000000（这是设置最大数据堆的大小）</li>
+<li>requirepass redis.windows.conf 搜索# requirepass foobared 修改密码,去掉‘#’</li>
+<li>port 修改端口 redis.windows.conf 搜索port 6379</li>
+</ol>
+<h5 id="3-运行"><a href="#3-运行" class="headerlink" title="3.运行"></a>3.运行</h5><pre><code>redis-server.exe redis.windows.conf
+</code></pre>
+<h5 id="4-安装成windows服务"><a href="#4-安装成windows服务" class="headerlink" title="4.安装成windows服务"></a>4.安装成windows服务</h5><pre><code>redis-server --service-install redis.windows.conf --loglevel verbose  --service-name Redis  注册为服务（要以管理员权限运行 cmd）
+</code></pre>
+<h5 id="5-图形化工具-下载"><a href="#5-图形化工具-下载" class="headerlink" title="5.图形化工具 下载"></a>5.图形化工具 <a target="_blank" rel="noopener" href="https://redisdesktop.com/download">下载</a></h5>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/11/16/windows%E4%B8%8B%E5%AE%89%E8%A3%85redis/" data-id="cm3zaz9c9001etgu676wjby5x" data-title="windows下安装redis" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-获取spring中的bean" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/10/01/%E8%8E%B7%E5%8F%96spring%E4%B8%AD%E7%9A%84bean/" class="article-date">
+  <time class="dt-published" datetime="2016-10-01T01:00:00.000Z" itemprop="datePublished">2016-10-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/10/01/%E8%8E%B7%E5%8F%96spring%E4%B8%AD%E7%9A%84bean/">获取spring中的bean</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h5 id="有时候在各种情况下，需要注入spring-管理的bean，可以通过-一下3种方式。"><a href="#有时候在各种情况下，需要注入spring-管理的bean，可以通过-一下3种方式。" class="headerlink" title="有时候在各种情况下，需要注入spring 管理的bean，可以通过 一下3种方式。"></a>有时候在各种情况下，需要注入spring 管理的bean，可以通过 一下3种方式。</h5><h6 id="1-通过WebApplicationContextUtils得到得到-ApplicationContext-需要传入ServletContext-上下文"><a href="#1-通过WebApplicationContextUtils得到得到-ApplicationContext-需要传入ServletContext-上下文" class="headerlink" title="1.通过WebApplicationContextUtils得到得到 ApplicationContext ,需要传入ServletContext 上下文"></a>1.通过WebApplicationContextUtils得到得到 ApplicationContext ,需要传入ServletContext 上下文</h6><pre><code> ApplicationContext application=WebApplicationContextUtils.getWebApplicationContext(servletContext);  
+</code></pre>
+<h6 id="2-以静态变量保存-ApplicationContext-不过该类需要在spring中实例化注入ApplicationContext-静态变量不能注入-但是setXX-方式可以注入。"><a href="#2-以静态变量保存-ApplicationContext-不过该类需要在spring中实例化注入ApplicationContext-静态变量不能注入-但是setXX-方式可以注入。" class="headerlink" title="2.以静态变量保存 ApplicationContext 不过该类需要在spring中实例化注入ApplicationContext, 静态变量不能注入 但是setXX 方式可以注入。"></a>2.以静态变量保存 ApplicationContext 不过该类需要在spring中实例化注入ApplicationContext, 静态变量不能注入 但是setXX 方式可以注入。</h6><pre><code>&lt;bean class=&quot;SpringContextHolder&quot;/&gt;
+ 
+import java.util.Map;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class SpringContextHolder implements ApplicationContextAware &#123;
+
+    private static ApplicationContext applicationContext;
+
+    // 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量.
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) &#123;
+        SpringContextHolder.applicationContext = applicationContext;
+    &#125;
+
+    // 取得存储在静态变量中的ApplicationContext.
+    public static ApplicationContext getApplicationContext() &#123;
+        checkApplicationContext();
+        return applicationContext;
+    &#125;
+
+    // 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; T getBean(String name) &#123;
+        checkApplicationContext();
+        return (T) applicationContext.getBean(name);
+    &#125;
+
+    // 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+    // 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+    // 如果有多个Bean符合Class, 取出第一个.
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; T getBean(Class&lt;T&gt; clazz) &#123;
+        checkApplicationContext();
+        @SuppressWarnings(&quot;rawtypes&quot;)
+        Map beanMaps = applicationContext.getBeansOfType(clazz);
+        if (beanMaps != null &amp;&amp; !beanMaps.isEmpty()) &#123;
+            return (T) beanMaps.values().iterator().next();
+        &#125; else &#123;
+            return null;
+        &#125;
+    &#125;
+
+    private static void checkApplicationContext() &#123;
+        if (applicationContext == null) &#123;
+            throw new IllegalStateException(&quot;applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder&quot;);
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<h6 id="3-使用spring提供的工具方法，可以将不受spring-管理的bean-被纳入管理"><a href="#3-使用spring提供的工具方法，可以将不受spring-管理的bean-被纳入管理" class="headerlink" title="3.使用spring提供的工具方法，可以将不受spring 管理的bean 被纳入管理"></a>3.使用spring提供的工具方法，可以将不受spring 管理的bean 被纳入管理</h6><pre><code> SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(x.class);
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/10/01/%E8%8E%B7%E5%8F%96spring%E4%B8%AD%E7%9A%84bean/" data-id="cm3zaz9cc001xtgu6ehl0bmz4" data-title="获取spring中的bean" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bean/" rel="tag">bean</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql事件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/15/mysql%E4%BA%8B%E4%BB%B6/" class="article-date">
+  <time class="dt-published" datetime="2016-08-15T01:00:00.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/15/mysql%E4%BA%8B%E4%BB%B6/">mysql事件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="mysql事件"><a href="#mysql事件" class="headerlink" title="mysql事件"></a>mysql事件</h2><ul>
+<li>事件:  事件（event）是MySQL在相应的时刻调用的过程式数据库对象。一个事件可调用一次，也可周期性的启动，它由一个特定的线程来管理的，也就是所谓的“事件调度器”。<br>事件可以取代定时任务来执行的工作。</li>
+</ul>
+<h2 id="事件的优缺点"><a href="#事件的优缺点" class="headerlink" title="事件的优缺点"></a>事件的优缺点</h2><ul>
+<li>优点：<br>一些对数据定时性操作不再依赖外部程序，而直接使用数据库本身提供的功能。<br>可以实现每秒钟执行一个任务，这在一些对实时性要求较高的环境下就非常实用了。</li>
+<li>缺点：<br>定时触发，不可以调用。</li>
+</ul>
+<p><strong><code>语法</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE EVENT EVENT_NAME<br>ON SCHEDULE EVENT_SCHEDULE<br>[ON COMPLETION [NOT] PRESERVE]<br>[ENABLE | DISABLE]<br>DO<br>BEGIN<br>….;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<p><strong><code>详解</code></strong></p>
+<ol>
+<li>EVENT_NAME：名称最大长度可以是64个字节。名字必须是当前Dateabase中唯一 建议规则：动作名称_（INTO&#x2F;FROM_）表名_TIME</li>
+<li>EVENT_SCHEDULE：有两种设定计划任务的方式<ol>
+<li>AT 时间戳，用来完成单次的计划任务。</li>
+<li>EVERY 时间（单位）的数量时间单位[STARTS 时间戳] [ENDS时间戳]，用来完成重复的计划任 YEAR，MONTH，DAY，HOUR，MINUTE<br>或者SECOND。</li>
+</ol>
+</li>
+<li>ON COMPLETION [NOT] PRESERVE ：PRESERVE 当event到期了,event会被disable,但是该event还是会存在,而not<br>preserve该event会被自动删除掉.</li>
+<li>ENABLE\DISABLE参数Enable和Disable表示设定事件的状态。Enable表示系统将执行这个事件。Disable表示系统不执行该事件。</li>
+<li>BEGIN….END 中可以调用存储过程。</li>
+</ol>
+<p><strong><code>例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE EVENT event_first<br>ON SCHEDULE AT ‘2017-09-05 19:00:57’<br>ON COMPLETION NOT PRESERVE<br>ENABLE<br>DO<br>BEGIN<br>INSERT INTO t_user_tem(id,uid,uname,<code>time</code>) VALUES (NULL,1,NULL,NOW());<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<blockquote>
+<p>DELIMITER $$<br>CREATE EVENT event_first2<br>ON SCHEDULE every 1 minute<br>ON COMPLETION NOT PRESERVE<br>ENABLE<br>DO<br>BEGIN<br>INSERT INTO t_user_tem(id,uid,uname,<code>time</code>) VALUES (NULL,1,NULL,NOW());<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<blockquote>
+<p>DELIMITER $$<br>CREATE EVENT event_first2<br>ON SCHEDULE every 30 SECOND STARTS ‘2017-09-05 19:00:00’ ENDS ‘2017-09-05 19:10:00’<br>ON COMPLETION NOT PRESERVE<br>ENABLE<br>DO<br>BEGIN<br>INSERT INTO t_user_tem(id,uid,uname,<code>time</code>) VALUES (NULL,1,NULL,NOW());<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/15/mysql%E4%BA%8B%E4%BB%B6/" data-id="cm3zaz9c6000ntgu63rl7f1o7" data-title="mysql事件" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql触发器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/14/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/" class="article-date">
+  <time class="dt-published" datetime="2016-08-14T01:00:00.000Z" itemprop="datePublished">2016-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/14/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/">mysql触发器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="mysql触发器"><a href="#mysql触发器" class="headerlink" title="mysql触发器"></a>mysql触发器</h2><ul>
+<li>触发器: 触发器是一种与表操作有关的数据库对象，当触发器所在表上出现指定事件时，将调用该对象，即表的操作事件触发表上的触发器的执行。</li>
+</ul>
+<p><strong><code>语法</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>TRIGGER <TRIGGER Name> BEFORE&#x2F;AFTER INSERT&#x2F;UPDATE&#x2F;DELETE<br>ON <Table Name><br>FOR EACH ROW BEGIN<br>….;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<pre><code>1.	INSERT | UPDATE | DELETE --触发器有执行的时间设置：可以设置为事件发生前或后。
+2.	INSERT | UPDATE | DELETE --同样也能设定触发的事件：它们可以在执行insert、update或delete的过程中触发。
+3.	FOR EACH ROW  每行受影响，触发器都执行，叫行级触发器。
+</code></pre>
+<p><strong><code>例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>TRIGGER tir_first BEFORE DELETE ON t_user<br>FOR EACH ROW BEGIN<br>INSERT INTO t_user_tem(id,uid,uname) VALUES (NULL,OLD.id,OLD.name);<br>END$$<br>DELIMITER;</p>
+</blockquote>
+<p><strong><code>变量详解</code></strong></p>
+<ol>
+<li>DECLARE var_name[,…] type [DEFAULT value] 来定义一局部变量,只能在 BEGIN … END 复合语句中使用，并且应该定义在复合语句的开头</li>
+<li>SET var_name &#x3D; expr [,var_name &#x3D; expr] 采用SET语句对变量赋值。</li>
+<li>NEW 与 OLD和 MS SQL Server 中的 INSERTED 和 DELETED 类似，MySQL中定义了 NEW 和 OLD，用来表示触发器的所在表中，触发了触发器的那一行数据。<br>在 INSERT 型触发器中，NEW 用来表示将要（BEFORE）或已经（AFTER）插入的新数据；<br>在 UPDATE 型触发器中，OLD 用来表示将要或已经被修改的原数据，NEW 用来表示将要或已经修改为的新数据；<br>在 DELETE 型触发器中，OLD 用来表示将要或已经被删除的原数据；<br>使用方法： NEW.columnName （columnName 为相应数据表某一列名）另外，OLD 是只读的，而 NEW 则可以在触发器中使用 SET<br>赋值，这样不会再次触发触发器，造成循环调用。</li>
+</ol>
+<p><strong><code>触发器的执行事物</code></strong><br>InnoDB 数据库会有事务回滚：</p>
+<pre><code>①如果 BEFORE 触发器执行失败，SQL 无法正确执行。
+②SQL 执行失败时，AFTER 型触发器不会触发。
+③AFTER 类型的触发器执行失败，SQL 会回滚
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/14/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/" data-id="cm3zaz9c7000ttgu6c6fl5h73" data-title="mysql触发器" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql视图" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/13/mysql%E8%A7%86%E5%9B%BE/" class="article-date">
+  <time class="dt-published" datetime="2016-08-13T01:00:00.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/13/mysql%E8%A7%86%E5%9B%BE/">mysql视图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="mysql视图"><a href="#mysql视图" class="headerlink" title="mysql视图"></a>mysql视图</h2><ul>
+<li>视图: 视图是一个虚拟表，其内容由查询定义。同真实的表一样，视图包含一系列带有名称的列和行数据。但是，视图并不在数据库中以存储的数据值集形式存在。行和列数据来自由定义视图的查询所引用的表，并且在引用视图时动态生成。</li>
+</ul>
+<p><strong><code>为什么使用视图</code></strong></p>
+<blockquote>
+<p>1、重用sql语句。<br>2、简化复杂的sql操作。在编写查询后，可以很方便的重用他，而不必知道他的基本查询细节。<br>3、使用表的组成部分而不是整个表。<br>4、保护数据。可以给用户授予表的特定部分的访问权限。<br>5、更改数据的格式和表示。视图可返回与底层表的表示与格式不同的数据。</p>
+</blockquote>
+<p><strong><code>规则和限制</code></strong></p>
+<blockquote>
+<p>1、与表一样视图必须唯一命名。（不能给视图取和别的视图或者是表相同的名字）<br>2、对于可以创建的视图个数是没有限制的。<br>3、为了创建视图，必须有足够的权限，这些权限是有数据库管理员授予的。<br>4、视图可以嵌套，即可以利用从其他视图中检索数据的查询来构建一视图。<br>5、ORDER BY可以使用在视图上，但是如果从该视图中检索数据的SELECT中如果也包含ORDER BY 语句，则视图中的ORDER 将会被覆盖。<br>6、视图不能有索引，也不能有关联的触发器或默认值。<br>7、视图可以和表一起使用。例如，编写一条连接视图与表的SELECT语句。<br>8、视图是不允许数据修改的（除了只从一个实表抽出若干列，而且没统计列和groupby，相关没涉及列修改符合表约束，这种视图部分DBMS允许修改）。</p>
+</blockquote>
+<p><strong><code>视图的创建</code></strong></p>
+<blockquote>
+<p>CREATE VIEW view_name AS(<br>SELECT column_name(s)<br>FROM table_name<br>WHERE condition<br>)</p>
+</blockquote>
+<p><strong><code>使用视图</code></strong></p>
+<blockquote>
+<p>1、使用CREATE VIEW来创建视图<br>2、使用SHOW CREATE VIEW viewname，来查看创建视图的语句。<br>3、使用DROP VIEW viewname来删除视图。<br>4、更新视图的时候可以先用DROP 在用CREATE，也可以直接使用CREATE OR REPLACE VIEW<br>。如果要更新的视图不存在，第二种更新的语句将会创建一个视图。如果更新的视图存在，则在第二条更新语句使用后将会替换以前的视图。</p>
+</blockquote>
+<p><strong><code>分析视图</code></strong></p>
+<ol>
+<li><p>首先创建视图：</p>
+</li>
+<li><p>执行: EXPLAIN SELECT * FROM ur WHERE ur.uname&#x3D;’文杰’</p>
+</li>
+<li><p>结果: 看结果发现： ur.uname&#x3D;’文杰’ 使用了全表扫描。<br><img src="/../images/mysql/result1.jpg"></p>
+</li>
+<li><p>在真实表数据上创建索引视图能否使用呢：CREATE INDEX idx_name ON t_user (<code>name</code>);<br>看结果发现： ur.uname&#x3D;’文杰’ 使用了索引。<br><br>总结：查询视图的性能与组成视图的sql直接相关。当你查询视图的时候，数据库会先执行生成视图的语句，再在视图的基础上进行查询。<br>若视图数据列的来源列上建了索引（ur.uname和t_user.name的关系），那么视图也会使用索引。<br><img src="/../images/mysql/result2.jpg"></p>
+</li>
+</ol>
+<hr>
+<h2 id="mysql执行计划分析："><a href="#mysql执行计划分析：" class="headerlink" title="mysql执行计划分析："></a>mysql执行计划分析：</h2><p><img src="/../images/mysql/idx_.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/13/mysql%E8%A7%86%E5%9B%BE/" data-id="cm3zaz9c80015tgu68c9odqb2" data-title="mysql视图" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bean/" rel="tag">bean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rocketmq/" rel="tag">rocketmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aop/" style="font-size: 10px;">aop</a> <a href="/tags/bean/" style="font-size: 10px;">bean</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rocketmq/" style="font-size: 10px;">rocketmq</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">事务</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">分布式事务</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 16.67px;">基础知识</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">定时任务</a> <a href="/tags/%E6%89%A9%E5%B1%95/" style="font-size: 10px;">扩展</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 10px;">整合</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/27/hexo%E4%BD%BF%E7%94%A8/">hexo使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/17/spring%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">spring单元测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/jsonp%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82/">jsonp跨域请求</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/mybatis%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/">mybatis初步使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/ControllerAdvice/">spring mvc advice</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杰<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

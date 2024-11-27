@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>du小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="假如生活欺骗了你，不要悲伤，不要哭泣。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="du小站">
+<meta property="og:url" content="https://wenjies.github.io/page/3/index.html">
+<meta property="og:site_name" content="du小站">
+<meta property="og:description" content="假如生活欺骗了你，不要悲伤，不要哭泣。">
+<meta property="og:locale">
+<meta property="article:author" content="杰">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="du小站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">du小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我们笑着说再见，却深知再见遥遥无期。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wenjies.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mysql存储过程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2016-08-12T01:00:00.000Z" itemprop="datePublished">2016-08-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">mysql存储过程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="存储过程简介"><a href="#存储过程简介" class="headerlink" title="存储过程简介"></a>存储过程简介</h2><ol>
+<li><p>SQL语句需要先编译然后执行，而存储过程（Stored<br>Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。</p>
+</li>
+<li><p>存储过程是可编程的函数，在数据库中创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。</p>
+</li>
+</ol>
+<h2 id="存储过程的优点"><a href="#存储过程的优点" class="headerlink" title="存储过程的优点"></a>存储过程的优点</h2><ol>
+<li><p>增强SQL语言的功能和灵活性：存储过程可以用控制语句编写，有很强的灵活性，可以完成复杂的判断和较复杂的运算。</p>
+</li>
+<li><p>标准组件式编程：存储过程被创建后，可以在程序中被多次调用，而不必重新编写该存储过程的SQL语句。减小程序业务的复杂性，在一定程度上降低了程序的耦合性。</p>
+</li>
+<li></li>
+</ol>
+<p>较快的执行速度：如果某一操作包含大量的Transaction-SQL代码或分别被多次执行，那么存储过程要比批处理的执行速度快很多。因为存储过程是预编译的。在首次运行一个存储过程时查询，优化器对其进行分析优化，并且给出最终被存储在系统表中的执行计划。而批处理的Transaction-SQL语句在每次运行时都要进行编译和优化，速度相对要慢一些。</p>
+<ol start="4">
+<li><p>减少网络流量：针对同一个数据库对象的操作（如查询、修改），如果这一操作所涉及的Transaction-SQL语句被组织进存储过程，那么当在客户计算机上调用该存储过程时，网络中传送的只是该调用语句，从而大大减少网络流量并降低了网络负载。</p>
+</li>
+<li><p>作为一种安全机制来充分利用：通过对执行某一存储过程的权限进行限制，能够实现对相应的数据的访问权限的限制，避免了非授权用户对数据的访问，保证了数据的安全。<br>不同的排序算法性质有所不同，衡量算法的效率，通常是用资源，例如<code>CPU</code>(时间)占用、内存占用、硬盘占用和网络占用。当讨论大<code>O</code><br>表示法时，一般考虑的是<code>CPU</code>占用。</p>
+</li>
+</ol>
+<h2 id="MySQL存储过程的"><a href="#MySQL存储过程的" class="headerlink" title="MySQL存储过程的"></a>MySQL存储过程的</h2><p><strong><code>语法</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型[,[IN|OUT|INOUT] 参数名 数据类型…]]) [特性 ...] 过程体
+DELIMITER ;
+</code></pre>
+<p><strong><code>分隔符</code></strong></p>
+<blockquote>
+<p>所以要事先用“DELIMITER $$”声明当前段分隔符，让编译器把两个”$$”<br>之间的内容当做存储过程的代码，不会执行这些代码；“DELIMITER;”的意为把分隔符还原。BEGIN …<br>END之间是我们要编写的部分。MySQL默认以”;”为分隔符，如果没有声明分割符，则编译器会把存储过程当成SQL语句进行处理，因此编译过程会报错。</p>
+</blockquote>
+<p><strong><code>参数</code></strong></p>
+<blockquote>
+<p>存储过程根据需要可能会有输入、输出、输入输出参数，如果有多个参数用”,”<br>分割开。MySQL存储过程的参数用在存储过程的定义，共有三种参数类型,IN,OUT,INOUT:</p>
+</blockquote>
+<ul>
+<li>IN参数的值必须在调用存储过程时指定，在存储过程中修改该参数的值不能被返回，为默认值</li>
+<li>OUT:该值可在存储过程内部被改变，并可返回</li>
+<li>INOUT:调用时指定，并且可被改变和返回</li>
+</ul>
+<p><strong><code>过程体</code></strong></p>
+<blockquote>
+<p>过程体的开始与结束使用BEGIN与END进行标识。</p>
+</blockquote>
+<p><strong><code>IN参数例子</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE
+    PROCEDURE p_in(IN parm_in INT)
+    BEGIN
+        SELECT parm_in;#若注掉 结果：5
+        SET parm_in=5;
+        SELECT parm_in;
+    END$$
+DELIMITER ;
+</code></pre>
+<p>调用<br>SET @p_in&#x3D;1;<br>CALL p_in(@p_in);<br>SELECT @p_in;<br>结果：5</p>
+<p><strong><code>OUT参数例子</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE
+    PROCEDURE p_out(IN parm_out INT)
+    BEGIN
+    SELECT parm_out;#若注掉 结果：5
+    SET parm_out=5;
+    SELECT parm_out;
+    END$$
+DELIMITER ;
+</code></pre>
+<p>调用<br>SET @p_out&#x3D;1;<br>CALL p_out(@p_out);<br>SELECT @p_out;<br>结果：1</p>
+<p><strong><code>INOUT参数例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>PROCEDURE p_in_out(IN parm_in_out INT)<br>BEGIN<br>SELECT parm_in_out; #若注掉 结果：5<br>SET parm_in_out&#x3D;5;<br>SELECT parm_in_out;<br>END$$<br>DELIMITER ;<br>调用<br>SET @p_in_out&#x3D;1;<br>CALL p_in_out(@p_in_out);<br>SELECT @p_in_out;<br>结果：1</p>
+</blockquote>
+<p><strong><code>动态拼接sql例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS dsql $$<br>CREATE PROCEDURE dsql(IN parameter INT,IN name1 VARCHAR(64))<br>BEGIN<br>SET @sql1&#x3D;’SELECT * FROM t_user u WHERE 1&#x3D;1’;<br>IF parameter IS NOT NULL THEN<br>SET @sql1&#x3D; CONCAT(@sql1,’ and u.id &#x3D; ‘,parameter);<br>END IF ;<br>IF (name1 IS NOT NULL AND name1!&#x3D;’’) THEN<br>SET @sql1&#x3D; CONCAT(@sql1,’ and u.name LIKE&#39;%’,name1,’%&#39;‘);<br>END IF ;<br>PREPARE stmt FROM @sql1;<br>EXECUTE stmt;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<p><strong><code>实际例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS ckm $$<br>CREATE<br>PROCEDURE ckm(IN t1 INT)<br>BEGIN<br>DECLARE u_time TIMESTAMP;<br>SELECT t.update_time INTO u_time FROM tx_msg_task t ;<br>UPDATE tx_msg_task SET update_time&#x3D;NOW();<br>DELETE uk FROM tx_msg_uk uk INNER JOIN tx_msg_hc h ON uk.msg_key&#x3D;h.msg_key;</p>
+</blockquote>
+<pre><code>    PREPARE sql1 FROM &#39;SELECT * FROM tx_msg_uk u  WHERE DATE_SUB(NOW(),INTERVAL ? MINUTE) &gt;=u.update_time&#39;;
+    SET @a = t1;
+    EXECUTE sql1 USING @a;#多个可以，分割
+    DEALLOCATE PREPARE sql1;#清理资源
+    END$$
+DELIMITER ; 
+</code></pre>
+<h2 id="MySQL存储过程的调用"><a href="#MySQL存储过程的调用" class="headerlink" title="MySQL存储过程的调用"></a>MySQL存储过程的调用</h2><pre><code>用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
+</code></pre>
+<h2 id="MySQL存储过程的查询"><a href="#MySQL存储过程的查询" class="headerlink" title="MySQL存储过程的查询"></a>MySQL存储过程的查询</h2><pre><code>SELECT name FROM mysql.proc WHERE db=&#39;数据库名&#39;;
+SELECT routine_name FROM information_schema.routines WHERE routine_schema=&#39;数据库名&#39;;
+SHOW PROCEDURE STATUS WHERE db=&#39;数据库名&#39;;
+</code></pre>
+<h2 id="MySQL存储过程的删除"><a href="#MySQL存储过程的删除" class="headerlink" title="MySQL存储过程的删除"></a>MySQL存储过程的删除</h2><pre><code>DROP PROCEDURE [过程1[,过程2…]]
+从MySQL的表格中删除一个或多个存储过程。
+</code></pre>
+<h2 id="存储程序中的变量"><a href="#存储程序中的变量" class="headerlink" title="存储程序中的变量"></a>存储程序中的变量</h2><ol>
+<li>DECLARE局部变量 DECLARE var_name[,…] type [DEFAULT value]<br><br>这个语句被用来声明局部变量。 要给变量提供一个默认值，请包含一个DEFAULT子句。值可以被指定为一个表达式，不需要为一个常数。如果没有DEFAULT子句，初始值为NULL。<br>局部变量的作用范围在它被声明的BEGIN … END块内。它可以被用在嵌套的块中，除了那些用相同名字声明变量的块。</li>
+<li>变量SET语句 SET var_name &#x3D; expr [, var_name &#x3D; expr]<br><br>在存储程序中的SET语句是一般SET语句的扩展版本。被参考变量可能是子程序内声明的变量，或者是全局服务器变量。<br>在存储程序中的SET语句作为预先存在的SET语法的一部分来实现。这允许SET a&#x3D;x, b&#x3D;y,<br>…这样的扩展语法。其中不同的变量类型（局域声明变量及全局和集体变量）可以被混合起来。这也允许把局部变量和一些只对系统变量有意义的选项合并起来。</li>
+<li>SELECT … INTO<br><br>SELECT col_name[,…] INTO var_name[,…] table_expr这个SELECT语法把选定的列直接存储到变量。因此，只有单一的行可以被取回。<br>SELECT id,data INTO x,y FROM test.t1 LIMIT 1;</li>
+</ol>
+<p>列子：</p>
+<pre><code>SELECT &#39;Hello World&#39; INTO @a;
+SELECT @a;
+
+SET @b=&#39;Hello World&#39;;
+SELECT @b;
+
+SET @c=1+2+3;
+SELECT @c; 
+
+#在存储过程中使用用户变量
+CREATE PROCEDURE sayHi() SELECT CONCAT(@hi,&#39;...&#39;);
+SET @hi=&#39;hi&#39;;
+CALL sayHi(); 
+#在存储过程间传递全局范围的用户变量
+CREATE PROCEDURE tp1() SET @param=&#39;p1&#39;;
+CREATE PROCEDURE tp2() SELECT CONCAT(&#39;param... &#39;,@param);
+CALL tp1();
+CALL tp2(); 
+</code></pre>
+<h2 id="MySQL存储过程的控制语句"><a href="#MySQL存储过程的控制语句" class="headerlink" title="MySQL存储过程的控制语句"></a>MySQL存储过程的控制语句</h2><ol>
+<li>变量作用域: 内部变量在其作用域范围内享有更高的优先权，当执行到end时，内部变量消失，不再可见了，在存储<br>过程外再也找不到这个内部变量，但是可以通过out参数或者将其值指派给会话变量来保存其值。</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS <code>proc</code>$$<br>CREATE PROCEDURE proc()<br>BEGIN<br>DECLARE x1 VARCHAR(5) DEFAULT ‘outer’;<br>BEGIN<br>DECLARE x1 VARCHAR(5) DEFAULT ‘inner’;<br>SELECT x1;<br>END;<br>SELECT x1;<br>END$$<br>DELIMITER ;<br>#调用<br>CALL proc();<br>结果：inner</p>
+</blockquote>
+<ol start="2">
+<li>条件语句 IF-THEN-ELSE</li>
+</ol>
+<blockquote>
+<p>DROP PROCEDURE IF EXISTS proc3 ;<br>DELIMITER $$<br>CREATE PROCEDURE proc3(IN parameter INT)<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;parameter+1;<br>IF var&#x3D;0 THEN<br>INSERT INTO t VALUES (17);<br>END IF ;<br>IF parameter&#x3D;0 THEN<br>UPDATE t SET s1&#x3D;s1+1;<br>ELSE<br>UPDATE t SET s1&#x3D;s1+2;<br>END IF ;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="3">
+<li>CASE-WHEN-THEN-ELSE语句</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc4 (IN parameter INT)<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;parameter+1;<br>CASE var<br>WHEN 0 THEN<br>INSERT INTO t VALUES (17);<br>WHEN 1 THEN<br>INSERT INTO t VALUES (18);<br>ELSE<br>INSERT INTO t VALUES (19);<br>END CASE ;<br>END$$<br>DELIMITER;</p>
+</blockquote>
+<ol start="4">
+<li>循环语句 WHILE-DO…END-WHILE</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc5()<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;0;<br>WHILE var&lt;6 DO<br>INSERT INTO t VALUES (var);<br>SET var&#x3D;var+1;<br>END WHILE ;<br>END$$<br>DELIMITER;</p>
+</blockquote>
+<ol start="5">
+<li>REPEAT…END REPEAT 此语句的特点是执行操作后检查结果</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc6 ()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>REPEAT<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>UNTIL v&gt;&#x3D;5<br>END REPEAT;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="6">
+<li>LOOP…END LOOP</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc7 ()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>LOOP_LABLE:LOOP<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>IF v &gt;&#x3D;5 THEN<br>LEAVE LOOP_LABLE;<br>END IF;<br>END LOOP;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="7">
+<li><p>LABLES标号:标号可以用在begin repeat while 或者loop 语句前，语句标号只能在合法的语句前面使用。可以跳出循环，使运行指令达到复合语句的最后一步。</p>
+</li>
+<li><p>ITERATE迭代通过引用复合语句的标号,来从新开始复合语句</p>
+</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc8()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>LOOP_LABLE:LOOP<br>IF v&#x3D;3 THEN<br>SET v&#x3D;v+1;<br>ITERATE LOOP_LABLE;<br>END IF;<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>IF v&gt;&#x3D;5 THEN<br>LEAVE LOOP_LABLE;<br>END IF;<br>END LOOP;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<h2 id="MySQL存储过程的基本函数"><a href="#MySQL存储过程的基本函数" class="headerlink" title="MySQL存储过程的基本函数"></a>MySQL存储过程的基本函数</h2><ol>
+<li><p>字符串类</p>
+<blockquote>
+<p>CHARSET(str) &#x2F;&#x2F;返回字串字符集<br>CONCAT (string2 [,… ]) &#x2F;&#x2F;连接字串<br>INSTR (string ,substring ) &#x2F;&#x2F;返回substring首次在string中出现的位置,不存在返回0<br>LCASE (string2 ) &#x2F;&#x2F;转换成小写<br>LEFT (string2 ,length ) &#x2F;&#x2F;从string2中的左边起取length个字符<br>LENGTH (string ) &#x2F;&#x2F;string长度<br>LOAD_FILE (file_name ) &#x2F;&#x2F;从文件读取内容<br>LOCATE (substring , string [,start_position ] ) 同INSTR,但可指定开始位置<br>LPAD (string2 ,length ,pad ) &#x2F;&#x2F;重复用pad加在string开头,直到字串长度为length<br>LTRIM (string2 ) &#x2F;&#x2F;去除前端空格<br>REPEAT (string2 ,count ) &#x2F;&#x2F;重复count次<br>REPLACE (str ,search_str ,replace_str ) &#x2F;&#x2F;在str中用replace_str替换search_str<br>RPAD (string2 ,length ,pad) &#x2F;&#x2F;在str后用pad补充,直到长度为length<br>RTRIM (string2 ) &#x2F;&#x2F;去除后端空格<br>STRCMP (string1 ,string2 ) &#x2F;&#x2F;逐字符比较两字串大小,<br>SUBSTRING (str , position [,length ]) &#x2F;&#x2F;从str的position开始,取length个字符,<br>TRIM([[BOTH|LEADING|TRAILING] [padding] FROM]string2) &#x2F;&#x2F;去除指定位置的指定字符<br>UCASE (string2 ) &#x2F;&#x2F;转换成大写<br>RIGHT(string2,length) &#x2F;&#x2F;取string2最后length个字符<br>SPACE(count) &#x2F;&#x2F;生成count个空格<br>注：mysql中处理字符串时，默认第一个字符下标为1，即参数position必须大于等于1</p>
+</blockquote>
+</li>
+<li><p>数学类</p>
+<blockquote>
+<p>ABS (number2 ) &#x2F;&#x2F;绝对值<br>BIN (decimal_number ) &#x2F;&#x2F;十进制转二进制<br>CEILING (number2 ) &#x2F;&#x2F;向上取整<br>CONV(number2,from_base,to_base) &#x2F;&#x2F;进制转换<br>FLOOR (number2 ) &#x2F;&#x2F;向下取整<br>FORMAT (number,decimal_places ) &#x2F;&#x2F;保留小数位数<br>HEX (DecimalNumber ) &#x2F;&#x2F;转十六进制<br>注：HEX()中可传入字符串，则返回其ASC-11码，如HEX(‘DEF’)返回4142143<br>也可以传入十进制整数，返回其十六进制编码，如HEX(25)返回19<br>LEAST (number , number2 [,..]) &#x2F;&#x2F;求最小值<br>MOD (numerator ,denominator ) &#x2F;&#x2F;求余<br>POWER (number ,power ) &#x2F;&#x2F;求指数<br>RAND([seed]) &#x2F;&#x2F;随机数<br>ROUND (number [,decimals ]) &#x2F;&#x2F;四舍五入,decimals为小数位数] 注：返回类型并非均为整数，如：<br>SIGN (number2 ) &#x2F;&#x2F; 正数返回1，负数返回-1<br>MINUTE(datetime) &#x2F;&#x2F;分返回符号,正负或0<br>SQRT(number2) &#x2F;&#x2F;开平方</p>
+</blockquote>
+</li>
+<li><p>日期时间类</p>
+<blockquote>
+<p>ADDTIME (date2 ,time_interval ) &#x2F;&#x2F;将time_interval加到date2<br>CONVERT_TZ (datetime2 ,fromTZ ,toTZ ) &#x2F;&#x2F;转换时区<br>CURRENT_DATE ( ) &#x2F;&#x2F;当前日期<br>CURRENT_TIME ( ) &#x2F;&#x2F;当前时间<br>CURRENT_TIMESTAMP ( ) &#x2F;&#x2F;当前时间戳<br>DATE (datetime ) &#x2F;&#x2F;返回datetime的日期部分<br>DATE_ADD (date2 , INTERVAL d_value d_type ) &#x2F;&#x2F;在date2中加上日期或时间<br>DATE_FORMAT (datetime ,FormatCodes ) &#x2F;&#x2F;使用formatcodes格式显示datetime<br>DATE_SUB (date2 , INTERVAL d_value d_type ) &#x2F;&#x2F;在date2上减去一个时间<br>DATEDIFF (date1 ,date2 ) &#x2F;&#x2F;两个日期差<br>DAY (date ) &#x2F;&#x2F;返回日期的天<br>DAYNAME (date ) &#x2F;&#x2F;英文星期<br>DAYOFWEEK (date ) &#x2F;&#x2F;星期(1-7) ,1为星期天<br>DAYOFYEAR (date ) &#x2F;&#x2F;一年中的第几天<br>EXTRACT (interval_name FROM date ) &#x2F;&#x2F;从date中提取日期的指定部分<br>MAKEDATE (year ,day ) &#x2F;&#x2F;给出年及年中的第几天,生成日期串<br>MAKETIME (hour ,minute ,second ) &#x2F;&#x2F;生成时间串<br>MONTHNAME (date ) &#x2F;&#x2F;英文月份名<br>NOW ( ) &#x2F;&#x2F;当前时间<br>SEC_TO_TIME (seconds ) &#x2F;&#x2F;秒数转成时间<br>STR_TO_DATE (string ,format ) &#x2F;&#x2F;字串转成时间,以format格式显示<br>TIMEDIFF (datetime1 ,datetime2 ) &#x2F;&#x2F;两个时间差<br>TIME_TO_SEC (time ) &#x2F;&#x2F;时间转秒数]<br>WEEK (date_time [,start_of_week ]) &#x2F;&#x2F;第几周<br>YEAR (datetime ) &#x2F;&#x2F;年份<br>DAYOFMONTH(datetime) &#x2F;&#x2F;月的第几天<br>HOUR(datetime) &#x2F;&#x2F;小时<br>LAST_DAY(date) &#x2F;&#x2F;date的月的最后日期<br>MICROSECOND(datetime) &#x2F;&#x2F;微秒<br>MONTH(datetime) &#x2F;&#x2F;月</p>
+</blockquote>
+</li>
+</ol>
+<!--http://www.cnblogs.com/mark-chan/p/5384139.html-->
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><pre><code>单行：--或 #
+多行：/*  */ 
+</code></pre>
+<h2 id="mybatis调用存储过程"><a href="#mybatis调用存储过程" class="headerlink" title="mybatis调用存储过程"></a>mybatis调用存储过程</h2><pre><code>&lt;select id=&quot;proFindUser&quot; resultMap=&quot;BaseResultMap&quot; statementType=&quot;CALLABLE&quot;&gt;
+    &#123;
+        CALL find_user(#&#123;uid,mode=IN,jdbcType=BIGINT&#125;,#&#123;name,mode=IN,jdbcType=VARCHAR&#125;)
+    &#125;
+&lt;/select&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" data-id="cm3zaz9c6000ltgu6cdqk7y1i" data-title="mysql存储过程" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql自定义函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/11/mysql%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2016-08-11T01:00:00.000Z" itemprop="datePublished">2016-08-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/11/mysql%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">mysql自定义函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h2><ul>
+<li>自定义函数:  自定义函数 (user-defined function UDF)就是用一个象ABS() 或 CONCAT()<br>这样的固有（内建）函数一样作用的新函数去扩展MySQL。所以UDF是对MySQL功能的一个扩展</li>
+</ul>
+<p><strong><code>语法</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>FUNCTION FUNCTION_NAME(PARAM TYPE,[PARAM TYPE,…])<br>RETURNS TYPE<br>BEGIN<br>………..;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<hr>
+<p><strong><code>详解</code></strong></p>
+<ol>
+<li>FUNCTION_NAME：名字必须是当前Dateabase中唯一</li>
+<li>PARAM：参数名</li>
+<li>PARAM TYPE：TYPE是参数类型，如 VARCHAR</li>
+<li>RETURNS TYPE：返回类型，如 VARCHAR</li>
+</ol>
+<p><strong><code>变量和控制流程</code></strong></p>
+<ol>
+<li>mysql的变量设置，流程控制。在**<code>存储过程</code><strong>、</strong><code>函数</code><strong>、</strong><code>事件</code><strong>、</strong><code>触发器</code>**<br>中的脚本规则都是一样的，可以参考：<a href="/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" title="mysql存储过程">mysql存储过程</a></li>
+</ol>
+<hr>
+<p><strong><code>例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>FUNCTION func(str VARCHAR(10))<br>RETURNS VARCHAR(100)<br>BEGIN<br>RETURN CONCAT(str,’, hi’);<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<hr>
+<p><strong><code>删除</code></strong></p>
+<blockquote>
+<p>DROP FUNCTION FUNCTION_NAME;</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/11/mysql%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" data-id="cm3zaz9c8000ztgu64mke1hth" data-title="mysql自定义函数" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql的sql优化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/03/mysql%E7%9A%84sql%E4%BC%98%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2016-08-03T01:00:00.000Z" itemprop="datePublished">2016-08-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/03/mysql%E7%9A%84sql%E4%BC%98%E5%8C%96/">mysql的sql优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="单值索引和复合索引的区别"><a href="#单值索引和复合索引的区别" class="headerlink" title="单值索引和复合索引的区别"></a>单值索引和复合索引的区别</h2><ol>
+<li>首先来看没有索引的情况：可以看出 type 为 all 是全表扫描性能不高，优化就是建立索引。</li>
+</ol>
+<blockquote>
+<p>EXPLAIN SELECT address,<code>name</code> FROM t_user u WHERE u.address&#x3D;’成都’ AND u.name&#x3D;’haha’</p>
+</blockquote>
+<pre><code>![](../images/mysql/y_h_1.jpg)
+</code></pre>
+<hr>
+<ol start="2">
+<li>来看创建两个单值索引的情况：看到possible_keys为 idx_a,idx_n 但是key为idx_a说明只用了一个索引另一个索引没有使用（mysql会自动使用最优的索引）</li>
+</ol>
+<blockquote>
+<p>CREATE INDEX idx_a ON t_user(address);<br>CREATE INDEX idx_n ON t_user(<code>name</code>);<br>EXPLAIN SELECT address,<code>name</code> FROM t_user u WHERE u.address&#x3D;’成都’ AND u.name&#x3D;’haha’</p>
+</blockquote>
+<pre><code>![](../images/mysql/y_h_2.jpg)
+</code></pre>
+<hr>
+<ol start="3">
+<li>来看创建一个复合索引的情况：key为idx_a_n说明用了索引,ref为 const,const 说名这个复合索引对这两个字段都起作用。Extra中有Using<br>index（覆盖索引）sql性能很好。</li>
+</ol>
+<blockquote>
+<p>CREATE INDEX idx_a_n ON t_user(address,<code>name</code>);<br>EXPLAIN SELECT address,<code>name</code> FROM t_user u WHERE u.address&#x3D;’成都’ AND u.name&#x3D;’haha’</p>
+</blockquote>
+<pre><code>![](../images/mysql/y_h_3.jpg)
+</code></pre>
+<hr>
+<h2 id="join连接索引优化"><a href="#join连接索引优化" class="headerlink" title="join连接索引优化"></a>join连接索引优化</h2><ol>
+<li>left join使用索引，索引应建立在右边。</li>
+</ol>
+<blockquote>
+<p>分析“FROM t_user u LEFT JOIN t_user_role ur ON u.id&#x3D;ur.user_id LEFT JOIN t_role r ON ur.role_id &#x3D;r.id”索引该如何建立.<br>1、“t_user u LEFT JOIN t_user_role” 所以“u.id&#x3D;ur.user_id”中user_id应建索引<br>2、“LEFT JOIN t_role”所以“ur.role_id &#x3D;r.id”中id应建索引。因为id为主键所以本身就是主键索引。</p>
+</blockquote>
+<pre><code>![](../images/mysql/y_h_5.jpg)
+</code></pre>
+<hr>
+<ol start="2">
+<li>RIGHT join使用索引，索引应建立在左边。</li>
+</ol>
+<blockquote>
+<p>同理分析“FROM t_user u RIGHT JOIN t_user_role ur ON u.id&#x3D;ur.user_id RIGHT JOIN t_role r ON ur.role_id &#x3D;r.id”索引该如何建立.<br>1、“RIGHT JOIN t_user_role ur” 所以“ u.id&#x3D;ur.user_id”中id应建索引，因为id为主键所以本身就是主键索引。<br>2、“RIGHT JOIN t_role r”所以“ur.role_id &#x3D;r.id”中role_id应建索引。</p>
+</blockquote>
+<pre><code>![](../images/mysql/y_h_6.jpg)
+</code></pre>
+<hr>
+<h2 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h2><h2 id="索引失效的大致情况如下1、如index-a-b-c-whereb-5-and-c-6-b-c不会使用索引-因为缺少a。3、如index-a-b-c-where-a-1-and-b-5-and-c-6-那么a-b会用到索引，c不会使用索引-7、可以使用覆盖索引的方式解决：like’-’索引失效。9、可以使用-union-带替代-or"><a href="#索引失效的大致情况如下1、如index-a-b-c-whereb-5-and-c-6-b-c不会使用索引-因为缺少a。3、如index-a-b-c-where-a-1-and-b-5-and-c-6-那么a-b会用到索引，c不会使用索引-7、可以使用覆盖索引的方式解决：like’-’索引失效。9、可以使用-union-带替代-or" class="headerlink" title="索引失效的大致情况如下1、如index(a,b,c)&#x3D;&gt; whereb&#x3D;5 and c&#x3D;6 b,c不会使用索引.因为缺少a。3、如index(a,b,c)&#x3D;&gt; where a&#x3D;1 and b&gt;5 and c&#x3D;6 那么a,b会用到索引，c不会使用索引.7、可以使用覆盖索引的方式解决：like’%..%’索引失效。9、可以使用 union 带替代 or
+ "></a><strong><code>索引失效的大致情况如下</code></strong><br><img src="/../images/mysql/index_lose.png"><br>1、如index(a,b,c)&#x3D;&gt; whereb&#x3D;5 and c&#x3D;6 b,c不会使用索引.因为缺少a。<br/><br>3、如index(a,b,c)&#x3D;&gt; where a&#x3D;1 and b&gt;5 and c&#x3D;6 那么a,b会用到索引，c不会使用索引.<br/><br>7、可以使用覆盖索引的方式解决：like’%..%’索引失效。<br/><br>9、可以使用 union 带替代 or<br/>
+ </h2><h2 id="index列子分析"><a href="#index列子分析" class="headerlink" title="index列子分析"></a>index列子分析</h2><p>index(c1,c2,c3,c4):order by</p>
+<blockquote>
+<p>where c1&gt;50 order by c2 出现:filesort。<br>where 1&#x3D;1 order by c1 asc,c2 desc 出现:filesort。<br>where 1&#x3D;1 order by c1 asc,c2 desc 出现:filesort。<br>where c1&#x3D;”c1” and c5&#x3D;’c5’ order by c3,c2 出现:filesort。<br>where c1&#x3D;”c1” and c5&#x3D;’c5’ order by c2,c3 不出现:filesort。<br>where c1&#x3D;”c1” and c5&#x3D;’c5’ and c2&#x3D;’c2’ order by c3,c2 不出现:filesort。</p>
+</blockquote>
+<p>index(c1,c2,c3,c4):group by</p>
+<blockquote>
+<p>where c1&#x3D;”c1” and c4&#x3D;’c4’ group by c2,c3 不出现:filesort、temp<br>where c1&#x3D;”c1” and c4&#x3D;’c4’ group by c3,c2 出现:filesort、temp。<br>where c1&#x3D;”c1” and c4&#x3D;’c4’ and c2&#x3D;’c2’ group by c2,c3 不出现:filesort、temp。</p>
+</blockquote>
+<h2 id="group-by-分组之前基本需要排序，可能会有临时表产生很耗性能。"><a href="#group-by-分组之前基本需要排序，可能会有临时表产生很耗性能。" class="headerlink" title="group by:分组之前基本需要排序，可能会有临时表产生很耗性能。
+ "></a>group by:分组之前基本需要排序，可能会有临时表产生很耗性能。<br><img src="/../images/mysql/y_h_8.jpg"><br><img src="/../images/mysql/y_h_4.jpg">
+ </h2><h2 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a>小表驱动大表</h2><p><img src="/../images/mysql/y_h_10.jpg"></p>
+<pre><code>exists不一定性能比in高，exists是in的一个变种替代。
+</code></pre>
+<hr>
+<h2 id="慢查询开启及分析"><a href="#慢查询开启及分析" class="headerlink" title="慢查询开启及分析"></a>慢查询开启及分析</h2><p><img src="/../images/mysql/sql_slow.jpg"></p>
+<h2 id="profile"><a href="#profile" class="headerlink" title="profile"></a>profile</h2><blockquote>
+<p>SHOW VARIABLES LIKE’profiling’;<br>SET profiling&#x3D;ON;<br>SHOW PROFILES;<br>SHOW PROFILE cpu,block io FOR QUERY Query_ID;或将 cpu,block io 改为 all</p>
+</blockquote>
+<h2 id="若：Status中出现以下4个中一个必须优化。"><a href="#若：Status中出现以下4个中一个必须优化。" class="headerlink" title="若：Status中出现以下4个中一个必须优化。
+ "></a>若：Status中出现以下4个中一个必须优化。<br><img src="/../images/mysql/y_h_7.jpg">
+ </h2><h2 id="全局查询日志"><a href="#全局查询日志" class="headerlink" title="全局查询日志"></a>全局查询日志</h2><blockquote>
+<p>SET GLOBAL general_log&#x3D;1;#0为关闭 1为开启<br>SET GLOBAL log_output&#x3D;’Table’;</p>
+</blockquote>
+<p>执行：SELECT * FROM mysql.general_log; 将看到执行过的sql信息。<br><br>sql优化过程步骤：<br><img src="/../images/mysql/y_h_9.jpg"></p>
+<h2 id="Mysql的锁"><a href="#Mysql的锁" class="headerlink" title="Mysql的锁"></a>Mysql的锁</h2><p><img src="/../images/mysql/y_h_11.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/03/mysql%E7%9A%84sql%E4%BC%98%E5%8C%96/" data-id="cm3zaz9c7000wtgu60poz6tww" data-title="mysql的sql优化" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-join的7种方式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/02/join%E7%9A%847%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2016-08-02T01:00:00.000Z" itemprop="datePublished">2016-08-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/02/join%E7%9A%847%E7%A7%8D%E6%96%B9%E5%BC%8F/">join的7种方式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="SQL-JOIN的7种方式"><a href="#SQL-JOIN的7种方式" class="headerlink" title="SQL JOIN的7种方式"></a>SQL JOIN的7种方式</h1><hr>
+<h3 id="JOIN在查询时用的非常频繁"><a href="#JOIN在查询时用的非常频繁" class="headerlink" title="JOIN在查询时用的非常频繁"></a>JOIN在查询时用的非常频繁</h3><ol>
+<li>常用join方式 <img src="/../images/mysql/7-join.png"></li>
+</ol>
+<h3 id="left-JOIN的的后面能不能带条件"><a href="#left-JOIN的的后面能不能带条件" class="headerlink" title="left JOIN的的后面能不能带条件"></a>left JOIN的的后面能不能带条件</h3><ol>
+<li>从结果的情况来看</li>
+</ol>
+<blockquote>
+<p>SELECT * FROM t_user u LEFT JOIN t_user_role ur ON ur.user_id &#x3D; u.id<br>LEFT JOIN t_role r ON ur.role_id &#x3D; r.id<br>WHERE u.id&#x3D;1 AND r.id&#x3D;1</p>
+</blockquote>
+<pre><code>![](../images/mysql/7-join-r1.png)	
+
+&gt;	SELECT * FROM t_user u   LEFT JOIN t_user_role ur   ON ur.user_id = u.id
+       AND  ur.user_id=1 LEFT JOIN t_role r   ON ur.role_id = r.id
+             AND ur.role_id =1
+
+
+
+![](../images/mysql/7-join-r2.png)
+</code></pre>
+<ol start="2">
+<li>从使用索引的情况来看</li>
+</ol>
+<blockquote>
+<p>EXPLAIN SELECT * FROM t_user u LEFT JOIN t_user_role ur ON ur.user_id &#x3D; u.id<br>LEFT JOIN t_role r ON ur.role_id &#x3D; r.id<br>WHERE u.id&#x3D;1 AND r.id&#x3D;1</p>
+</blockquote>
+<pre><code>![](../images/mysql/7-join-r3.png)	
+
+&gt;	EXPLAIN SELECT * FROM t_user u   LEFT JOIN t_user_role ur   
+ 		ON ur.user_id = u.id   AND  ur.user_id=1
+            LEFT JOIN t_role r   ON ur.role_id = r.id AND ur.role_id =1
+
+
+
+
+![](../images/mysql/7-join-r4.png)
+</code></pre>
+<ol start="3">
+<li>结论：</li>
+</ol>
+<blockquote>
+<p>left join on 后面跟 and 带过滤条件并不能起到过滤作用。而且导致不能使用索引。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/02/join%E7%9A%847%E7%A7%8D%E6%96%B9%E5%BC%8F/" data-id="cm3zaz9c3000dtgu69arp9t5x" data-title="join的7种方式" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql的索引" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/01/mysql%E7%9A%84%E7%B4%A2%E5%BC%95/" class="article-date">
+  <time class="dt-published" datetime="2016-08-01T01:00:00.000Z" itemprop="datePublished">2016-08-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/08/01/mysql%E7%9A%84%E7%B4%A2%E5%BC%95/">mysql的索引</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h2><ol>
+<li>mysql索引:<br>是一种帮助mysql高效的获取数据的数据结构，这些数据结构以某种方式引用数据，这种结构就是索引。可简单理解为排好序的快速查找数据结构。如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。</li>
+</ol>
+<hr>
+<h2 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h2><ol>
+<li>单值索引:一个索引包含1个列 create index idx_XX on table(f1) 一个表可以建多个。</li>
+<li>唯一索引: 索引列的值必须唯一，但允许有空值 create unique index idx_XX on table(f1)</li>
+<li>复合索引: 一个索引包含多个列 如：create index idx_XX on table(f1,f2，..)</li>
+</ol>
+<hr>
+<h2 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h2><ol>
+<li>BTree</li>
+<li>Hash索引</li>
+<li>full-text全文索引:</li>
+</ol>
+<hr>
+<h2 id="什么情况建立索引"><a href="#什么情况建立索引" class="headerlink" title="什么情况建立索引"></a>什么情况建立索引</h2><ol>
+<li>主键自动建立唯一索引</li>
+<li>频繁作为查询条件的字段因该创建索引</li>
+<li>查询中与其他表关联的字段，外键关系建立索引</li>
+<li>频繁更新的字段不适合建立索引</li>
+<li>where条件里用不到的字段不建立索引</li>
+<li>单键&#x2F;复合索引的选择（高并发下倾向复合）</li>
+<li>查询中排序的字段因建立索引</li>
+<li>查询中统计或分组字段</li>
+</ol>
+<h2 id="什么情况建不立索引"><a href="#什么情况建不立索引" class="headerlink" title="什么情况建不立索引"></a>什么情况建不立索引</h2><ol>
+<li>频繁增删改的表</li>
+<li>表记录太少</li>
+<li>数据重复且分布平均的表字段。（重复太多索引意义不大）</li>
+</ol>
+<hr>
+<h2 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h2><p>可以参考：<a href="/2016/08/03/mysql%E7%9A%84sql%E4%BC%98%E5%8C%96/" title="mysql的sql优化">mysql的sql优化</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/01/mysql%E7%9A%84%E7%B4%A2%E5%BC%95/" data-id="cm3zaz9c7000rtgu68k6b89fw" data-title="mysql的索引" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-spring定时任务" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/05/01/spring%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time class="dt-published" datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished">2016-05-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/05/01/spring%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">spring定时任务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="spring-定时任务实现3中方式-推荐第二种"><a href="#spring-定时任务实现3中方式-推荐第二种" class="headerlink" title="spring 定时任务实现3中方式 推荐第二种"></a>spring 定时任务实现3中方式 推荐第二种</h4><h6 id="1-在spring-xml中定义好-scheduler，在容器中的bean-方法上加上-Scheduled注解"><a href="#1-在spring-xml中定义好-scheduler，在容器中的bean-方法上加上-Scheduled注解" class="headerlink" title="1.在spring xml中定义好 scheduler，在容器中的bean 方法上加上@Scheduled注解"></a>1.在spring xml中定义好 scheduler，在容器中的bean 方法上加上@Scheduled注解</h6><pre><code>xmlns:task=&quot;http://www.springframework.org/schema/task&quot;
+
+http://www.springframework.org/schema/task 
+http://www.springframework.org/schema/task/spring-task.xsd
+
+&lt;task:annotation-driven /&gt;
+&lt;task:scheduled-tasks scheduler=&quot;myScheduler&quot;&gt;  
+    &lt;task:scheduled ref=&quot;scheduledTaskManager&quot; method=&quot;autoCardCalculate&quot; cron=&quot;1/5 * * * * *&quot;/&gt;  
+&lt;/task:scheduled-tasks&gt;  
+&lt;task:scheduler id=&quot;myScheduler&quot; pool-size=&quot;10&quot;/&gt;  
+
+@Scheduled(cron = &quot;0/5 * * * * *&quot; )
+public void doSomething() &#123;
+    System.err.println(Thread.currentThread().getName() + &quot;   doSomething statrt.................&quot;);
+&#125;
+</code></pre>
+<h6 id="2-使用注解启用-schedul，同样可以在容器中的bean-方法上加上-Scheduled注解来标识是调度，或者手动注册"><a href="#2-使用注解启用-schedul，同样可以在容器中的bean-方法上加上-Scheduled注解来标识是调度，或者手动注册" class="headerlink" title="2.使用注解启用 schedul，同样可以在容器中的bean 方法上加上@Scheduled注解来标识是调度，或者手动注册"></a>2.使用注解启用 schedul，同样可以在容器中的bean 方法上加上@Scheduled注解来标识是调度，或者手动注册</h6><pre><code>　
+@Configuration
+@EnableScheduling
+public class AppConfig implements SchedulingConfigurer &#123;
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) &#123;
+        taskRegistrar.setScheduler(taskScheduler());
+        taskRegistrar.addTriggerTask(myTask(), new CustomTrigger(&quot;0/5 * * * * *&quot;));
+    &#125;
+
+    @Bean(destroyMethod = &quot;shutdown&quot;)
+    public Executor taskScheduler() &#123;
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(5);
+        // Executor executor=new ThreadPoolExecutor(4, 10, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue&lt;Runnable&gt;(10000));
+        return scheduledThreadPoolExecutor;
+    &#125;
+
+    @Bean
+    public MyTask myTask() &#123;
+        return new MyTask();
+    &#125;
+    
+    @Scheduled(cron = &quot;0/5 * * * * *&quot; )
+    public void doSomething() &#123;
+        System.err.println(Thread.currentThread().getName() + &quot;   doSomething statrt.................&quot;);
+    &#125;
+&#125;
+
+class MyTask implements Runnable &#123;
+    @Override
+    public void run() &#123;
+        System.err.println(Thread.currentThread().getName() + &quot;   MyTask statrt.................&quot;);
+        try &#123;
+            Thread.sleep(10000);
+        &#125; catch (InterruptedException e) &#123;
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        &#125;
+        System.err.println(Thread.currentThread().getName() + &quot;   MyTask end.................&quot;);
+    &#125;
+&#125;
+
+class CustomTrigger implements Trigger &#123;
+
+    private String cron;
+
+    CustomTrigger(String cron) &#123;
+        this.cron = cron;
+    &#125;
+
+    @Override
+    public Date nextExecutionTime(TriggerContext triggerContext) &#123;
+        CronTrigger trigger = new CronTrigger(cron);
+        Date nextExec = trigger.nextExecutionTime(triggerContext);
+        return nextExec;
+    &#125;
+&#125;
+</code></pre>
+<h6 id="3-使用-quartz-在spring-中代码-如下"><a href="#3-使用-quartz-在spring-中代码-如下" class="headerlink" title="3.使用 quartz 在spring 中代码 如下"></a>3.使用 quartz 在spring 中代码 如下</h6><pre><code>&lt;bean id=&quot;payTask&quot; class=&quot;cn.bookingsmart.jp.task.OrderTask&quot;/&gt;
+&lt;!-- 支付超时 --&gt;
+&lt;bean id=&quot;handlePayTimeout&quot; class=&quot;org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean&quot;&gt;
+    &lt;property name=&quot;targetObject&quot;&gt;
+        &lt;ref bean=&quot;payTask&quot; /&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;targetMethod&quot;&gt;
+        &lt;value&gt;handlePayTimeout&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;concurrent&quot; value=&quot;false&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;handlePayTimeoutTrigger&quot; class=&quot;org.springframework.scheduling.quartz.CronTriggerFactoryBean&quot;&gt;
+    &lt;property name=&quot;jobDetail&quot;&gt;
+        &lt;ref bean=&quot;handlePayTimeout&quot; /&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;cronExpression&quot;&gt;
+        &lt;value&gt;0 0/5 * * * ? *&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean class=&quot;org.springframework.scheduling.quartz.SchedulerFactoryBean&quot;&gt;
+    &lt;property name=&quot;triggers&quot;&gt;
+        &lt;list&gt;
+            &lt;ref bean=&quot;handlePayTimeoutTrigger&quot; /&gt;
+            &lt;ref bean=&quot;handlePayErrTrigger&quot; /&gt;
+            &lt;ref bean=&quot;handleTicketTrigger&quot; /&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;threadPoolTaskExecutor&quot; class=&quot;org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor&quot;&gt;
+  &lt;!-- 核心线程数，默认为1 --&gt;
+  &lt;property name=&quot;corePoolSize&quot; value=&quot;3&quot; /&gt;
+  &lt;!-- 最大线程数，默认为Integer.MAX_VALUE --&gt;
+  &lt;property name=&quot;maxPoolSize&quot; value=&quot;10&quot; /&gt;
+  &lt;!-- 队列最大长度，一般需要设置值&gt;=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE --&gt;
+  &lt;property name=&quot;queueCapacity&quot; value=&quot;1000&quot; /&gt;
+  &lt;!-- 线程池维护线程所允许的空闲时间，默认为60s --&gt;
+  &lt;property name=&quot;keepAliveSeconds&quot; value=&quot;300&quot; /&gt;
+  &lt;!-- 线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者 --&gt;
+  &lt;property name=&quot;rejectedExecutionHandler&quot;&gt;
+      &lt;!-- AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常 --&gt;
+      &lt;!-- CallerRunsPolicy:主线程直接执行该任务，执行完之后尝试添加下一个任务到线程池中，可以有效降低向线程池内添加任务的速度 --&gt;
+      &lt;!-- DiscardOldestPolicy:抛弃旧的任务、暂不支持；会导致被丢弃的任务无法再次被执行 --&gt;
+      &lt;!-- DiscardPolicy:抛弃当前任务、暂不支持；会导致被丢弃的任务无法再次被执行 --&gt;
+      &lt;bean class=&quot;java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy&quot; /&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+
+
+public class OrderTask &#123;
+    @Resource
+    private OrderService orderService;
+    @Resource
+    private QaeService qaeService;
+
+    public void handlePayTimeout() &#123;
+     
+    &#125;
+    
+    public void handlePayErr() &#123;
+         
+    &#125;
+    
+    public void handNoTicket() &#123;
+         
+    &#125;
+
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/05/01/spring%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" data-id="cm3zaz9c90018tgu66ki1awf3" data-title="spring定时任务" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java中强引用，软引用，弱引用，虚引用概念比较" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/03/15/java%E4%B8%AD%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%8C%E8%BD%AF%E5%BC%95%E7%94%A8%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%8C%E8%99%9A%E5%BC%95%E7%94%A8%E6%A6%82%E5%BF%B5%E6%AF%94%E8%BE%83/" class="article-date">
+  <time class="dt-published" datetime="2016-03-14T16:00:00.000Z" itemprop="datePublished">2016-03-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/03/15/java%E4%B8%AD%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%8C%E8%BD%AF%E5%BC%95%E7%94%A8%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%8C%E8%99%9A%E5%BC%95%E7%94%A8%E6%A6%82%E5%BF%B5%E6%AF%94%E8%BE%83/">java中强引用，软引用，弱引用，虚引用概念比较</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        在JAVA垃圾回收，内存分配过程中，经常会涉及对象的生命周期，而判定对象是否存货都与“引用”有关。Java中的引用的定义非常简单粗糙：如果reference类型的数据中存储的数值代表的是另一块内存的起始地址，就表示该内存块存在一个引用。这样分类会将对讲划分成两个类别：有引用、无引用。我们希望能够根据GC回收时间来对对象引用进行划分：当内存空间足够时，对象的引用继续保持；当内存不够时，抛弃这些对象。
+        
+          <p class="article-more-link">
+            <a href="/2016/03/15/java%E4%B8%AD%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%8C%E8%BD%AF%E5%BC%95%E7%94%A8%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%8C%E8%99%9A%E5%BC%95%E7%94%A8%E6%A6%82%E5%BF%B5%E6%AF%94%E8%BE%83/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/03/15/java%E4%B8%AD%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%8C%E8%BD%AF%E5%BC%95%E7%94%A8%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%8C%E8%99%9A%E5%BC%95%E7%94%A8%E6%A6%82%E5%BF%B5%E6%AF%94%E8%BE%83/" data-id="cm3zaz9c20007tgu687gnbwqk" data-title="java中强引用，软引用，弱引用，虚引用概念比较" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-那些年踩过的坑——持续更新中" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/02/22/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E2%80%94%E2%80%94%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/" class="article-date">
+  <time class="dt-published" datetime="2016-02-21T16:00:00.000Z" itemprop="datePublished">2016-02-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/02/22/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E2%80%94%E2%80%94%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">那些年踩过的坑——持续更新中</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>在java web开发过程中，遇到的各类问题总结，包括java语言，spring，spring mvc，ibatis框架等使用过程中遇到的一些常见的，或者不常见的问题。分条列举，附有问题详情以及解决方案。</p>
+<h3 id="1-java定义的boolen数据类型的get，set函数（定义为isEditable）："><a href="#1-java定义的boolen数据类型的get，set函数（定义为isEditable）：" class="headerlink" title="1.java定义的boolen数据类型的get，set函数（定义为isEditable）："></a>1.java定义的boolen数据类型的get，set函数（定义为isEditable）：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> isEditable;<span class="comment">//是否可以编辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEditable</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> isEditable;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setEditable</span><span class="params">(<span class="type">boolean</span> isEditable)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.isEditable = isEditable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>现象</strong>：IDEA自动生成的boolean类型与我们的预期有一定的差异，属性isEditable的getter访问器是isEditable(),<br>而不是getIsEditable()；setter访问器是setEditable(),而不是setIsEditable()。</p>
+<p><strong>原因</strong>：由于属性名isEditable的is没有去掉， 以致java bean类违背了java bean 的命名规范。<br><code>JavaBean 的属性名和getter/setter存取方法规则小结：</code></p>
+<blockquote>
+<ul>
+<li>对于常规属性propertyName ，<br>  属性名称的第一个单词小写且字母个数大于1，第二个单词首字母大写。对应的getter&#x2F;setter方法名为：get&#x2F;set + PropertyName()，<br>  即属性名称的第一个单词的首字母改成大写，前面再加上”get”或”set”前缀。</li>
+<li>对于布尔类型propertyName,可以按常规属性的规则编写getter&#x2F;setter方法外， getter方法可以使用 is + PropertyName()的形式来代替。</li>
+<li>对于非常规属性pName，属性名称的第一个单词小写且字母个数等于1，第二个单词首字母大写,分一下三种情况：</li>
+</ul>
+</blockquote>
+<p><code>1.</code>对应的getter&#x2F;setter方法名可以为：get&#x2F;set + PName()， 即第一个单词的首字母为改为大写，前面再加上”get”或”set”前缀。</p>
+<p><code>2.</code>对应的getter&#x2F;setter方法名也可以为：get&#x2F;set + pName()， 即属性名称不变，第一个单词的首字母任然为小写，前面再加上”get”或”<br>set”前缀。</p>
+<p><code>3.</code>对于非常规属性PName， 属性名称的前两个字母都是大写 。即连续两个大写字母开头的属性名。对应的getter&#x2F;setter方法名为：<br>get&#x2F;set+PName()</p>
+<p><code>4.</code>对于非常规属性<Property>或<PropertyName>， 属性名称第一个字母大写 。网上有帖子说这是不符合JSR规范的，会报 “属性找不到”<br>的错误。</p>
+<p><strong>总结</strong>：<br><strong>1. javabean属性命名尽量使用常规的驼峰式命名规则</strong><br><strong>2. 属性名第一个单词尽量避免使用一个字母：如eBook， eMail</strong><br><strong>3. boolean属性名避免使用 “is” 开头的名称</strong><br>**4. 随着jdk， eclipse， spring 等软件版本的不断提高， 底版本的出现的问题可能在高版本中解决了， 低版本原来正常的代码可能在高版本环境下不再支持。<br>**</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/02/22/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%E2%80%94%E2%80%94%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/" data-id="cm3zaz9cd0020tgu6cvfw2rxs" data-title="那些年踩过的坑——持续更新中" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java抽象类vs接口" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/02/21/java%E6%8A%BD%E8%B1%A1%E7%B1%BBvs%E6%8E%A5%E5%8F%A3/" class="article-date">
+  <time class="dt-published" datetime="2016-02-21T12:33:00.000Z" itemprop="datePublished">2016-02-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/02/21/java%E6%8A%BD%E8%B1%A1%E7%B1%BBvs%E6%8E%A5%E5%8F%A3/">java抽象类vs接口</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-JAVA抽象类"><a href="#1-JAVA抽象类" class="headerlink" title="1.JAVA抽象类:"></a>1.JAVA抽象类:</h3><p>抽象类除了不能实例化以外，跟普通类没有任何区别。在《JAVA编程思想》一书中，将抽象类定义为“包含抽象方法的类”。</p>
+<h3 id="2-JAVA接口"><a href="#2-JAVA接口" class="headerlink" title="2.JAVA接口:"></a>2.JAVA接口:</h3><p>接口，英文称作interface，是对事物最高层次的抽象，用来供别人调用的方法或者函数。</p>
+<h2 id="JAVA抽象类和接口的主要区别如下图"><a href="#JAVA抽象类和接口的主要区别如下图" class="headerlink" title="JAVA抽象类和接口的主要区别如下图:"></a>JAVA抽象类和接口的主要区别如下图:</h2><p><img src="/../images/20160221P1.jpg" alt="cmd-markdown-logo"></p>
+<h3 id="什么时候使用抽象类和接口"><a href="#什么时候使用抽象类和接口" class="headerlink" title="什么时候使用抽象类和接口"></a>什么时候使用抽象类和接口</h3><p>首先，我们要先弄清楚抽象类和接口之间的关系：</p>
+<blockquote>
+<ul>
+<li>类对事物的抽象，定义了事物的属性和行为。</li>
+<li>抽象类是不完全的类，具有抽象方法。</li>
+<li>接口则比类的抽象层次更高。</li>
+</ul>
+</blockquote>
+<p>所以，我们可以这样理解它们之间的关系：<strong>类是对事物的抽象，抽象类是对类的抽象，接口是对抽象类的抽象</strong>。</p>
+<p>在设计类的时候，首先考虑用接口抽象出类的特性，当你发现某些方法可以复用的时候，可以使用抽象类来复用代码。简单说，*<br><em>接口用于抽象事物的特性，抽象类用于代码复用。</em>*</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/02/21/java%E6%8A%BD%E8%B1%A1%E7%B1%BBvs%E6%8E%A5%E5%8F%A3/" data-id="cm3z9ugxj00044ou68da19syv" data-title="java抽象类vs接口" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bean/" rel="tag">bean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rocketmq/" rel="tag">rocketmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aop/" style="font-size: 10px;">aop</a> <a href="/tags/bean/" style="font-size: 10px;">bean</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rocketmq/" style="font-size: 10px;">rocketmq</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">事务</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">分布式事务</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 16.67px;">基础知识</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">定时任务</a> <a href="/tags/%E6%89%A9%E5%B1%95/" style="font-size: 10px;">扩展</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 10px;">整合</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/27/hexo%E4%BD%BF%E7%94%A8/">hexo使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/17/spring%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">spring单元测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/jsonp%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82/">jsonp跨域请求</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/mybatis%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/">mybatis初步使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/ControllerAdvice/">spring mvc advice</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杰<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

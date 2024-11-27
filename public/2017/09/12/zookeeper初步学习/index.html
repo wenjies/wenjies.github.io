@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>zookeeper初步学习 | du小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，它包含一个简单的原语集，分布式应用程序可以基于它实现同步服务，配置维护和命名服务等。Zookeeper是hadoop的一个子项目，其发展历程无需赘述。在分布式应用中，由于工程师不能很好地使用锁机制，以及基于消息的协调机制不适合在某些应用中使用，因此需要有一种可靠的、可扩展的、分布式的、可配置的协调机制来统一系统的状态。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper初步学习">
+<meta property="og:url" content="https://wenjies.github.io/2017/09/12/zookeeper%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="du小站">
+<meta property="og:description" content="ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，它包含一个简单的原语集，分布式应用程序可以基于它实现同步服务，配置维护和命名服务等。Zookeeper是hadoop的一个子项目，其发展历程无需赘述。在分布式应用中，由于工程师不能很好地使用锁机制，以及基于消息的协调机制不适合在某些应用中使用，因此需要有一种可靠的、可扩展的、分布式的、可配置的协调机制来统一系统的状态。">
+<meta property="og:locale">
+<meta property="og:image" content="https://wenjies.github.io/images/zk/zk_1.jpg">
+<meta property="og:image" content="https://wenjies.github.io/images/zk/zk_wa.png">
+<meta property="article:published_time" content="2017-09-12T01:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-27T03:40:43.069Z">
+<meta property="article:author" content="杰">
+<meta property="article:tag" content="zookeeper">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wenjies.github.io/images/zk/zk_1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="du小站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">du小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我们笑着说再见，却深知再见遥遥无期。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wenjies.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-zookeeper初步学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/09/12/zookeeper%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2017-09-12T01:00:00.000Z" itemprop="datePublished">2017-09-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/zookeeper/">zookeeper</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      zookeeper初步学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Zookeeper简介"><a href="#Zookeeper简介" class="headerlink" title="Zookeeper简介"></a>Zookeeper简介</h2><pre><code>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，它包含一个简单的原语集，分布式应用程序可以基于它实现同步服务，配置维护和命名服务等。Zookeeper是hadoop的一个子项目，其发展历程无需赘述。在分布式应用中，由于工程师不能很好地使用锁机制，以及基于消息的协调机制不适合在某些应用中使用，因此需要有一种可靠的、可扩展的、分布式的、可配置的协调机制来统一系统的状态。
+</code></pre>
+<hr>
+<h2 id="Zookeeper的基本概念"><a href="#Zookeeper的基本概念" class="headerlink" title="Zookeeper的基本概念"></a>Zookeeper的基本概念</h2><p><strong><code>1.角色</code></strong><br>Zookeeper中的角色主要有以下三类，如下表所示：</p>
+<p><img src="/../images/zk/zk_1.jpg"></p>
+<p><strong><code>2.特色</code></strong></p>
+<ol>
+<li>最终一致性：client不论连接到哪个Server，展示给它都是同一个视图，这是zookeeper最重要的性能。</li>
+<li>可靠性：具有简单、健壮、良好的性能，如果消息m被到一台服务器接受，那么它将被所有的服务器接受。</li>
+<li></li>
+</ol>
+<p>实时性：Zookeeper保证客户端将在一个时间间隔范围内获得服务器的更新信息，或者服务器失效的信息。但由于网络延时等原因，Zookeeper不能保证两个客户端能同时得到刚更新的数据，如果需要最新数据，应该在读数据之前调用sync()<br>接口。</p>
+<ol start="4">
+<li>等待无关（wait-free）：慢的或者失效的client不得干预快速的client的请求，使得每个client都能有效的等待。</li>
+<li>原子性：更新只能成功或者失败，没有中间状态。</li>
+<li>顺序性：包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。</li>
+</ol>
+<p><strong><code>3.工作原理</code></strong></p>
+<p>Zookeeper的核心是原子广播，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。为了保证事务的顺序一致性，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。低32位用于递增计数。</p>
+<p><strong><code>3.数据模型</code></strong></p>
+<ol>
+<li><p>层次化的目录结构，命名符合常规文件系统规范</p>
+</li>
+<li><p>每个节点在zookeeper中叫做znode,并且其有一个唯一的路径标识</p>
+</li>
+<li><p>节点Znode可以包含数据和子节点，但是EPHEMERAL类型的节点不能有子节点</p>
+</li>
+<li><p>Znode中的数据可以有多个版本，比如某一个路径下存有多个数据版本，那么查询这个路径下的数据就需要带上版本</p>
+</li>
+<li><p>Znode有两种类型，短暂的（ephemeral）和持久的（persistent）</p>
+</li>
+<li><p>Znode的类型在创建时确定并且之后不能再修改</p>
+</li>
+<li><p>短暂znode的客户端会话结束时，zookeeper会将该短暂znode删除，短暂znode不可以有子节点</p>
+</li>
+<li><p>持久znode不依赖于客户端会话，只有当客户端明确要删除该持久znode时才会被删除</p>
+</li>
+<li><p>Znode有四种形式的目录节点，PERSISTENT、PERSISTENT_SEQUENTIAL、EPHEMERAL、EPHEMERAL_SEQUENTIAL</p>
+</li>
+<li><p>数据只能存字节数组</p>
+<p>每个znode由3部分组成:</p>
+<ol>
+<li>stat. 此为状态信息, 描述该znode的版本, 权限等信息.</li>
+<li>data. 与该znode关联的数据.</li>
+<li>secondNode. 该znode下的子节点.</li>
+</ol>
+</li>
+</ol>
+<h2 id="Zookeeper原生api列子"><a href="#Zookeeper原生api列子" class="headerlink" title="Zookeeper原生api列子"></a>Zookeeper原生api列子</h2><pre><code>public static void main(String[] args) throws Exception&#123;
+    /** zookeeper地址 */
+    final String CONNECT_ADDR = &quot;192.168.80.88:2181,192.168.80.87:2181,192.168.80.86:2181&quot;;
+    /** session超时时间 */
+    final int SESSION_OUTTIME = 2000;//ms 
+    /** 信号量，阻塞程序执行，用于等待zookeeper连接成功，发送成功信号 */
+    final CountDownLatch connectedSemaphore = new CountDownLatch(1);
+    ZooKeeper zk = new ZooKeeper(CONNECT_ADDR, SESSION_OUTTIME, new Watcher()&#123;
+        @Override
+        public void process(WatchedEvent event) &#123;
+            //获取事件的状态
+            KeeperState keeperState = event.getState();
+            EventType eventType = event.getType();
+            //如果是建立连接
+            if(KeeperState.SyncConnected == keeperState)&#123;
+                if(EventType.None == eventType)&#123;
+                    //如果建立连接成功，则发送信号量，让后续阻塞程序向下执行
+                    connectedSemaphore.countDown();
+                    System.out.println(&quot;zk 建立连接&quot;);
+                &#125;
+            &#125;
+        &#125;
+    &#125;);
+    //进行阻塞
+    connectedSemaphore.await();
+    
+    //创建父节点
+    zk.create(&quot;/firstNode&quot;, &quot;firstNode&quot;.getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+    
+    //创建子节点
+    zk.create(&quot;/firstNode/secondNode&quot;, &quot;secondNode data&quot;.getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+    
+    //获取节点洗信息
+    byte[] data = zk.getData(&quot;/firstNode&quot;, true, null);
+    System.out.println(new String(data));
+    System.out.println(zk.getsecondNode(&quot;/firstNode&quot;, true));
+    
+    //修改节点的值
+    zk.setData(&quot;/firstNode&quot;, &quot;modify data root&quot;.getBytes(), -1);
+    byte[] data2 = zk.getData(&quot;/firstNode&quot;, true, null);
+    System.out.println(new String(data2));		
+    
+    //判断节点是否存在
+    System.out.println(zk.exists(&quot;/firstNode/secondNode&quot;, true));
+    //删除节点
+    zk.delete(&quot;/firstNode/secondNode&quot;, -1);
+    System.out.println(zk.exists(&quot;/firstNode/secondNode&quot;, true));
+    
+    zk.close();
+&#125;
+
+state=-112 会话超时状态
+state= -113　认证失败状态
+state=  1 连接建立中
+state= 2 (暂时不清楚如何理解这个状态,ZOO_ASSOCIATING_STATE)
+state=3 连接已建立状态
+state= 999 无连接状态
+
+
+type=1 创建节点事件
+type=2 删除节点事件
+type=3 更改节点事件
+type=4 子节点列表变化事件
+type= -1 会话session事件
+type=-2 监控被移除事件
+</code></pre>
+<p>对父节点的变更以及孙节点的变更都不会触发watcher，而对watcher本身节点以及子节点的变更会触发watcher，watcher是一次行需要重复注册，具体参照下表。<br><img src="/../images/zk/zk_wa.png"></p>
+<h2 id="zkclient列子"><a href="#zkclient列子" class="headerlink" title="zkclient列子"></a>zkclient列子</h2><pre><code>public static void main(String[] args) throws Exception &#123;
+    final String CONNECT_ADDR = &quot;127.0.0.1:2181&quot;;
+    ZkClient zkc = new ZkClient(new ZkConnection(CONNECT_ADDR), 5000);
+
+    // 对父节点添加监听子节点变化。
+    zkc.subscribeChildChanges(&quot;/node&quot;, new IZkChildListener() &#123;
+        @Override
+        public void handleChildChange(String parentPath, List&lt;String&gt; currentChilds) throws Exception &#123;
+            System.out.println(&quot;parentPath: &quot; + parentPath);
+            System.out.println(&quot;currentChilds: &quot; + currentChilds);
+        &#125;
+    &#125;);
+    zkc.deleteRecursive(&quot;/node&quot;);
+    Thread.sleep(3000);
+
+    zkc.createPersistent(&quot;/node&quot;);
+    Thread.sleep(1000);
+
+    zkc.createPersistent(&quot;/node&quot; + &quot;/&quot; + &quot;node1&quot;, &quot;node1内容&quot;);
+    Thread.sleep(1000);
+
+    zkc.createPersistent(&quot;/node&quot; + &quot;/&quot; + &quot;node2&quot;, &quot;node2内容&quot;);
+    Thread.sleep(1000);
+
+    zkc.delete(&quot;/node/node2&quot;);
+    Thread.sleep(1000);
+
+    zkc.delete(&quot;/node/node2/node3&quot;);
+    Thread.sleep(1000);
+
+    zkc.deleteRecursive(&quot;/node&quot;);
+
+&#125;
+</code></pre>
+<p>相比原生Api</p>
+<ol>
+<li><p>zkclient是在官方API上进行封装使用更简洁。</p>
+</li>
+<li><p>zkclient可以递归的创建节点、递归的删除节点 没办法创建数据</p>
+</li>
+<li><p>watcher 的改进避免重复注册监听</p>
+<ol>
+<li>subscribeChildChanges只监听本节点或直接子节点创建、删除。</li>
+<li>subscribeDataChanges 只监听本节点或直接子节点创建、删除、数据的改变。</li>
+</ol>
+</li>
+</ol>
+<h2 id="curator列子"><a href="#curator列子" class="headerlink" title="curator列子"></a>curator列子</h2><pre><code>public static void main(String[] args) throws Exception &#123;
+    final String CONNECT_ADDR = &quot;127.0.0.1:2181&quot;;
+    final int SESSION_OUTTIME = 5000;
+    //1 重试策略：初试时间为1s 重试10次
+    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+    //2 通过工厂创建连接
+    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                .connectString(CONNECT_ADDR)
+                .sessionTimeoutMs(SESSION_OUTTIME)
+                .retryPolicy(retryPolicy)
+                .build();
+    
+    //3 建立连接
+    cf.start();
+    //4 建立一个cache缓存
+    final NodeCache cache = new NodeCache(cf, &quot;/firstNode&quot;, false);
+    cache.start(true);
+    //触发事件为创建节点和更新节点，在删除节点的时候并不触发此操作。
+    cache.getListenable().addListener(new NodeCacheListener() &#123; 
+        @Override
+        public void nodeChanged() throws Exception &#123;
+            System.out.println(&quot;路径为：&quot; + cache.getCurrentData().getPath());
+            System.out.println(&quot;数据为：&quot; + new String(cache.getCurrentData().getData()));
+            System.out.println(&quot;状态为：&quot; + cache.getCurrentData().getStat());
+        &#125;
+    &#125;);
+    
+    Thread.sleep(1000);
+    cf.create().forPath(&quot;/firstNode&quot;, &quot;123&quot;.getBytes());
+    
+    Thread.sleep(1000);
+    cf.setData().forPath(&quot;/firstNode&quot;, &quot;456&quot;.getBytes());
+    
+    Thread.sleep(1000);
+    cf.delete().forPath(&quot;/firstNode&quot;);
+    
+    Thread.sleep(Integer.MAX_VALUE);
+    cache.close();
+    cf.close();
+&#125;
+
+
+
+public static void main(String[] args) throws Exception &#123;
+     final String CONNECT_ADDR = &quot;127.0.0.1:2181&quot;;
+     final int SESSION_OUTTIME = 5000;
+    //1 重试策略：初试时间为1s 重试10次
+    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+    //2 通过工厂创建连接
+    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                .connectString(CONNECT_ADDR)
+                .sessionTimeoutMs(SESSION_OUTTIME)
+                .retryPolicy(retryPolicy)
+                .build();
+    //3 建立连接
+    cf.start();
+    //4 建立一个PathsecondNodeCache缓存,第三个参数为是否接受节点数据内容 如果为false则不接受
+    PathsecondNodeCache cache = new PathsecondNodeCache(cf, &quot;/firstNode&quot;, true);
+    //5 在初始化的时候就进行缓存监听
+    cache.start(StartMode.POST_INITIALIZED_EVENT);
+    //监听子节点 新建、修改、删除
+    cache.getListenable().addListener(new PathsecondNodeCacheListener() &#123;
+        @Override
+        public void childEvent(CuratorFramework cf, PathsecondNodeCacheEvent event) throws Exception &#123;
+            switch (event.getType()) &#123;
+            case CHILD_ADDED:
+                System.out.println(&quot;CHILD_ADDED :&quot; + event.getData().getPath());
+                break;
+            case CHILD_UPDATED:
+                System.out.println(&quot;CHILD_UPDATED :&quot; + event.getData().getPath());
+                break;
+            case CHILD_REMOVED:
+                System.out.println(&quot;CHILD_REMOVED :&quot; + event.getData().getPath());
+                break;
+            default:
+                break;
+            &#125;
+        &#125;
+    &#125;);
+
+    //创建本身节点不发生变化
+    cf.create().forPath(&quot;/firstNode&quot;, &quot;init&quot;.getBytes());
+    
+    //添加子节点
+    Thread.sleep(1000);
+    cf.create().forPath(&quot;/firstNode/secondNode&quot;, &quot;secondNode内容&quot;.getBytes());
+    Thread.sleep(1000);
+    cf.create().forPath(&quot;/firstNode/thirdNode&quot;, &quot;thirdNode内容&quot;.getBytes());
+    
+    //修改子节点
+    Thread.sleep(1000);
+    cf.setData().forPath(&quot;/firstNode/secondNode&quot;, &quot;secondNode更新内容&quot;.getBytes());
+    
+    //删除子节点
+    Thread.sleep(1000);
+    cf.delete().forPath(&quot;/firstNode/thirdNode&quot;);		
+    
+    //删除本身节点
+    Thread.sleep(1000);
+    cf.delete().deletingsecondNodeIfNeeded().forPath(&quot;/firstNode&quot;);
+    
+    Thread.sleep(Integer.MAX_VALUE);
+    cache.close();
+    cf.close();
+&#125;
+</code></pre>
+<h2 id="curator在分布式方面的应用"><a href="#curator在分布式方面的应用" class="headerlink" title="curator在分布式方面的应用"></a>curator在分布式方面的应用</h2><ol>
+<li><p>分布式锁 InterProcessMutex</p>
+<pre><code>    public static void main(String[] args) throws Exception &#123;
+        //1 重试策略：初试时间为1s 重试10次
+        RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+        //2 通过工厂创建连接
+        CuratorFramework cf = CuratorFrameworkFactory.builder()
+                    .connectString(&quot;127.0.0.1:2181&quot;)
+                    .sessionTimeoutMs(5000)
+                    .retryPolicy(retryPolicy)
+                    .build();
+        //3 开启连接
+        cf.start();
+        //4 分布式锁
+        final InterProcessMutex lock = new InterProcessMutex(cf, &quot;/firstNode&quot;);
+        for(int i = 0; i &lt; 10; i++)&#123;
+            new Thread(new Runnable() &#123;
+                @Override
+                public void run() &#123;
+                    try &#123;
+                        //加锁
+                        lock.acquire();
+                        SimpleDateFormat sdf = new SimpleDateFormat(&quot;HH:mm:ss|SSS&quot;);
+                        System.err.println(sdf);
+                    &#125; catch (Exception e) &#123;
+                        e.printStackTrace();
+                    &#125; finally &#123;
+                        try &#123;
+                            lock.release();
+                        &#125; catch (Exception e) &#123;
+                            e.printStackTrace();
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;,&quot;t&quot; + i).start();
+        &#125;
+        Thread.sleep(100000);
+        cf.close();
+    &#125;
+</code></pre>
+</li>
+</ol>
+<p><code>InterProcessMutex 与 Semaphore semaphore=new Semaphore(1);功能相似</code></p>
+<ol>
+<li><p>DistributedDoubleBarrier</p>
+<pre><code>public static void main(String[] args) throws Exception &#123;
+    for(int i = 0; i &lt; 5; i++)&#123;
+        new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+                    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                                .connectString(&quot;127.0.0.1:2181&quot;)
+                                .retryPolicy(retryPolicy)
+                                .build();
+                    cf.start();
+                    DistributedDoubleBarrier barrier = new DistributedDoubleBarrier(cf, &quot;/firstNode&quot;, 5);
+                    Thread.sleep(1000 * (new Random()).nextInt(3)); 
+                    System.out.println(Thread.currentThread().getName() + &quot;已经准备&quot;);
+                    barrier.enter();
+                    System.out.println(&quot;同时开始运行...&quot;);
+                    Thread.sleep(1000 * (new Random()).nextInt(3));
+                    System.out.println(Thread.currentThread().getName() + &quot;运行完毕&quot;);
+                    barrier.leave();
+                    System.out.println(&quot;同时退出运行...&quot;);
+                &#125; catch (Exception e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;,&quot;t&quot; + i).start();
+    &#125;
+&#125;
+</code></pre>
+</li>
+</ol>
+<p><code>DistributedDoubleBarrier 与 CyclicBarrier cyclicBarrier=new CyclicBarrier(n);功能相似</code></p>
+<ol>
+<li><p>DistributedBarrier</p>
+<pre><code>public static void main(String[] args) throws Exception &#123;
+    for(int i = 0; i &lt; 5; i++)&#123;
+        new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+                    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                                .connectString(&quot;127.0.0.1:2181&quot;)
+                                .sessionTimeoutMs(5000)
+                                .retryPolicy(retryPolicy)
+                                .build();
+                    cf.start();
+                    DistributedBarrier barrier = new DistributedBarrier(cf, &quot;/firstNode&quot;);
+                    System.out.println(Thread.currentThread().getName() + &quot;设置barrier!&quot;);
+                    barrier.setBarrier();		//设置
+                    barrier.waitOnBarrier();	//等待
+                    System.out.println(&quot;---------开始执行程序----------&quot;);
+                &#125; catch (Exception e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;,&quot;t&quot; + i).start();
+    &#125;
+
+    Thread.sleep(5000);
+    
+    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                .connectString(CONNECT_ADDR)
+                .sessionTimeoutMs(SESSION_OUTTIME)
+                .retryPolicy(retryPolicy)
+                .build();
+    cf.start();
+    DistributedBarrier barrier = new DistributedBarrier(cf, &quot;/firstNode&quot;);
+    barrier.removeBarrier();	//释放
+&#125;
+</code></pre>
+</li>
+</ol>
+<p><code>DistributedBarrier 与 CountDownLatch countDownLatch=new CountDownLatch(1);功能相似</code></p>
+<ol>
+<li><p>DistributedAtomicInteger 分布式原子性</p>
+<pre><code>public static void main(String[] args) throws Exception &#123;
+    //1 重试策略：初试时间为1s 重试10次
+    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
+    //2 通过工厂创建连接
+    CuratorFramework cf = CuratorFrameworkFactory.builder()
+                .connectString(&quot;127.0.0.1:2181&quot;)
+                .sessionTimeoutMs(5000)
+                .retryPolicy(retryPolicy)
+                .build();
+    //3 开启连接
+    cf.start();
+    cf.delete().forPath(&quot;/firstNode&quot;);
+    
+
+    //4 使用DistributedAtomicInteger
+    DistributedAtomicInteger atomicIntger = 
+            new DistributedAtomicInteger(cf, &quot;/firstNode&quot;, new RetryNTimes(3, 1000));
+    
+    AtomicValue&lt;Integer&gt; value = atomicIntger.add(1);
+    System.out.println(value.succeeded());
+    System.out.println(value.postValue());	//最新值
+    System.out.println(value.preValue());	//原始值
+    
+&#125;
+</code></pre>
+</li>
+<li><p>可以实现类“发布、订阅”功能</p>
+<p>PathsecondNodeCache cache &#x3D; new PathsecondNodeCache(cf, “topic”, true);<br>cache.start(StartMode.POST_INITIALIZED_EVENT);<br>cache.getListenable().addListener(new PathsecondNodeCacheListener() ｛｝<br>&#x2F;&#x2F;离线在上线，也可以收到 期间的事件。</p>
+</li>
+</ol>
+<p><strong><code>curator 也是基于官方API封装，其语法支持链式编程，API更贴合开发人员思维，特别在分布式并发方面相当给力，建议使用curator。</code></strong></p>
+<h2 id="maven坐标"><a href="#maven坐标" class="headerlink" title="maven坐标"></a>maven坐标</h2><pre><code>    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
+        &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
+        &lt;version&gt;3.5.3-beta&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+    &lt;/dependency&gt;
+    
+    
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.101tec&lt;/groupId&gt;
+        &lt;artifactId&gt;zkclient&lt;/artifactId&gt;
+        &lt;version&gt;0.9&lt;/version&gt;
+    &lt;/dependency&gt;
+
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
+        &lt;artifactId&gt;curator-framework&lt;/artifactId&gt;
+        &lt;version&gt;4.0.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
+        &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;
+        &lt;version&gt;4.0.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    ]()
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/09/12/zookeeper%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" data-id="cm3zc7fkp0006l8u6566c68js" data-title="zookeeper初步学习" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/13/AOP%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          AOP初步学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/11/%E8%A7%A3%E5%86%B3%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E5%B8%B8%E7%94%A8%E7%9A%843%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">解决分布式事务常用的3种实现方式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bean/" rel="tag">bean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rocketmq/" rel="tag">rocketmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aop/" style="font-size: 10px;">aop</a> <a href="/tags/bean/" style="font-size: 10px;">bean</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rocketmq/" style="font-size: 10px;">rocketmq</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">事务</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">分布式事务</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 16.67px;">基础知识</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">定时任务</a> <a href="/tags/%E6%89%A9%E5%B1%95/" style="font-size: 10px;">扩展</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 10px;">整合</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/27/hexo%E4%BD%BF%E7%94%A8/">hexo使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/17/spring%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">spring单元测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/jsonp%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82/">jsonp跨域请求</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/mybatis%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/">mybatis初步使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/ControllerAdvice/">spring mvc advice</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杰<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

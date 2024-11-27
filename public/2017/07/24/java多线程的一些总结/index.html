@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>java多线程的一些总结 | du小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.java线程创建方式 创建线程 继承 Thread重写 run方法,调用 start方法。12345new Thread()&#123;public void run() &#123;System.out.println(&quot;Thread&quot;);&#125;;&#125;.start(); Thread构造函数 中传入 Runnable 实现类,调用 start方法。  123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java多线程的一些总结">
+<meta property="og:url" content="https://wenjies.github.io/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="du小站">
+<meta property="og:description" content="1.java线程创建方式 创建线程 继承 Thread重写 run方法,调用 start方法。12345new Thread()&#123;public void run() &#123;System.out.println(&quot;Thread&quot;);&#125;;&#125;.start(); Thread构造函数 中传入 Runnable 实现类,调用 start方法。  123">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-07-24T01:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-27T03:20:35.235Z">
+<meta property="article:author" content="杰">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="du小站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">du小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我们笑着说再见，却深知再见遥遥无期。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wenjies.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java多线程的一些总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2017-07-24T01:00:00.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      java多线程的一些总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-java线程创建方式"><a href="#1-java线程创建方式" class="headerlink" title="1.java线程创建方式"></a>1.java线程创建方式</h1><hr>
+<h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><ol>
+<li>继承 Thread重写 run方法,调用 start方法。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">new Thread()&#123;</span><br><span class="line">public void run() &#123;</span><br><span class="line">System.out.println(&quot;Thread&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">&#125;.start();</span><br></pre></td></tr></table></figure></li>
+<li>Thread构造函数 中传入 Runnable 实现类,调用 start方法。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run() &#123;</span><br><span class="line">		System.out.println(&quot;Runnable&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>线程池中submit一个 (<em>Callable</em> ) 代码如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService service = Executors.newSingleThreadExecutor();</span><br><span class="line">Future&lt;String&gt; future = service.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">	public String call() throws Exception &#123;</span><br><span class="line">		return &quot;Callable&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line">future.get();</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>创建Timer</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Timer().schedule(</span><br><span class="line">		new TimerTask()&#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				System.out.println(&quot;Timer&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, </span><br><span class="line">10000,</span><br><span class="line">1000);</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-线程间的通信方式"><a href="#2-线程间的通信方式" class="headerlink" title="2.线程间的通信方式"></a>2.线程间的通信方式</h1><h3 id="1-线程同步synchronized、notify、wait"><a href="#1-线程同步synchronized、notify、wait" class="headerlink" title="1. 线程同步synchronized、notify、wait"></a>1. 线程同步synchronized、notify、wait</h3><ul>
+<li>如果对象调用了wait方法就会 使持有该对象的线程把该对象的控制权交出去，然后处于等待状态。</li>
+<li>如果对象调用了notify方法就会通知某个正在等待这个对象的控制权的线程可以继续运行。（但不是立即）</li>
+<li>如果对象调用了notifyAll方法就会通知所有等待这个对象控制权的线程继续运行。（但不是立即）</li>
+<li>wait、notify必须用在synchronized块里面。</li>
+<li>下面主线程和子线程轮流打印5次例子：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class SynchronizedDemo &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		final Worker business = new Worker();</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">					try &#123;</span><br><span class="line">						business.sub(i);</span><br><span class="line">					&#125; catch (Exception e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;.start();</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">			business.main(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class Worker &#123;</span><br><span class="line">	private boolean isSub = true;</span><br><span class="line"></span><br><span class="line">	public synchronized void sub(int i) throws Exception &#123;</span><br><span class="line">		while (!isSub) &#123;</span><br><span class="line">			this.wait();</span><br><span class="line">		&#125;</span><br><span class="line">		for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">			System.out.println(&quot;sub: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">		&#125;</span><br><span class="line">		isSub = false;</span><br><span class="line">		this.notify();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public synchronized void main(int i) throws InterruptedException &#123;</span><br><span class="line">		while (isSub) &#123;</span><br><span class="line">			this.wait();</span><br><span class="line">		&#125;</span><br><span class="line">		for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">			System.out.println(&quot;main: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">		&#125;</span><br><span class="line">		isSub = true;</span><br><span class="line">		this.notify();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-利用ReentrantLock、Condition"><a href="#2-利用ReentrantLock、Condition" class="headerlink" title="2. 利用ReentrantLock、Condition"></a>2. 利用ReentrantLock、Condition</h3><ul>
+<li>如果Lock调用了await()方法就会 使持有该对象的线程把该对象的控制权交出去，然后处于等待状态。</li>
+<li>如果对象调用了signal方法就会通知某个正在等待这个对象的控制权的线程可以继续运行。（但不是立即）</li>
+<li>如果对象调用了signalAll方法就会通知所有等待这个对象控制权的线程继续运行。（但不是立即）</li>
+<li>lock.unlock() 一定要写在 finally 块里防止异常释放锁失败造成死锁。</li>
+<li>下面主线程和子线程轮流打印5次例子：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public class ReentrantLockDemo &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		final Worker2 business = new Worker2();</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">					try &#123;</span><br><span class="line">						business.sub(i);</span><br><span class="line">					&#125; catch (Exception e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;.start();</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= 2; i++) &#123;</span><br><span class="line">			business.main(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">class Worker2 &#123;</span><br><span class="line">	Lock lock = new ReentrantLock();</span><br><span class="line">	Condition condition = lock.newCondition();</span><br><span class="line">	private boolean isSub = true;</span><br><span class="line">	public void sub(int i) throws InterruptedException &#123;</span><br><span class="line">		lock.lock();</span><br><span class="line">		try &#123;</span><br><span class="line">			while (!isSub) &#123;</span><br><span class="line">				condition.await();</span><br><span class="line">			&#125;</span><br><span class="line">			for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">				System.out.println(&quot;sub: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">			&#125;</span><br><span class="line">			isSub = false;</span><br><span class="line">			condition.signal();</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			lock.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void main(int i) throws InterruptedException &#123;</span><br><span class="line">		lock.lock();</span><br><span class="line">		try &#123;</span><br><span class="line">			while (isSub) &#123;</span><br><span class="line">				condition.await();</span><br><span class="line">			&#125;</span><br><span class="line">			for (int j = 1; j &lt;= 5; j++) &#123;</span><br><span class="line">				System.out.println(&quot;main: &quot; + i + &quot; times &quot; + &quot;,  loop &quot; + j);</span><br><span class="line">			&#125;</span><br><span class="line">			isSub = true;</span><br><span class="line">			condition.signal();</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			lock.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）"><a href="#3-volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）" class="headerlink" title="3. volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）"></a>3. volatile能保证所修饰的变量对于多个线程可见性，即只要被修改，其它线程读到的一定是最新的值。（并不能保证，线程并发修改的数据是安全的）</h3><h3 id="4-并发工具类"><a href="#4-并发工具类" class="headerlink" title="4. 并发工具类"></a>4. 并发工具类</h3><ul>
+<li>Semaphore 线程调用semaphore.acquire()获取资源使用权 当获取到资源执行，否则一直阻塞 等待获取资源Semaphore 构造函数中必须有<br>最大的数量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	final Semaphore semaphore = new Semaphore(1);</span><br><span class="line">	for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">		new Thread() &#123;</span><br><span class="line">			@Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				try &#123;</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot; 我申请坑位&quot;);</span><br><span class="line">					semaphore.acquire(1);</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot; 我申请到坑位啦&quot;);</span><br><span class="line">					Thread.sleep(5000);</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + &quot;:  我完事啦&quot;);</span><br><span class="line">					semaphore.release();</span><br><span class="line">				&#125; catch (InterruptedException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;.start();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Callable、Future 必须在线程池中使用，调用future.get()的线程会阻塞等待结果。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	ExecutorService service = Executors.newSingleThreadExecutor();</span><br><span class="line">	final Future&lt;String&gt; future = service.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">		public String call() throws Exception &#123;</span><br><span class="line">			System.out.println(&quot;我在计算中&quot;);</span><br><span class="line">			Thread.sleep(1000);</span><br><span class="line">			return &quot;hello&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	service.submit(new Runnable() &#123;</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				System.out.println(&quot;我在等待结果中&quot;);</span><br><span class="line">				System.out.println(&quot;结果: &quot;+future.get());</span><br><span class="line">			&#125; catch (Exception e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	service.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Exchanger仅适用与两个线程间数据的交换(类是与买东西 找补)。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> public static void main(String[] args) &#123;</span><br><span class="line">	final Exchanger&lt;Integer&gt; exchanger=new Exchanger&lt;Integer&gt;();</span><br><span class="line">	 new Thread()&#123;</span><br><span class="line">		 @Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			 System.out.println(Thread.currentThread().getName()+ &quot;那谁，我要给你5块&quot;);</span><br><span class="line">			 try &#123;</span><br><span class="line">				Integer exchange = exchanger.exchange(5);</span><br><span class="line">				System.out.println(Thread.currentThread().getName()+ &quot;收到：&quot;+exchange +&quot; 块 &quot;);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125;.start();</span><br><span class="line">	 </span><br><span class="line">	 new Thread()&#123;</span><br><span class="line">		 @Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			 System.out.println(Thread.currentThread().getName()+ &quot;那谁，我要找你1块&quot;);</span><br><span class="line">			 try &#123;</span><br><span class="line">				 Integer exchange = exchanger.exchange(1);</span><br><span class="line">			     System.out.println(Thread.currentThread().getName()+ &quot;收到：&quot;+exchange +&quot; 块 &quot;);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				// TODO Auto-generated catch block</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125;.start();</span><br><span class="line">	 </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CyclicBarrier 用于多个线程都准备等待,当同时等待的线程达到规定数量后 所有线程自动唤醒运行。 （类似汽车票站<br>没有检够票数不发车）相比CountDownLatch,CyclicBarrier不需要其他线程来唤醒等待的线程.CyclicBarrier 的构造函数 等待线程数量<br>达到规定数量线程开始运行。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	CyclicBarrier cyclicBarrier=new CyclicBarrier(5);</span><br><span class="line">	for(int i=0;i&lt;5;i++) &#123;</span><br><span class="line">		 new Thread()&#123;</span><br><span class="line">			 @Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				 try &#123;</span><br><span class="line">					 cyclicBarrier.await();</span><br><span class="line">					Thread.sleep((long) (Math.random()*1000));</span><br><span class="line">					System.out.println(Thread.currentThread().getName()+ &quot;:  开始跑啦&quot;);</span><br><span class="line">				&#125; catch (Exception e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;.start();;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CountDownLatch 用于多个线程都准备等待，接到命令后 统一运行（类似 赛跑比赛）CountDownLatch的构造函数中的数字表示等待者必须接到几次命令后<br>开始运行等待者待用调用countDownLatch.await()后开始阻塞发布命令者调用一次或多次countDownLatch.countDown()后唤醒等待者。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	 final CountDownLatch countDownLatch=new CountDownLatch(1);</span><br><span class="line">	 for(int i=0;i&lt;3;i++) &#123;</span><br><span class="line">		 new Thread()&#123;</span><br><span class="line">			 @Override</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				 try &#123;</span><br><span class="line">					countDownLatch.await();</span><br><span class="line">					Thread.sleep((long) (Math.random()*1000));</span><br><span class="line">					System.out.println(Thread.currentThread().getName()+ &quot;:  开始跑啦&quot;);</span><br><span class="line">				&#125; catch (InterruptedException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;.start();</span><br><span class="line">	 &#125;</span><br><span class="line">	 </span><br><span class="line">	 Thread.sleep(2000);</span><br><span class="line">	 System.out.println(Thread.currentThread().getName()+ &quot;:  准备&quot;);</span><br><span class="line">	 countDownLatch.countDown();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-线程常用api"><a href="#3-线程常用api" class="headerlink" title="3.线程常用api"></a>3.线程常用api</h1><ol>
+<li>join()：线程的合并的含义就是将几个并行线程的线程合并为一个单线程执行，应用场景是当一个线程必须等待另一个线程执行完毕才能执行时可以使用join方法。</li>
+<li>yield(): 暂停当前正在执行的线程对象，并执行其他线程。（当前时间片）。</li>
+<li>interrupt():中断线程。</li>
+<li>sleep(long millis)：暂停执行(不会释放占有资源)。</li>
+</ol>
+<h1 id="4-线程池"><a href="#4-线程池" class="headerlink" title="4.线程池"></a>4.线程池</h1><h3 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h3><pre><code>1.ThreadPoolExecutor：ThreadPoolExecutor(int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue&lt;Runnable&gt; workQueue)
+    1.	当线程池实际线程数小于corePoolSize时，有新的任务加入则优先创建线程。
+    2.	当线程池实际线程数等于corePoolSize时，有新的任务加入则加入队列。
+    3.	当线程池实际线程数等于corePoolSize时，有新的任务加入若队列已满，则在总线程数不大于maximumPoolSize的前提下，创建新的线程。
+    4.	当线程池实际线程数等于maximumPoolSize，有新的任务加入则执行拒绝策略（默认抛异常）。可自定义拒绝策略 需实现RejectedExecutionHandler接口。
+    总结：所以关键点是： 队列是否会满若是无限队列（可能系统资源耗尽） ,maximumPoolSize是否会达到最大值。
+
+2.Executors工具提供四种线程池(基于 ThreadPoolExecutor )，分别为：
+    1.	newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+    2.	newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+    3.	newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+    4.	newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+</code></pre>
+<h1 id="5-Java死锁范例以及如何分析死锁"><a href="#5-Java死锁范例以及如何分析死锁" class="headerlink" title="5.Java死锁范例以及如何分析死锁"></a>5.Java死锁范例以及如何分析死锁</h1><h3 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h3><pre><code>1.死锁是这样一种情形：多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放,而那个资源又不能被释放。导致线程被无限期地阻塞，因此程序不可能正常终止。(等待一个永远无法获取的资源)
+2.java 死锁产生的四个必要条件：
+    1、互斥使用，即当资源被一个线程使用(占有)时，别的线程不能使用
+    2、不可抢占，资源请求者不能强制从资源占有者手中夺取资源，资源只能由资源占有者主动释放。
+    3、请求和保持，即当资源请求者在请求其他的资源的同时保持对原有资源的占有。
+    4、循环等待，即存在一个等待队列：P1占有P2的资源，P2占有P3的资源，P3占有P1的资源。这样就形成了一个等待环路。
+</code></pre>
+<h3 id="死锁方式"><a href="#死锁方式" class="headerlink" title="死锁方式"></a>死锁方式</h3><ol>
+<li></li>
+</ol>
+<p>第一种synchronized方式死锁：线程thread1先获取锁locka，然后在同步块里嵌套竞争锁lockb。而线程thread2先获取锁lockb，然后在同步块里嵌套竞争锁locka。此时已经被线程thread1拥有，而thread1在等待lockb，而lockb被thread2拥有，thread2在等待locka……无线循环。(<br>synchronized (locka){ …; synchronized (locka){…;} ….; } )</p>
+<ol start="2">
+<li>第二种concurrent包Lock错误使用，导致死锁：释放锁使用地方不规范，导致死锁不能正常释放！ 应该在finally块里 lock.unlock();</li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
+<li>修改代码才能从根本解决问题。</li>
+<li>检查问题代码<ol>
+<li>使用一些静态分析库可以帮助我们发现可能出现的死锁。</li>
+<li>它其中包含连个方法findDeadlockedThreads()和findMonitorDeadlockedThreads()，用来查找处于死锁。代码如下：thread1<br>和thread2 死锁状态。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	final Object lock1 = new Object();</span><br><span class="line">	final Object lock2 = new Object();</span><br><span class="line"></span><br><span class="line">	Thread thread1 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			synchronized (lock1) &#123;</span><br><span class="line">				System.out.println(&quot;Thread1 acquired lock1&quot;);</span><br><span class="line">				try &#123;</span><br><span class="line">					TimeUnit.MILLISECONDS.sleep(500);</span><br><span class="line">				&#125; catch (InterruptedException ignore) &#123;</span><br><span class="line">				&#125;</span><br><span class="line">				synchronized (lock2) &#123;</span><br><span class="line">					System.out.println(&quot;Thread1 acquired lock2&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;);</span><br><span class="line">	thread1.start();</span><br><span class="line"></span><br><span class="line">	Thread thread2 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			synchronized (lock2) &#123;</span><br><span class="line">				System.out.println(&quot;Thread2 acquired lock2&quot;);</span><br><span class="line">				synchronized (lock1) &#123;</span><br><span class="line">					System.out.println(&quot;Thread2 acquired lock1&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	thread2.start();</span><br><span class="line">	try &#123;</span><br><span class="line">		Thread.sleep(20000);</span><br><span class="line">	&#125; catch (InterruptedException e) &#123;</span><br><span class="line">		// TODO Auto-generated catch block</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	Thread thread3 = new Thread(new Runnable() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			ThreadMXBean mbean = ManagementFactory.getThreadMXBean();</span><br><span class="line">			long[] findDeadlockedThreads = mbean.findDeadlockedThreads();</span><br><span class="line">			if (findDeadlockedThreads != null) &#123;</span><br><span class="line">				ThreadInfo[] threadInfos = mbean.getThreadInfo(findDeadlockedThreads);</span><br><span class="line">				for (ThreadInfo threadInfo : threadInfos) &#123;</span><br><span class="line">					//获取线程</span><br><span class="line">					for (Thread thread : Thread.getAllStackTraces().keySet()) &#123;</span><br><span class="line">						if (thread.getId() == threadInfo.getThreadId()) &#123;</span><br><span class="line">							System.err.println(threadInfo.toString().trim());</span><br><span class="line">							for (StackTraceElement ste : thread.getStackTrace()) &#123;</span><br><span class="line">								System.err.println(&quot;t&quot; + ste.toString().trim());</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	thread3.start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2017/07/24/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/" data-id="cm3zaz9c5000itgu63dl8eyh2" data-title="java多线程的一些总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/08/rocketmq%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          rocketmq初步学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/23/Spring%E4%B8%AD%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Spring中事务的一些特性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bean/" rel="tag">bean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rocketmq/" rel="tag">rocketmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aop/" style="font-size: 10px;">aop</a> <a href="/tags/bean/" style="font-size: 10px;">bean</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rocketmq/" style="font-size: 10px;">rocketmq</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">事务</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">分布式事务</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 16.67px;">基础知识</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">定时任务</a> <a href="/tags/%E6%89%A9%E5%B1%95/" style="font-size: 10px;">扩展</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 10px;">整合</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/27/hexo%E4%BD%BF%E7%94%A8/">hexo使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/17/spring%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">spring单元测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/jsonp%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82/">jsonp跨域请求</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/mybatis%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/">mybatis初步使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/ControllerAdvice/">spring mvc advice</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 杰<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
