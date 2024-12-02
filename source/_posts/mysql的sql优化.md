@@ -1,5 +1,6 @@
 ---
-title: "mysql的sql优化"
+title: mysql的sql优化
+excerpt: sql优化分析
 date: 2016-08-03 09:00:00
 categories: 数据库
 tags:
@@ -12,7 +13,7 @@ tags:
 
 > EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
-	![](../images/mysql/y_h_1.jpg)
+![](../images/mysql/y_h_1.jpg)
 
 ----------
 
@@ -22,7 +23,7 @@ tags:
 > CREATE INDEX idx_n ON t_user(`name`);
 > EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
-	![](../images/mysql/y_h_2.jpg)
+![](../images/mysql/y_h_2.jpg)
 
 ----------
 
@@ -32,7 +33,7 @@ tags:
 > CREATE INDEX idx_a_n ON t_user(address,`name`);
 > EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
-	![](../images/mysql/y_h_3.jpg)
+![](../images/mysql/y_h_3.jpg)
 
  
 ----------
@@ -45,7 +46,7 @@ tags:
 > 1、“t_user u LEFT JOIN t_user_role” 所以“u.id=ur.user_id”中user_id应建索引
 > 2、“LEFT JOIN t_role”所以“ur.role_id =r.id”中id应建索引。因为id为主键所以本身就是主键索引。
 
-	![](../images/mysql/y_h_5.jpg)
+![](../images/mysql/y_h_5.jpg)
 
  
 ----------
@@ -56,7 +57,7 @@ tags:
 > 1、“RIGHT JOIN t_user_role ur” 所以“ u.id=ur.user_id”中id应建索引，因为id为主键所以本身就是主键索引。
 > 2、“RIGHT JOIN t_role r”所以“ur.role_id =r.id”中role_id应建索引。
 
-	![](../images/mysql/y_h_6.jpg)
+![](../images/mysql/y_h_6.jpg)
 
  
 ----------

@@ -1,5 +1,6 @@
 ---
-title: "获取spring中的bean"
+title: 获取spring中的bean
+excerpt: 获取spring中的bean的常用方式
 date: 2016-10-01 09:00:00
 categories: Spring
 tags:

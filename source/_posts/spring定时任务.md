@@ -1,5 +1,6 @@
 ---
 title: spring定时任务
+excerpt: spring定时任务使用的方式
 date: 2016-05-01 00:00:00
 categories: Spring
 tags:

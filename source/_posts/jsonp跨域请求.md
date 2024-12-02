@@ -1,5 +1,6 @@
 ---
 title: jsonp跨域请求
+excerpt: jsonp跨域请求的使用示例
 date: 2017-09-16 09:00:00
 categories: AJAX
 tags:

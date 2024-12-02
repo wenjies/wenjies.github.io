@@ -1,5 +1,6 @@
 ---
 title: java抽象类vs接口
+excerpt: 抽象类和接口的比较和却别
 date: 2016.02.21 20:33:00
 category: JAVA
 tags:

@@ -1,5 +1,6 @@
 ---
-title: "spring mvc的interceptor"
+title: spring mvc的interceptor
+excerpt: spring mvc的interceptor的简单使用
 date: 2017-09-13 09:00:00
 categories: Spring
 tags:

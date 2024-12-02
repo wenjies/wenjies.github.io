@@ -1,5 +1,6 @@
 ---
-title: "Spring中事务的一些特性"
+title: Spring中事务的一些特性
+excerpt: 事务的一些特性
 date: 2017-05-23 09:00:00
 categories: Spring
 tags:

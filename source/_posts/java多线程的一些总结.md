@@ -1,5 +1,6 @@
 ---
-title: "java多线程的一些总结"
+title: java多线程的一些总结
+excerpt: java多线程的创建方式、线程间的通信方式。
 date: 2017-07-24 09:00:00
 category: JAVA
 tags:

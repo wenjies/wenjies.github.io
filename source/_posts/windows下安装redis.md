@@ -1,5 +1,6 @@
 ---
-title: "windows下安装redis"
+title: windows下安装redis
+excerpt: windows下安装redis的介绍
 date: 2016-11-16 09:00:00
 categories: Redis
 tags:

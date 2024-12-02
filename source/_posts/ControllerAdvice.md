@@ -1,14 +1,13 @@
 ---
 title: "spring mvc advice"
+excerpt: ControllerAdvice 除了可以完成全局异常的处理，同时也可以在真正调用方法之前对body 中的请求参数进行处理，以及在对body 数据相应写回之前对数据进行处理；
 date: 2017-09-14 09:00:00
-category: spring
+category: Spring
 tags:
   - mvc
 ---
 
-## ControllerAdvice
-
-**`ControllerAdvice`**
+**`ControllerAdvice`** 除了可以完成全局异常的处理，同时也可以在真正调用方法之前对body 中的请求参数进行处理，以及在对body 数据相应写回之前对数据进行处理；
 
 1. Controller的增强
 2. 每个请求都会进入

@@ -1,5 +1,6 @@
 ---
 title: join的7种方式
+excerpt: 本文详细介绍了MySQL中的JOIN关键字在查询时的关键作用，包括INNER JOIN、LEFT OIN、RIGHT JOIN的不同用法
 date: 2016-08-02 09:00:00
 categories: 数据库
 tags:
@@ -21,7 +22,7 @@ tags:
 > LEFT JOIN t_role r ON ur.role_id = r.id
 > WHERE u.id=1 AND r.id=1
 
-	![](../images/mysql/7-join-r1.png)	
+![](../images/mysql/7-join-r1.png)	
 
 	>	SELECT * FROM t_user u   LEFT JOIN t_user_role ur   ON ur.user_id = u.id
 		   AND  ur.user_id=1 LEFT JOIN t_role r   ON ur.role_id = r.id
@@ -29,7 +30,7 @@ tags:
 
 
 
-	![](../images/mysql/7-join-r2.png)
+![](../images/mysql/7-join-r2.png)
 
 2. 从使用索引的情况来看
 
@@ -37,7 +38,7 @@ tags:
 > LEFT JOIN t_role r ON ur.role_id = r.id
 > WHERE u.id=1 AND r.id=1
 
-	![](../images/mysql/7-join-r3.png)	
+![](../images/mysql/7-join-r3.png)	
 
 	>	EXPLAIN SELECT * FROM t_user u   LEFT JOIN t_user_role ur   
 	 		ON ur.user_id = u.id   AND  ur.user_id=1
@@ -46,7 +47,7 @@ tags:
 
 
 
-	![](../images/mysql/7-join-r4.png)
+![](../images/mysql/7-join-r4.png)
 
 3. 结论：
 

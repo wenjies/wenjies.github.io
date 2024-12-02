@@ -1,5 +1,5 @@
 ---
-title: "rocketmq初步学习"
+title: rocketmq初步学习
 excerpt: Apache RocketMQ 是一款低延迟、高并发、高可用、高可靠的分布式消息中间件。消息队列 RocketMQ 可为分布式应用系统提供异步解耦和削峰填谷的能力，同时也具备互联网应用所需的海量消息堆积、高吞吐、可靠重试等特性。
 date: 2017-09-08 09:00:00
 categories: MQ

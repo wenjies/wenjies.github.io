@@ -1,5 +1,6 @@
 ---
 title: JAVA面试总结
+excerpt: Java面试总结‌
 date: 2017.05.17 17:28:00
 category: 经验
 tags:

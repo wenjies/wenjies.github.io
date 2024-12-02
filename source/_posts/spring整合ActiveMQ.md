@@ -1,5 +1,6 @@
 ---
-title: "spring 整合 ActiveMQ "
+title: spring整合ActiveMQ
+excerpt: spring整合ActiveMQ的例子
 date: 2016-12-13 09:00:00
 categories: Spring
 tags:

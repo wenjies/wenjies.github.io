@@ -1,5 +1,6 @@
 ---
-title: "spring单元测试"
+title: spring单元测试
+excerpt: spring单元测试的例子
 date: 2017-10-17 09:00:00
 categories: Spring
 tags:

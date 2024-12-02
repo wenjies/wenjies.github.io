@@ -1,5 +1,6 @@
 ---
 title: mybatis初步使用
+excerpt: mybatis常用的使用示例
 date: 2017-09-15 09:00:00
 categories: Mybatis
 tags:

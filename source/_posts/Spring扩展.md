@@ -1,5 +1,6 @@
 ---
-title: "Spring扩展"
+title: Spring扩展
+excerpt: Spring扩展的简单示例
 date: 2017-05-22 09:00:00
 categories: Spring
 tags:

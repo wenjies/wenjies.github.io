@@ -1,5 +1,6 @@
 ---
-title: "mysql自定义函数"
+title: mysql自定义函数
+excerpt: 自定义函数 (user-defined function UDF)就是用一个象ABS() 或 CONCAT() 这样的固有（内建）函数一样作用的新函数去扩展MySQL。所以UDF是对MySQL功能的一个扩展
 date: 2016-08-11 09:00:00
 categories: 数据库
 tags:
@@ -8,8 +9,7 @@ tags:
 
 ## 自定义函数
 
-- 自定义函数:  自定义函数 (user-defined function UDF)就是用一个象ABS() 或 CONCAT()
-  这样的固有（内建）函数一样作用的新函数去扩展MySQL。所以UDF是对MySQL功能的一个扩展
+- 自定义函数:  自定义函数 (user-defined function UDF)就是用一个象ABS() 或 CONCAT() 这样的固有（内建）函数一样作用的新函数去扩展MySQL。所以UDF是对MySQL功能的一个扩展
 
 **`语法`**
 > DELIMITER $$
