@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>mysql存储过程 | du小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql存储过程">
+<meta property="og:url" content="https://wenjies.github.io/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="du小站">
+<meta property="og:description" content="SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-08-12T01:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-02T02:13:29.177Z">
+<meta property="article:author" content="杰">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="du小站" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">du小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我们笑着说再见，却深知再见遥遥无期。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wenjies.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mysql存储过程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2016-08-12T01:00:00.000Z" itemprop="datePublished">2016-08-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      mysql存储过程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="存储过程简介"><a href="#存储过程简介" class="headerlink" title="存储过程简介"></a>存储过程简介</h2><ol>
+<li><p>SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。</p>
+</li>
+<li><p>存储过程是可编程的函数，在数据库中创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。</p>
+</li>
+</ol>
+<h2 id="存储过程的优点"><a href="#存储过程的优点" class="headerlink" title="存储过程的优点"></a>存储过程的优点</h2><ol>
+<li><p>增强SQL语言的功能和灵活性：存储过程可以用控制语句编写，有很强的灵活性，可以完成复杂的判断和较复杂的运算。</p>
+</li>
+<li><p>标准组件式编程：存储过程被创建后，可以在程序中被多次调用，而不必重新编写该存储过程的SQL语句。减小程序业务的复杂性，在一定程度上降低了程序的耦合性。</p>
+</li>
+<li></li>
+</ol>
+<p>较快的执行速度：如果某一操作包含大量的Transaction-SQL代码或分别被多次执行，那么存储过程要比批处理的执行速度快很多。因为存储过程是预编译的。在首次运行一个存储过程时查询，优化器对其进行分析优化，并且给出最终被存储在系统表中的执行计划。而批处理的Transaction-SQL语句在每次运行时都要进行编译和优化，速度相对要慢一些。</p>
+<ol start="4">
+<li><p>减少网络流量：针对同一个数据库对象的操作（如查询、修改），如果这一操作所涉及的Transaction-SQL语句被组织进存储过程，那么当在客户计算机上调用该存储过程时，网络中传送的只是该调用语句，从而大大减少网络流量并降低了网络负载。</p>
+</li>
+<li><p>作为一种安全机制来充分利用：通过对执行某一存储过程的权限进行限制，能够实现对相应的数据的访问权限的限制，避免了非授权用户对数据的访问，保证了数据的安全。<br>不同的排序算法性质有所不同，衡量算法的效率，通常是用资源，例如<code>CPU</code>(时间)占用、内存占用、硬盘占用和网络占用。当讨论大<code>O</code><br>表示法时，一般考虑的是<code>CPU</code>占用。</p>
+</li>
+</ol>
+<h2 id="MySQL存储过程的"><a href="#MySQL存储过程的" class="headerlink" title="MySQL存储过程的"></a>MySQL存储过程的</h2><p><strong><code>语法</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型[,[IN|OUT|INOUT] 参数名 数据类型…]]) [特性 ...] 过程体
+DELIMITER ;
+</code></pre>
+<p><strong><code>分隔符</code></strong></p>
+<blockquote>
+<p>所以要事先用“DELIMITER $$”声明当前段分隔符，让编译器把两个”$$”<br>之间的内容当做存储过程的代码，不会执行这些代码；“DELIMITER;”的意为把分隔符还原。BEGIN …<br>END之间是我们要编写的部分。MySQL默认以”;”为分隔符，如果没有声明分割符，则编译器会把存储过程当成SQL语句进行处理，因此编译过程会报错。</p>
+</blockquote>
+<p><strong><code>参数</code></strong></p>
+<blockquote>
+<p>存储过程根据需要可能会有输入、输出、输入输出参数，如果有多个参数用”,”<br>分割开。MySQL存储过程的参数用在存储过程的定义，共有三种参数类型,IN,OUT,INOUT:</p>
+</blockquote>
+<ul>
+<li>IN参数的值必须在调用存储过程时指定，在存储过程中修改该参数的值不能被返回，为默认值</li>
+<li>OUT:该值可在存储过程内部被改变，并可返回</li>
+<li>INOUT:调用时指定，并且可被改变和返回</li>
+</ul>
+<p><strong><code>过程体</code></strong></p>
+<blockquote>
+<p>过程体的开始与结束使用BEGIN与END进行标识。</p>
+</blockquote>
+<p><strong><code>IN参数例子</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE
+    PROCEDURE p_in(IN parm_in INT)
+    BEGIN
+        SELECT parm_in;#若注掉 结果：5
+        SET parm_in=5;
+        SELECT parm_in;
+    END$$
+DELIMITER ;
+</code></pre>
+<p>调用<br>SET @p_in&#x3D;1;<br>CALL p_in(@p_in);<br>SELECT @p_in;<br>结果：5</p>
+<p><strong><code>OUT参数例子</code></strong></p>
+<blockquote>
+<pre><code>DELIMITER $$
+</code></pre>
+</blockquote>
+<pre><code>CREATE
+    PROCEDURE p_out(IN parm_out INT)
+    BEGIN
+    SELECT parm_out;#若注掉 结果：5
+    SET parm_out=5;
+    SELECT parm_out;
+    END$$
+DELIMITER ;
+</code></pre>
+<p>调用<br>SET @p_out&#x3D;1;<br>CALL p_out(@p_out);<br>SELECT @p_out;<br>结果：1</p>
+<p><strong><code>INOUT参数例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>CREATE<br>PROCEDURE p_in_out(IN parm_in_out INT)<br>BEGIN<br>SELECT parm_in_out; #若注掉 结果：5<br>SET parm_in_out&#x3D;5;<br>SELECT parm_in_out;<br>END$$<br>DELIMITER ;<br>调用<br>SET @p_in_out&#x3D;1;<br>CALL p_in_out(@p_in_out);<br>SELECT @p_in_out;<br>结果：1</p>
+</blockquote>
+<p><strong><code>动态拼接sql例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS dsql $$<br>CREATE PROCEDURE dsql(IN parameter INT,IN name1 VARCHAR(64))<br>BEGIN<br>SET @sql1&#x3D;’SELECT * FROM t_user u WHERE 1&#x3D;1’;<br>IF parameter IS NOT NULL THEN<br>SET @sql1&#x3D; CONCAT(@sql1,’ and u.id &#x3D; ‘,parameter);<br>END IF ;<br>IF (name1 IS NOT NULL AND name1!&#x3D;’’) THEN<br>SET @sql1&#x3D; CONCAT(@sql1,’ and u.name LIKE&#39;%’,name1,’%&#39;‘);<br>END IF ;<br>PREPARE stmt FROM @sql1;<br>EXECUTE stmt;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<p><strong><code>实际例子</code></strong></p>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS ckm $$<br>CREATE<br>PROCEDURE ckm(IN t1 INT)<br>BEGIN<br>DECLARE u_time TIMESTAMP;<br>SELECT t.update_time INTO u_time FROM tx_msg_task t ;<br>UPDATE tx_msg_task SET update_time&#x3D;NOW();<br>DELETE uk FROM tx_msg_uk uk INNER JOIN tx_msg_hc h ON uk.msg_key&#x3D;h.msg_key;</p>
+</blockquote>
+<pre><code>    PREPARE sql1 FROM &#39;SELECT * FROM tx_msg_uk u  WHERE DATE_SUB(NOW(),INTERVAL ? MINUTE) &gt;=u.update_time&#39;;
+    SET @a = t1;
+    EXECUTE sql1 USING @a;#多个可以，分割
+    DEALLOCATE PREPARE sql1;#清理资源
+    END$$
+DELIMITER ; 
+</code></pre>
+<h2 id="MySQL存储过程的调用"><a href="#MySQL存储过程的调用" class="headerlink" title="MySQL存储过程的调用"></a>MySQL存储过程的调用</h2><pre><code>用call和过程名以及一个括号，括号里面根据需要，加入参数，参数包括输入参数、输出参数、输入输出参数。CALL
+</code></pre>
+<h2 id="MySQL存储过程的查询"><a href="#MySQL存储过程的查询" class="headerlink" title="MySQL存储过程的查询"></a>MySQL存储过程的查询</h2><pre><code>SELECT name FROM mysql.proc WHERE db=&#39;数据库名&#39;;
+SELECT routine_name FROM information_schema.routines WHERE routine_schema=&#39;数据库名&#39;;
+SHOW PROCEDURE STATUS WHERE db=&#39;数据库名&#39;;
+</code></pre>
+<h2 id="MySQL存储过程的删除"><a href="#MySQL存储过程的删除" class="headerlink" title="MySQL存储过程的删除"></a>MySQL存储过程的删除</h2><pre><code>DROP PROCEDURE [过程1[,过程2…]]
+从MySQL的表格中删除一个或多个存储过程。
+</code></pre>
+<h2 id="存储程序中的变量"><a href="#存储程序中的变量" class="headerlink" title="存储程序中的变量"></a>存储程序中的变量</h2><ol>
+<li>DECLARE局部变量 DECLARE var_name[,…] type [DEFAULT value]<br><br>这个语句被用来声明局部变量。 要给变量提供一个默认值，请包含一个DEFAULT子句。值可以被指定为一个表达式，不需要为一个常数。如果没有DEFAULT子句，初始值为NULL。<br>局部变量的作用范围在它被声明的BEGIN … END块内。它可以被用在嵌套的块中，除了那些用相同名字声明变量的块。</li>
+<li>变量SET语句 SET var_name &#x3D; expr [, var_name &#x3D; expr]<br><br>在存储程序中的SET语句是一般SET语句的扩展版本。被参考变量可能是子程序内声明的变量，或者是全局服务器变量。<br>在存储程序中的SET语句作为预先存在的SET语法的一部分来实现。这允许SET a&#x3D;x, b&#x3D;y,<br>…这样的扩展语法。其中不同的变量类型（局域声明变量及全局和集体变量）可以被混合起来。这也允许把局部变量和一些只对系统变量有意义的选项合并起来。</li>
+<li>SELECT … INTO<br><br>SELECT col_name[,…] INTO var_name[,…] table_expr这个SELECT语法把选定的列直接存储到变量。因此，只有单一的行可以被取回。<br>SELECT id,data INTO x,y FROM test.t1 LIMIT 1;</li>
+</ol>
+<p>列子：</p>
+<pre><code>SELECT &#39;Hello World&#39; INTO @a;
+SELECT @a;
+
+SET @b=&#39;Hello World&#39;;
+SELECT @b;
+
+SET @c=1+2+3;
+SELECT @c; 
+
+#在存储过程中使用用户变量
+CREATE PROCEDURE sayHi() SELECT CONCAT(@hi,&#39;...&#39;);
+SET @hi=&#39;hi&#39;;
+CALL sayHi(); 
+#在存储过程间传递全局范围的用户变量
+CREATE PROCEDURE tp1() SET @param=&#39;p1&#39;;
+CREATE PROCEDURE tp2() SELECT CONCAT(&#39;param... &#39;,@param);
+CALL tp1();
+CALL tp2(); 
+</code></pre>
+<h2 id="MySQL存储过程的控制语句"><a href="#MySQL存储过程的控制语句" class="headerlink" title="MySQL存储过程的控制语句"></a>MySQL存储过程的控制语句</h2><ol>
+<li>变量作用域: 内部变量在其作用域范围内享有更高的优先权，当执行到end时，内部变量消失，不再可见了，在存储<br>过程外再也找不到这个内部变量，但是可以通过out参数或者将其值指派给会话变量来保存其值。</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>DROP PROCEDURE IF EXISTS <code>proc</code>$$<br>CREATE PROCEDURE proc()<br>BEGIN<br>DECLARE x1 VARCHAR(5) DEFAULT ‘outer’;<br>BEGIN<br>DECLARE x1 VARCHAR(5) DEFAULT ‘inner’;<br>SELECT x1;<br>END;<br>SELECT x1;<br>END$$<br>DELIMITER ;<br>#调用<br>CALL proc();<br>结果：inner</p>
+</blockquote>
+<ol start="2">
+<li>条件语句 IF-THEN-ELSE</li>
+</ol>
+<blockquote>
+<p>DROP PROCEDURE IF EXISTS proc3 ;<br>DELIMITER $$<br>CREATE PROCEDURE proc3(IN parameter INT)<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;parameter+1;<br>IF var&#x3D;0 THEN<br>INSERT INTO t VALUES (17);<br>END IF ;<br>IF parameter&#x3D;0 THEN<br>UPDATE t SET s1&#x3D;s1+1;<br>ELSE<br>UPDATE t SET s1&#x3D;s1+2;<br>END IF ;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="3">
+<li>CASE-WHEN-THEN-ELSE语句</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc4 (IN parameter INT)<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;parameter+1;<br>CASE var<br>WHEN 0 THEN<br>INSERT INTO t VALUES (17);<br>WHEN 1 THEN<br>INSERT INTO t VALUES (18);<br>ELSE<br>INSERT INTO t VALUES (19);<br>END CASE ;<br>END$$<br>DELIMITER;</p>
+</blockquote>
+<ol start="4">
+<li>循环语句 WHILE-DO…END-WHILE</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc5()<br>BEGIN<br>DECLARE var INT;<br>SET var&#x3D;0;<br>WHILE var&lt;6 DO<br>INSERT INTO t VALUES (var);<br>SET var&#x3D;var+1;<br>END WHILE ;<br>END$$<br>DELIMITER;</p>
+</blockquote>
+<ol start="5">
+<li>REPEAT…END REPEAT 此语句的特点是执行操作后检查结果</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc6 ()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>REPEAT<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>UNTIL v&gt;&#x3D;5<br>END REPEAT;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="6">
+<li>LOOP…END LOOP</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc7 ()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>LOOP_LABLE:LOOP<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>IF v &gt;&#x3D;5 THEN<br>LEAVE LOOP_LABLE;<br>END IF;<br>END LOOP;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<ol start="7">
+<li><p>LABLES标号:标号可以用在begin repeat while 或者loop 语句前，语句标号只能在合法的语句前面使用。可以跳出循环，使运行指令达到复合语句的最后一步。</p>
+</li>
+<li><p>ITERATE迭代通过引用复合语句的标号,来从新开始复合语句</p>
+</li>
+</ol>
+<blockquote>
+<p>DELIMITER $$<br>CREATE PROCEDURE proc8()<br>BEGIN<br>DECLARE v INT;<br>SET v&#x3D;0;<br>LOOP_LABLE:LOOP<br>IF v&#x3D;3 THEN<br>SET v&#x3D;v+1;<br>ITERATE LOOP_LABLE;<br>END IF;<br>INSERT INTO t VALUES(v);<br>SET v&#x3D;v+1;<br>IF v&gt;&#x3D;5 THEN<br>LEAVE LOOP_LABLE;<br>END IF;<br>END LOOP;<br>END$$<br>DELIMITER ;</p>
+</blockquote>
+<h2 id="MySQL存储过程的基本函数"><a href="#MySQL存储过程的基本函数" class="headerlink" title="MySQL存储过程的基本函数"></a>MySQL存储过程的基本函数</h2><ol>
+<li><p>字符串类</p>
+<blockquote>
+<p>CHARSET(str) &#x2F;&#x2F;返回字串字符集<br>CONCAT (string2 [,… ]) &#x2F;&#x2F;连接字串<br>INSTR (string ,substring ) &#x2F;&#x2F;返回substring首次在string中出现的位置,不存在返回0<br>LCASE (string2 ) &#x2F;&#x2F;转换成小写<br>LEFT (string2 ,length ) &#x2F;&#x2F;从string2中的左边起取length个字符<br>LENGTH (string ) &#x2F;&#x2F;string长度<br>LOAD_FILE (file_name ) &#x2F;&#x2F;从文件读取内容<br>LOCATE (substring , string [,start_position ] ) 同INSTR,但可指定开始位置<br>LPAD (string2 ,length ,pad ) &#x2F;&#x2F;重复用pad加在string开头,直到字串长度为length<br>LTRIM (string2 ) &#x2F;&#x2F;去除前端空格<br>REPEAT (string2 ,count ) &#x2F;&#x2F;重复count次<br>REPLACE (str ,search_str ,replace_str ) &#x2F;&#x2F;在str中用replace_str替换search_str<br>RPAD (string2 ,length ,pad) &#x2F;&#x2F;在str后用pad补充,直到长度为length<br>RTRIM (string2 ) &#x2F;&#x2F;去除后端空格<br>STRCMP (string1 ,string2 ) &#x2F;&#x2F;逐字符比较两字串大小,<br>SUBSTRING (str , position [,length ]) &#x2F;&#x2F;从str的position开始,取length个字符,<br>TRIM([[BOTH|LEADING|TRAILING] [padding] FROM]string2) &#x2F;&#x2F;去除指定位置的指定字符<br>UCASE (string2 ) &#x2F;&#x2F;转换成大写<br>RIGHT(string2,length) &#x2F;&#x2F;取string2最后length个字符<br>SPACE(count) &#x2F;&#x2F;生成count个空格<br>注：mysql中处理字符串时，默认第一个字符下标为1，即参数position必须大于等于1</p>
+</blockquote>
+</li>
+<li><p>数学类</p>
+<blockquote>
+<p>ABS (number2 ) &#x2F;&#x2F;绝对值<br>BIN (decimal_number ) &#x2F;&#x2F;十进制转二进制<br>CEILING (number2 ) &#x2F;&#x2F;向上取整<br>CONV(number2,from_base,to_base) &#x2F;&#x2F;进制转换<br>FLOOR (number2 ) &#x2F;&#x2F;向下取整<br>FORMAT (number,decimal_places ) &#x2F;&#x2F;保留小数位数<br>HEX (DecimalNumber ) &#x2F;&#x2F;转十六进制<br>注：HEX()中可传入字符串，则返回其ASC-11码，如HEX(‘DEF’)返回4142143<br>也可以传入十进制整数，返回其十六进制编码，如HEX(25)返回19<br>LEAST (number , number2 [,..]) &#x2F;&#x2F;求最小值<br>MOD (numerator ,denominator ) &#x2F;&#x2F;求余<br>POWER (number ,power ) &#x2F;&#x2F;求指数<br>RAND([seed]) &#x2F;&#x2F;随机数<br>ROUND (number [,decimals ]) &#x2F;&#x2F;四舍五入,decimals为小数位数] 注：返回类型并非均为整数，如：<br>SIGN (number2 ) &#x2F;&#x2F; 正数返回1，负数返回-1<br>MINUTE(datetime) &#x2F;&#x2F;分返回符号,正负或0<br>SQRT(number2) &#x2F;&#x2F;开平方</p>
+</blockquote>
+</li>
+<li><p>日期时间类</p>
+<blockquote>
+<p>ADDTIME (date2 ,time_interval ) &#x2F;&#x2F;将time_interval加到date2<br>CONVERT_TZ (datetime2 ,fromTZ ,toTZ ) &#x2F;&#x2F;转换时区<br>CURRENT_DATE ( ) &#x2F;&#x2F;当前日期<br>CURRENT_TIME ( ) &#x2F;&#x2F;当前时间<br>CURRENT_TIMESTAMP ( ) &#x2F;&#x2F;当前时间戳<br>DATE (datetime ) &#x2F;&#x2F;返回datetime的日期部分<br>DATE_ADD (date2 , INTERVAL d_value d_type ) &#x2F;&#x2F;在date2中加上日期或时间<br>DATE_FORMAT (datetime ,FormatCodes ) &#x2F;&#x2F;使用formatcodes格式显示datetime<br>DATE_SUB (date2 , INTERVAL d_value d_type ) &#x2F;&#x2F;在date2上减去一个时间<br>DATEDIFF (date1 ,date2 ) &#x2F;&#x2F;两个日期差<br>DAY (date ) &#x2F;&#x2F;返回日期的天<br>DAYNAME (date ) &#x2F;&#x2F;英文星期<br>DAYOFWEEK (date ) &#x2F;&#x2F;星期(1-7) ,1为星期天<br>DAYOFYEAR (date ) &#x2F;&#x2F;一年中的第几天<br>EXTRACT (interval_name FROM date ) &#x2F;&#x2F;从date中提取日期的指定部分<br>MAKEDATE (year ,day ) &#x2F;&#x2F;给出年及年中的第几天,生成日期串<br>MAKETIME (hour ,minute ,second ) &#x2F;&#x2F;生成时间串<br>MONTHNAME (date ) &#x2F;&#x2F;英文月份名<br>NOW ( ) &#x2F;&#x2F;当前时间<br>SEC_TO_TIME (seconds ) &#x2F;&#x2F;秒数转成时间<br>STR_TO_DATE (string ,format ) &#x2F;&#x2F;字串转成时间,以format格式显示<br>TIMEDIFF (datetime1 ,datetime2 ) &#x2F;&#x2F;两个时间差<br>TIME_TO_SEC (time ) &#x2F;&#x2F;时间转秒数]<br>WEEK (date_time [,start_of_week ]) &#x2F;&#x2F;第几周<br>YEAR (datetime ) &#x2F;&#x2F;年份<br>DAYOFMONTH(datetime) &#x2F;&#x2F;月的第几天<br>HOUR(datetime) &#x2F;&#x2F;小时<br>LAST_DAY(date) &#x2F;&#x2F;date的月的最后日期<br>MICROSECOND(datetime) &#x2F;&#x2F;微秒<br>MONTH(datetime) &#x2F;&#x2F;月</p>
+</blockquote>
+</li>
+</ol>
+<!--http://www.cnblogs.com/mark-chan/p/5384139.html-->
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><pre><code>单行：--或 #
+多行：/*  */ 
+</code></pre>
+<h2 id="mybatis调用存储过程"><a href="#mybatis调用存储过程" class="headerlink" title="mybatis调用存储过程"></a>mybatis调用存储过程</h2><pre><code>&lt;select id=&quot;proFindUser&quot; resultMap=&quot;BaseResultMap&quot; statementType=&quot;CALLABLE&quot;&gt;
+    &#123;
+        CALL find_user(#&#123;uid,mode=IN,jdbcType=BIGINT&#125;,#&#123;name,mode=IN,jdbcType=VARCHAR&#125;)
+    &#125;
+&lt;/select&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wenjies.github.io/2016/08/12/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" data-id="cm3zaz9c6000ltgu6cdqk7y1i" data-title="mysql存储过程" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/13/mysql%E8%A7%86%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          mysql视图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/11/mysql%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">mysql自定义函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AJAX/">AJAX</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bean/" rel="tag">bean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/micrometer/" rel="tag">micrometer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rocketmq/" rel="tag">rocketmq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="tag">定时任务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95/" rel="tag">扩展</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B4%E5%90%88/" rel="tag">整合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aop/" style="font-size: 10px;">aop</a> <a href="/tags/bean/" style="font-size: 10px;">bean</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/micrometer/" style="font-size: 10px;">micrometer</a> <a href="/tags/mvc/" style="font-size: 13.33px;">mvc</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rocketmq/" style="font-size: 10px;">rocketmq</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">事务</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" style="font-size: 10px;">分布式事务</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 16.67px;">基础知识</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">定时任务</a> <a href="/tags/%E6%89%A9%E5%B1%95/" style="font-size: 10px;">扩展</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 10px;">整合</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/01/10/spring%20boot3%E6%95%B4%E5%90%88ELK%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E6%90%9C%E7%B4%A2/">spring boot3整合ELK实现日志搜索</a>
+          </li>
+        
+          <li>
+            <a href="/2025/01/10/spring%20boot3%E6%95%B4%E5%90%88%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/">spring boot3整合链路追踪</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/27/hexo%E4%BD%BF%E7%94%A8/">hexo使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/17/spring%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">spring单元测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/jsonp%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82/">jsonp跨域请求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 杰<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
