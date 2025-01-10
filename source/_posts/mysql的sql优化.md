@@ -11,7 +11,7 @@ tags:
 
 1. 首先来看没有索引的情况：可以看出 type 为 all 是全表扫描性能不高，优化就是建立索引。
 
-> EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
+> EXPLAIN SELECT address,name FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
 ![](../images/mysql/y_h_1.jpg)
 
@@ -20,22 +20,21 @@ tags:
 2. 来看创建两个单值索引的情况：看到possible_keys为 idx_a,idx_n 但是key为idx_a说明只用了一个索引另一个索引没有使用（mysql会自动使用最优的索引）
 
 > CREATE INDEX idx_a ON t_user(address);
-> CREATE INDEX idx_n ON t_user(`name`);
-> EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
+> CREATE INDEX idx_n ON t_user(name);
+> EXPLAIN SELECT address,name FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
 ![](../images/mysql/y_h_2.jpg)
 
 ----------
 
-3. 来看创建一个复合索引的情况：key为idx_a_n说明用了索引,ref为 const,const 说名这个复合索引对这两个字段都起作用。Extra中有Using
-   index（覆盖索引）sql性能很好。
+3. 来看创建一个复合索引的情况：key为idx_a_n说明用了索引,ref为 const,const 说名这个复合索引对这两个字段都起作用。Extra中有Using index（覆盖索引）sql性能很好。
 
-> CREATE INDEX idx_a_n ON t_user(address,`name`);
-> EXPLAIN SELECT address,`name` FROM t_user u WHERE u.address='成都' AND u.name='haha'
+> CREATE INDEX idx_a_n ON t_user(address,name);
+> EXPLAIN SELECT address,name FROM t_user u WHERE u.address='成都' AND u.name='haha'
 
 ![](../images/mysql/y_h_3.jpg)
 
- 
+
 ----------
 
 ## join连接索引优化
@@ -48,7 +47,7 @@ tags:
 
 ![](../images/mysql/y_h_5.jpg)
 
- 
+
 ----------
 
 2. RIGHT join使用索引，索引应建立在左边。
@@ -59,23 +58,23 @@ tags:
 
 ![](../images/mysql/y_h_6.jpg)
 
- 
+
 ----------
 
 ## 索引失效
 
 **`索引失效的大致情况如下`**
 ![](../images/mysql/index_lose.png)
-1、如index(a,b,c)=> whereb=5 and c=6 b,c不会使用索引.因为缺少a。<br/>
-3、如index(a,b,c)=> where a=1 and b>5 and c=6 那么a,b会用到索引，c不会使用索引.<br/>
-7、可以使用覆盖索引的方式解决：like'%..%'索引失效。<br/>
-9、可以使用 union 带替代 or<br/>
- 
+1、如index(a,b,c)=> where b=5 and c=6 b,c不会使用索引.因为缺少a。
+3、如index(a,b,c)=> where a=1 and b>5 and c=6 那么a,b会用到索引，c不会使用索引. b是范围后面的都会中断。
+7、可以使用覆盖索引的方式解决：like'%..%'索引失效。
+9、可以使用 union 带替代 or
+
 ----------
 
 ## index列子分析
 
-index(c1,c2,c3,c4):order by
+index(c1,c2,c3,c4) : order by
 > where c1>50 order by c2 出现:filesort。
 > where 1=1 order by c1 asc,c2 desc 出现:filesort。
 > where 1=1 order by c1 asc,c2 desc 出现:filesort。
@@ -92,7 +91,7 @@ index(c1,c2,c3,c4):group by
 group by:分组之前基本需要排序，可能会有临时表产生很耗性能。
 ![](../images/mysql/y_h_8.jpg)
 ![](../images/mysql/y_h_4.jpg)
- 
+
 ----------
 
 ## 小表驱动大表
@@ -116,7 +115,7 @@ group by:分组之前基本需要排序，可能会有临时表产生很耗性�
 
 若：Status中出现以下4个中一个必须优化。
 ![](../images/mysql/y_h_7.jpg)
- 
+
 ----------
 
 ## 全局查询日志
